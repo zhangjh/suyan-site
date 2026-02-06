@@ -17,7 +17,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '帮助文档', link: '/guide/install' },
-      { text: '发布日志', link: 'https://github.com/zhangjh/SuYan-Release/releases' }
+      { text: '发布日志', link: 'https://github.com/zhangjh/suyan-site/releases' }
     ],
 
     sidebar: {
@@ -44,7 +44,7 @@ export default defineConfig({
     socialLinks: [
       // 这里依然可以指向你的私有库主页（如果你愿意），或者指向发布页
       // 或者干脆不放，保持高冷
-      { icon: 'github', link: 'https://github.com/zhangjh/SuYan-Release' }
+      { icon: 'github', link: 'https://github.com/zhangjh/suyan-site' }
     ],
 
     footer: {

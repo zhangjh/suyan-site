@@ -8,10 +8,10 @@ hero:
   actions:
     - theme: brand
       text: 📥 下载 Windows 版
-      link: https://github.com/zhangjh/SuYan-Release/releases/latest
+      link: https://github.com/zhangjh/suyan-site/releases/latest
     - theme: alt
       text: 📥 下载 macOS 版
-      link: https://github.com/zhangjh/SuYan-Release/releases/latest
+      link: https://github.com/zhangjh/suyan-site/releases/latest
     - theme: alt
       text: 📖不仅是输入法？
       link: /guide/install
