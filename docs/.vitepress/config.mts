@@ -32,7 +32,7 @@ export default defineConfig({
         {
           text: '功能特性',
           items: [
-            { text: '雾凇拼音', link: '/guide/rime-ice' },
+            { text: '致谢与核心', link: '/guide/credits' },
             { text: '剪贴板历史', link: '/guide/clipboard' },
             { text: '截图工具', link: '/guide/screenshot' }
           ]
