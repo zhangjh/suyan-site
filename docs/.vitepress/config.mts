@@ -34,8 +34,7 @@ export default defineConfig({
           items: [
             { text: '雾凇拼音', link: '/guide/rime-ice' },
             { text: '剪贴板历史', link: '/guide/clipboard' },
-            { text: '截图工具', link: '/guide/screenshot' },
-            { text: 'Lua 脚本', link: '/guide/lua' }
+            { text: '截图工具', link: '/guide/screenshot' }
           ]
         }
       ]
@@ -49,7 +48,7 @@ export default defineConfig({
 
     footer: {
       message: '极简于形，全能于心。',
-      copyright: 'Copyright © 2024-present zhangjh'
+      copyright: 'Copyright © 2026-present zhangjh'
     },
     
     // 隐藏编辑链接，因为是私有库
