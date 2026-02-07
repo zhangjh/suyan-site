@@ -34,7 +34,8 @@ export default defineConfig({
           items: [
             { text: '致谢与核心', link: '/guide/credits' },
             { text: '剪贴板历史', link: '/guide/clipboard' },
-            { text: '截图工具', link: '/guide/screenshot' }
+            { text: '截图工具', link: '/guide/screenshot' },
+            { text: '自定义词库', link: '/guide/dictionary' }
           ]
         }
       ]
