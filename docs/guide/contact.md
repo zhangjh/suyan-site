@@ -12,7 +12,7 @@
 
 ### 📧 电子邮件
 
-如果您有商务合作或其他私密问题，可以通过邮件联系。
+如果您有其他私密问题或建议，可以通过邮件联系。
 
 - **Email**: [njhxzhangjihong@126.com](mailto:njhxzhangjihong@126.com)
 
