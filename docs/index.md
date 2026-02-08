@@ -7,11 +7,8 @@ hero:
   tagline: 拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台输入法
   actions:
     - theme: brand
-      text: 📥 下载 Windows 版
-      link: https://github.com/zhangjh/suyan-site/releases/latest
-    - theme: alt
-      text: 📥 下载 macOS 版
-      link: https://github.com/zhangjh/suyan-site/releases/latest
+      text: 📥 立即下载
+      link: /download
     - theme: alt
       text: 📖 了解更多
       link: /guide/install
@@ -34,11 +31,7 @@ features:
     icon: 🛠️
 ---
 
-::: info 🚀 国内加速下载
-如 GitHub 访问缓慢，可尝试网盘下载 (提取码请自取)：
-- **百度网盘**: [点击下载](https://github.com/zhangjh/suyan-site/releases/latest) (提取码: `待补充`)
-- **夸克网盘**: [点击下载](https://github.com/zhangjh/suyan-site/releases/latest) (提取码: `待补充`)
-:::
+---
 
 ## 📸 功能演示
 
