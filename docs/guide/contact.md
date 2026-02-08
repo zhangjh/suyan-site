@@ -21,3 +21,9 @@
 关注开发者的 GitHub 主页，获取更多开源项目动态。
 
 - **GitHub**: [zhangjh](https://github.com/zhangjh)
+
+### 💬 微信公众号
+
+关注公众号 **但丁自留地**，获取更多技术分享与即时动态。
+
+![但丁自留地](/wechat-qr.jpg)
