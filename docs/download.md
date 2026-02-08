@@ -1,15 +1,15 @@
 # 📥 下载素言 (SuYan)
 
-选择适合您系统的版本进行下载。如果 GitHub 官方链接访问缓慢，可尝试使用国内网盘加速下载。
+请根据您的系统选择下载。由于 GitHub 官方源在国内访问较慢，**强烈推荐使用国内网盘链接下载**。
 
 ## 最新版本 (Latest)
 
-| 平台 | 版本 | 官方下载 (GitHub) | 国内加速 (网盘) |
+| 平台 | 版本 | 国内网盘 (推荐🚀) | 官方下载 (GitHub) |
 | :--- | :--- | :--- | :--- |
-| **Windows** | v2.1.0 | [SuYan-v2.1.0-windows.exe](https://github.com/zhangjh/SuYan/releases/download/v2.1.0/SuYan-v2.1.0-windows.exe) | [百度网盘](#) (提取码: 待补充)<br>[夸克网盘](#) (提取码: 待补充) |
-| **macOS** | v2.1.0 | [SuYan-v2.1.0-macos.pkg](https://github.com/zhangjh/SuYan/releases/download/v2.1.0/SuYan-v2.1.0-macos.pkg) | [百度网盘](#) (提取码: 待补充)<br>[夸克网盘](#) (提取码: 待补充) |
+| **Windows** | v2.1.0 | [百度网盘](https://pan.baidu.com/s/107FCil8J4OVDfx6NWIZSlA?pwd=ru98) (码:ru98)<br>[夸克网盘](https://pan.quark.cn/s/81b1e429a586) | [下载 .exe](https://github.com/zhangjh/SuYan/releases/download/v2.1.0/SuYan-v2.1.0-windows.exe) |
+| **macOS** | v2.1.0 | [百度网盘](https://pan.baidu.com/s/107FCil8J4OVDfx6NWIZSlA?pwd=ru98) (码:ru98)<br>[夸克网盘](https://pan.quark.cn/s/81b1e429a586) | [下载 .pkg](https://github.com/zhangjh/SuYan/releases/download/v2.1.0/SuYan-v2.1.0-macos.pkg) |
 
-> **提示**：GitHub Releases 是首选下载源，保证第一时间获取最新特性与修复。网盘版本通常稍有延迟。
+> **提示**：网盘内通常包含 Windows 和 macOS 双版本安装包，请按需下载。
 
 ## 历史版本
 
