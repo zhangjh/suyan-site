@@ -34,6 +34,12 @@ features:
     icon: 🛠️
 ---
 
+::: info 🚀 国内加速下载
+如 GitHub 访问缓慢，可尝试网盘下载 (提取码请自取)：
+- **百度网盘**: [点击下载](https://github.com/zhangjh/suyan-site/releases/latest) (提取码: `待补充`)
+- **夸克网盘**: [点击下载](https://github.com/zhangjh/suyan-site/releases/latest) (提取码: `待补充`)
+:::
+
 ## 📸 功能演示
 
 > *（在此处展示输入法的实际界面、皮肤效果或功能视频。建议使用 Markdown 图片语法插入 GIF）*
