@@ -30,6 +30,12 @@ export default defineConfig({
           ]
         },
         {
+          text: '功能详解',
+          items: [
+            { text: '自定义词库', link: '/guide/dictionary' }
+          ]
+        },
+        {
           text: '关于',
           items: [
             { text: '致谢与核心', link: '/guide/credits' },
