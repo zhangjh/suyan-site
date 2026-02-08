@@ -6,14 +6,14 @@
 
 | 平台 | 版本 | 国内网盘 (推荐🚀) | 官方下载 (GitHub) |
 | :--- | :--- | :--- | :--- |
-| **Windows** | v2.1.1 | [百度网盘](https://pan.baidu.com/s/107FCil8J4OVDfx6NWIZSlA?pwd=ru98)<br>[夸克网盘](https://pan.quark.cn/s/81b1e429a586) | [前往 Release 页面](https://github.com/zhangjh/SuYan/releases/latest) |
-| **macOS** | v2.1.1 | [百度网盘](https://pan.baidu.com/s/107FCil8J4OVDfx6NWIZSlA?pwd=ru98)<br>[夸克网盘](https://pan.quark.cn/s/81b1e429a586) | [前往 Release 页面](https://github.com/zhangjh/SuYan/releases/latest) |
+| **Windows** | v2.1.1 | [百度网盘](https://pan.baidu.com/s/107FCil8J4OVDfx6NWIZSlA?pwd=ru98)<br>[夸克网盘](https://pan.quark.cn/s/81b1e429a586) | [前往 Release 页面](https://github.com/zhangjh/suyan-site/releases/latest) |
+| **macOS** | v2.1.1 | [百度网盘](https://pan.baidu.com/s/107FCil8J4OVDfx6NWIZSlA?pwd=ru98)<br>[夸克网盘](https://pan.quark.cn/s/81b1e429a586) | [前往 Release 页面](https://github.com/zhangjh/suyan-site/releases/latest) |
 
 > **提示**：网盘内通常包含 Windows 和 macOS 双版本安装包，请按需下载。
 
 ## 历史版本
 
-如需下载旧版本，请访问 [GitHub Releases 页面](https://github.com/zhangjh/SuYan/releases)。
+如需下载旧版本，请访问 [GitHub Releases 页面](https://github.com/zhangjh/suyan-site/releases)。
 
 ## 安装说明
 
