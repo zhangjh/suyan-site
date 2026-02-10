@@ -2,12 +2,9 @@
 layout: home
 
 hero:
-  name: "素言 SuYan"
+  name: '<img src="/logo.png" alt="Logo" style="height: 1.2em; vertical-align: bottom; margin-right: 0.3em; display: inline-block;" /> 素言 SuYan'
   text: "回归输入的本质"
   tagline: 拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台中英文输入法
-  image:
-    src: /logo.png
-    alt: SuYan Logo
   actions:
     - theme: brand
       text: 📥 立即下载
