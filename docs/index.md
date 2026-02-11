@@ -34,7 +34,7 @@ features:
 
 > 点击下方图片观看完整演示视频（Bilibili）
 
-[![素言输入法演示](https://i2.hdslb.com/bfs/archive/a4399d4b08e1a11919e668858b2ab552c8d7f89a.jpg)](https://www.bilibili.com/video/BV1zDFozyETF)
+[![素言输入法演示](/demo-cover.jpg)](https://www.bilibili.com/video/BV1zDFozyETF)
 
 ---
 
