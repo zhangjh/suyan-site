@@ -32,9 +32,9 @@ features:
 
 ## 📸 功能演示
 
-> *（在此处展示输入法的实际界面、皮肤效果或功能视频。建议使用 Markdown 图片语法插入 GIF）*
+> 点击下方图片观看完整演示视频（Bilibili）
 
-![输入演示](https://via.placeholder.com/800x400?text=Placeholder+for+Input+Demo+GIF)
+[![素言输入法演示](https://i2.hdslb.com/bfs/archive/a4399d4b08e1a11919e668858b2ab552c8d7f89a.jpg)](https://www.bilibili.com/video/BV1zDFozyETF)
 
 ---
 
