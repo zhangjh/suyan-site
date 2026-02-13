@@ -38,7 +38,7 @@ features:
 
 > 点击下方图片观看完整语音输入模式完整演示视频（Bilibili）
 
-[![素言语音模式演示](/demo-cover.jpg)](https://www.bilibili.com/video/BV1vBcEzAE8z/)
+[![素言语音模式演示](/voice_input.jpg)](https://www.bilibili.com/video/BV1vBcEzAE8z/)
 
 ---
 
