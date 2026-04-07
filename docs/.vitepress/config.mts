@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: "素言 SuYan",
-  description: "基于 RIME 的跨平台中英文输入法，内置剪贴板与截图工具。",
+  description: "基于 RIME 的跨平台中英文输入法，支持离线语音输入，内置剪贴板与截图工具。",
   lang: 'zh-CN',
   
   head: [
