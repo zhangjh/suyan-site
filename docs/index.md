@@ -63,27 +63,41 @@ features:
 
 ### 🖼️ 界面预览
 
-<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; padding: 1rem 0;">
+<div style="max-width: 720px; margin: 0 auto; padding: 1rem 0;">
+
+<h4 style="text-align: center; color: var(--vp-c-text-2); font-weight: 500; margin-bottom: 12px;">🎨 候选词框</h4>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 2rem;">
   <figure style="margin: 0; text-align: center;">
-    <img src="/image.png" alt="系统默认皮肤候选词框" style="max-width: 360px; border-radius: 8px;" />
-    <figcaption style="color: #888; font-size: 0.9em; margin-top: 6px;">默认皮肤</figcaption>
+    <img src="/image.png" alt="系统默认皮肤候选词框" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);" />
+    <figcaption style="color: var(--vp-c-text-3); font-size: 0.85em; margin-top: 8px;">默认皮肤</figcaption>
   </figure>
   <figure style="margin: 0; text-align: center;">
-    <img src="/image-1.png" alt="自定义皮肤候选词框" style="max-width: 360px; border-radius: 8px;" />
-    <figcaption style="color: #888; font-size: 0.9em; margin-top: 6px;">自定义皮肤</figcaption>
+    <img src="/image-1.png" alt="自定义皮肤候选词框" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);" />
+    <figcaption style="color: var(--vp-c-text-3); font-size: 0.85em; margin-top: 8px;">自定义皮肤</figcaption>
+  </figure>
+</div>
+
+<h4 style="text-align: center; color: var(--vp-c-text-2); font-weight: 500; margin-bottom: 12px;">🎙️ 语音输入</h4>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 2rem;">
+  <figure style="margin: 0; text-align: center;">
+    <img src="/image-4.png" alt="语音输入进行中" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);" />
+    <figcaption style="color: var(--vp-c-text-3); font-size: 0.85em; margin-top: 8px;">语音输入中</figcaption>
   </figure>
   <figure style="margin: 0; text-align: center;">
-    <img src="/image-2.png" alt="剪贴板管理器" style="max-width: 360px; border-radius: 8px;" />
-    <figcaption style="color: #888; font-size: 0.9em; margin-top: 6px;">剪贴板管理</figcaption>
+    <img src="/image-3.png" alt="语音输入识别候选" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);" />
+    <figcaption style="color: var(--vp-c-text-3); font-size: 0.85em; margin-top: 8px;">语音识别候选</figcaption>
   </figure>
-  <figure style="margin: 0; text-align: center;">
-    <img src="/image-3.png" alt="语音输入识别候选" style="max-width: 360px; border-radius: 8px;" />
-    <figcaption style="color: #888; font-size: 0.9em; margin-top: 6px;">语音识别候选</figcaption>
-  </figure>
-  <figure style="margin: 0; text-align: center;">
-    <img src="/image-4.png" alt="语音输入进行中" style="max-width: 360px; border-radius: 8px;" />
-    <figcaption style="color: #888; font-size: 0.9em; margin-top: 6px;">语音输入中</figcaption>
-  </figure>
+</div>
+
+<h4 style="text-align: center; color: var(--vp-c-text-2); font-weight: 500; margin-bottom: 12px;">📋 剪贴板管理</h4>
+
+<figure style="margin: 0 auto; text-align: center; max-width: 400px;">
+  <img src="/image-2.png" alt="剪贴板管理器" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);" />
+  <figcaption style="color: var(--vp-c-text-3); font-size: 0.85em; margin-top: 8px;">剪贴板历史记录</figcaption>
+</figure>
+
 </div>
 
 ---
