@@ -54,6 +54,16 @@ if (typeof window !== 'undefined') {
 
 ---
 
+## 🌐 官方下载 (GitHub)
+
+如加速下载不可用或需下载历史版本，请访问 GitHub 官方仓库：
+
+- [前往 GitHub Releases 页面](https://github.com/zhangjh/suyan-site/releases/latest)
+
+> **提示**：GitHub Release 页面可能受网络环境影响，若无法访问，请使用科学上网或多次刷新。下载时请认准带有版本号的 `.exe` (Win) 或 `.pkg` (Mac) 文件。
+
+---
+
 ## ☕ 随缘赞助
 
 素言承诺**永久免费、无广告、纯本地运行**。
