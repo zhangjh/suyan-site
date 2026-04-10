@@ -34,8 +34,9 @@ if (typeof window !== 'undefined') {
         let winUrl = '', macUrl = '';
         
         data.assets.forEach(asset => {
-          if (asset.name.endsWith('.exe')) winUrl = mirror + asset.browser_download_url;
-          if (asset.name.endsWith('.pkg')) macUrl = mirror + asset.browser_download_url;
+          const name = asset.name.toLowerCase();
+          if (name.includes('windows') && name.endsWith('.exe')) winUrl = mirror + asset.browser_download_url;
+          if (name.includes('macos') && name.endsWith('.pkg')) macUrl = mirror + asset.browser_download_url;
         });
         
         if (winBtn && winUrl) {
