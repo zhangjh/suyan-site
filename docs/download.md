@@ -27,7 +27,7 @@ if (typeof window !== 'undefined') {
     .then(res => res.json())
     .then(data => {
       if (data.assets && data.assets.length > 0) {
-        const mirror = 'https://gh-proxy.com/';
+        const mirror = 'https://gh-proxy.org/';
         const winBtn = document.getElementById('btn-dl-win');
         const macBtn = document.getElementById('btn-dl-mac');
         
