@@ -7,16 +7,16 @@
 基于 GitHub 加速镜像，点击即下，无需登录。
 
 <div style="display: flex; gap: 20px; margin: 20px 0;">
-  <a href="https://github.com/zhangjh/suyan-site/releases/latest" 
+  <a href="https://mirror.ghproxy.com/https://github.com/zhangjh/suyan-site/releases/latest/download/suyan-win.exe" 
      onclick="if(window.LA) LA.track('download_click', {os: 'windows'})" 
      style="background-color: var(--vp-c-brand); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s;">
-    💻 前往下载 (Windows)
+    💻 Windows 版下载
   </a>
   
-  <a href="https://github.com/zhangjh/suyan-site/releases/latest" 
+  <a href="https://mirror.ghproxy.com/https://github.com/zhangjh/suyan-site/releases/latest/download/suyan-mac.pkg" 
      onclick="if(window.LA) LA.track('download_click', {os: 'macos'})" 
      style="background-color: var(--vp-c-brand); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s;">
-    🍎 前往下载 (macOS)
+    🍎 macOS 版下载
   </a>
 </div>
 
