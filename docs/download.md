@@ -6,17 +6,17 @@
 
 基于 GitHub 加速镜像，点击即下，无需登录。
 
-<div style="display: flex; flex-wrap: wrap; gap: 16px; margin: 32px 0;">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 32px 0; max-width: 660px;">
   <a id="btn-dl-win" href="https://github.com/zhangjh/suyan-site/releases/latest" 
      onclick="if(window.LA) LA.track('download_click', {os: 'windows'})" 
-     style="display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 260px; max-width: 320px; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-    💻 Windows 版下载 (获取中...)
+     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 56px; box-sizing: border-box;">
+    Windows 版下载 (获取中...)
   </a>
   
   <a id="btn-dl-mac" href="https://github.com/zhangjh/suyan-site/releases/latest" 
      onclick="if(window.LA) LA.track('download_click', {os: 'macos'})" 
-     style="display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 260px; max-width: 320px; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-    🍎 macOS 版下载 (获取中...)
+     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 56px; box-sizing: border-box;">
+    MacOS 版下载 (获取中...)
   </a>
 </div>
 
@@ -40,11 +40,11 @@ if (typeof window !== 'undefined') {
         
         if (winBtn && winUrl) {
           winBtn.href = winUrl;
-          winBtn.innerText = '💻 Windows 版下载 (' + data.tag_name + ')';
+          winBtn.innerText = 'Windows 版下载 (' + data.tag_name + ')';
         }
         if (macBtn && macUrl) {
           macBtn.href = macUrl;
-          macBtn.innerText = '🍎 macOS 版下载 (' + data.tag_name + ')';
+          macBtn.innerText = 'MacOS 版下载 (' + data.tag_name + ')';
         }
       }
     })
@@ -73,6 +73,6 @@ if (typeof window !== 'undefined') {
 ## 🛠️ 安装说明
 
 - **Windows**: 下载 `.exe` 文件后双击运行，按提示安装即可。如遇 SmartScreen 拦截，请点击“更多信息” -> “仍要运行”。
-- **macOS**: 下载 `.pkg` 文件后双击安装。安装后请在“系统设置 -> 键盘 -> 输入法”中添加素言。
+- **MacOS**: 下载 `.pkg` 文件后双击安装。安装后请在“系统设置 -> 键盘 -> 输入法”中添加素言。
 
 如有安装问题，请参考 [安装指南](/guide/install)。
