@@ -7,18 +7,50 @@
 基于 GitHub 加速镜像，点击即下，无需登录。
 
 <div style="display: flex; gap: 20px; margin: 20px 0;">
-  <a href="https://mirror.ghproxy.com/https://github.com/zhangjh/suyan-site/releases/latest/download/suyan-win.exe" 
+  <a id="btn-dl-win" href="https://github.com/zhangjh/suyan-site/releases/latest" 
      onclick="if(window.LA) LA.track('download_click', {os: 'windows'})" 
      style="background-color: var(--vp-c-brand); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s;">
-    💻 Windows 版下载
+    💻 Windows 版下载 (获取中...)
   </a>
   
-  <a href="https://mirror.ghproxy.com/https://github.com/zhangjh/suyan-site/releases/latest/download/suyan-mac.pkg" 
+  <a id="btn-dl-mac" href="https://github.com/zhangjh/suyan-site/releases/latest" 
      onclick="if(window.LA) LA.track('download_click', {os: 'macos'})" 
      style="background-color: var(--vp-c-brand); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s;">
-    🍎 macOS 版下载
+    🍎 macOS 版下载 (获取中...)
   </a>
 </div>
+
+<script>
+// 动态获取 GitHub 最新 Release 资源并应用镜像加速
+if (typeof window !== 'undefined') {
+  fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest')
+    .then(res => res.json())
+    .then(data => {
+      if (data.assets && data.assets.length > 0) {
+        const mirror = 'https://mirror.ghproxy.com/';
+        const winBtn = document.getElementById('btn-dl-win');
+        const macBtn = document.getElementById('btn-dl-mac');
+        
+        let winUrl = '', macUrl = '';
+        
+        data.assets.forEach(asset => {
+          if (asset.name.endsWith('.exe')) winUrl = mirror + asset.browser_download_url;
+          if (asset.name.endsWith('.pkg')) macUrl = mirror + asset.browser_download_url;
+        });
+        
+        if (winBtn && winUrl) {
+          winBtn.href = winUrl;
+          winBtn.innerText = '💻 Windows 版下载 (' + data.tag_name + ')';
+        }
+        if (macBtn && macUrl) {
+          macBtn.href = macUrl;
+          macBtn.innerText = '🍎 macOS 版下载 (' + data.tag_name + ')';
+        }
+      }
+    })
+    .catch(err => console.error('Failed to fetch latest release:', err));
+}
+</script>
 
 > **提示**：GitHub Release 页面可能受网络环境影响，若无法访问，请使用科学上网或多次刷新。下载时请认准带有版本号的 `.exe` (Win) 或 `.pkg` (Mac) 文件。
 
