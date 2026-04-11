@@ -6,16 +6,16 @@
 
 基于 GitHub 加速镜像，点击即下，无需登录。
 
-<div style="display: flex; flex-wrap: wrap; gap: 16px; margin: 32px 0; max-width: 660px; align-items: center;">
+<div style="display: flex; flex-direction: column; gap: 16px; margin: 32px 0; max-width: 400px;">
   <a id="btn-dl-win" href="https://github.com/zhangjh/suyan-site/releases/latest" 
      onclick="if(window.LA) LA.track('download_click', {os: 'windows'})" 
-     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 56px; box-sizing: border-box; flex: 1 1 280px; min-width: 280px;">
+     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">
     Windows 版下载 (获取中...)
   </a>
   
   <a id="btn-dl-mac" href="https://github.com/zhangjh/suyan-site/releases/latest" 
      onclick="if(window.LA) LA.track('download_click', {os: 'macos'})" 
-     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 56px; box-sizing: border-box; flex: 1 1 280px; min-width: 280px;">
+     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">
     MacOS 版下载 (获取中...)
   </a>
 </div>
