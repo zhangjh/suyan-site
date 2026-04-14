@@ -7,8 +7,17 @@ export default defineConfig({
   
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }],
-    ['script', { charset: 'UTF-8', id: 'LA_COLLECT', src: '//sdk.51.la/js-sdk-pro.min.js' }],
-    ['script', {}, `LA.init({id:"L65dxF4BaxJ5ImOA",ck:"L65dxF4BaxJ5ImOA"})`]
+    ['script', { charset: 'UTF-8', id: 'LA_COLLECT', src: 'https://sdk.51.la/js-sdk-pro.min.js' }],
+    ['script', {}, `
+      (function() {
+        var checkLA = setInterval(function() {
+          if (window.LA) {
+            LA.init({id:"L65dxF4BaxJ5ImOA",ck:"L65dxF4BaxJ5ImOA",hashMode:true});
+            clearInterval(checkLA);
+          }
+        }, 100);
+      })();
+    `]
   ],
 
   themeConfig: {
