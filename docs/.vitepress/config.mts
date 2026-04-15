@@ -12,7 +12,7 @@ export default defineConfig({
       (function() {
         var checkLA = setInterval(function() {
           if (window.LA) {
-            LA.init({id:"L65dxF4BaxJ5ImOA",ck:"L65dxF4BaxJ5ImOA",hashMode:true});
+            LA.init({id:"L65dxF4BaxJ5ImOA",ck:"L65dxF4BaxJ5ImOA",hashMode:true,autoTrack:true});
             clearInterval(checkLA);
           }
         }, 100);
