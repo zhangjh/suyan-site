@@ -156,6 +156,12 @@ features:
 
 ---
 
+## 📰 相关文章
+
+- [素言输入法：一款纯净、离线、注重隐私的桌面输入法](https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw) — 公众号「但丁自留地」
+
+---
+
 <div style="text-align: center; margin-top: 2rem;">
   <h3>素言 · 简而不凡</h3>
   <p style="opacity: 0.8; max-width: 600px; margin: 10px auto;">"素"代表干净、纯粹，"言"代表表达、交流。<br>摒弃繁杂，回归输入的本质——将你的思绪毫无阻碍地转化为文字。</p>

@@ -26,4 +26,6 @@
 
 关注公众号 **但丁自留地**，获取更多技术分享与即时动态。
 
+- 📖 [素言输入法：一款纯净、离线、注重隐私的桌面输入法](https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw)
+
 ![但丁自留地](/wechat-qr.jpg)
