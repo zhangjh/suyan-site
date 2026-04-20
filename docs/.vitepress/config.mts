@@ -43,6 +43,7 @@ export default defineConfig({
         {
           text: '功能详解',
           items: [
+            { text: '特殊输入模式', link: '/guide/special-modes' },
             { text: '自定义词库', link: '/guide/dictionary' }
           ]
         },
