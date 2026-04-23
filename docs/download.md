@@ -13,10 +13,16 @@
     Windows 版下载 (获取中...)
   </a>
   
-  <a id="btn-dl-mac" href="https://github.com/zhangjh/suyan-site/releases/latest" 
-     onclick="if(window.LA) LA.track('download_mac')" 
+  <a id="btn-dl-mac-arm" href="https://github.com/zhangjh/suyan-site/releases/latest" 
+     onclick="if(window.LA) LA.track('download_mac_arm')" 
      style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">
-    MacOS 版下载 (获取中...)
+    MacOS 版下载 - Apple Silicon (获取中...)
+  </a>
+  
+  <a id="btn-dl-mac-intel" href="https://github.com/zhangjh/suyan-site/releases/latest" 
+     onclick="if(window.LA) LA.track('download_mac_intel')" 
+     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">
+    MacOS 版下载 - Intel (获取中...)
   </a>
 </div>
 
@@ -28,23 +34,29 @@ if (typeof window !== 'undefined') {
       if (data.assets && data.assets.length > 0) {
         const mirror = 'https://gh-proxy.org/';
         const winBtn = document.getElementById('btn-dl-win');
-        const macBtn = document.getElementById('btn-dl-mac');
+        const macArmBtn = document.getElementById('btn-dl-mac-arm');
+        const macIntelBtn = document.getElementById('btn-dl-mac-intel');
         
-        let winUrl = '', macUrl = '';
+        let winUrl = '', macArmUrl = '', macIntelUrl = '';
         
         data.assets.forEach(asset => {
           const name = asset.name.toLowerCase();
           if (name.includes('windows') && name.endsWith('.exe')) winUrl = mirror + asset.browser_download_url;
-          if (name.includes('macos') && name.endsWith('.pkg')) macUrl = mirror + asset.browser_download_url;
+          if (name.includes('macos') && name.includes('arm64') && name.endsWith('.pkg')) macArmUrl = mirror + asset.browser_download_url;
+          if (name.includes('macos') && name.includes('x86_64') && name.endsWith('.pkg')) macIntelUrl = mirror + asset.browser_download_url;
         });
         
         if (winBtn && winUrl) {
           winBtn.href = winUrl;
           winBtn.innerText = 'Windows 版下载 (' + data.tag_name + ')';
         }
-        if (macBtn && macUrl) {
-          macBtn.href = macUrl;
-          macBtn.innerText = 'MacOS 版下载 (' + data.tag_name + ')';
+        if (macArmBtn && macArmUrl) {
+          macArmBtn.href = macArmUrl;
+          macArmBtn.innerText = 'MacOS 版下载 - Apple Silicon (' + data.tag_name + ')';
+        }
+        if (macIntelBtn && macIntelUrl) {
+          macIntelBtn.href = macIntelUrl;
+          macIntelBtn.innerText = 'MacOS 版下载 - Intel (' + data.tag_name + ')';
         }
       }
     })
@@ -83,6 +95,6 @@ if (typeof window !== 'undefined') {
 ## 🛠️ 安装说明
 
 - **Windows**: 下载 `.exe` 文件后双击运行，按提示安装即可。如遇 SmartScreen 拦截，请点击“更多信息” -> “仍要运行”。
-- **MacOS**: 下载 `.pkg` 文件后双击安装。安装后请在“系统设置 -> 键盘 -> 输入法”中添加素言。
+- **MacOS**: 根据芯片类型选择对应版本（Apple Silicon 或 Intel），下载 `.pkg` 文件后双击安装。安装后请在“系统设置 -> 键盘 -> 输入法”中添加素言。
 
 如有安装问题，请参考 [安装指南](/guide/install)。

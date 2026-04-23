@@ -158,6 +158,7 @@ features:
 
 ## 📰 相关文章
 
+- [素言v3.6.0发布：你提的建议，我都做到了](https://mp.weixin.qq.com/s/p_OWf4GYqzPzYiDehMPAeg) — 公众号「但丁自留地」
 - [素言输入法：一款纯净、离线、注重隐私的桌面输入法](https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw) — 公众号「但丁自留地」
 
 ---
