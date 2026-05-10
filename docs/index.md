@@ -32,7 +32,7 @@ features:
     details: Windows 与 macOS 完美复刻，无论在哪里办公，输入手感始终如一。
 ---
 
----
+<div style="max-width: 800px; margin: 0 auto;">
 
 ## 🎙️ 离线语音输入
 
@@ -51,25 +51,21 @@ features:
 
 ## 📸 功能演示
 
-> 点击下方图片观看普通输入模式完整演示视频（Bilibili）
+### 普通输入模式
 
-<div style="max-width: 560px; margin: 0 auto;">
-
-[![素言普通模式演示](/demo-cover.jpg)](https://www.bilibili.com/video/BV1zDFozyETF)
-
+<div style="border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+  <iframe src="//player.bilibili.com/player.html?bvid=BV1zDFozyETF&autoplay=0&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width: 100%; height: 500px;"></iframe>
 </div>
 
-> 点击下方图片观看语音输入模式完整演示视频（Bilibili）
+### 语音输入模式
 
-<div style="max-width: 560px; margin: 0 auto;">
-
-[![素言语音模式演示](/voice_input.jpg)](https://www.bilibili.com/video/BV1vBcEzAE8z/)
-
+<div style="border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+  <iframe src="//player.bilibili.com/player.html?bvid=BV1vBcEzAE8z&autoplay=0&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width: 100%; height: 500px;"></iframe>
 </div>
 
 ### 🖼️ 界面预览
 
-<div style="max-width: 720px; margin: 0 auto; padding: 1rem 0;">
+<div style="padding: 1rem 0;">
 
 <div style="text-align: center; color: var(--vp-c-text-2); font-weight: 500; margin-bottom: 12px;">🎨 候选词框</div>
 
@@ -125,7 +121,11 @@ features:
 
 </div>
 
+</div>
+
 ---
+
+<div style="max-width: 800px; margin: 0 auto;">
 
 ## 为什么选择素言？
 
@@ -166,4 +166,30 @@ features:
 <div style="text-align: center; margin-top: 2rem;">
   <h3>素言 · 简而不凡</h3>
   <p style="opacity: 0.8; max-width: 600px; margin: 10px auto;">"素"代表干净、纯粹，"言"代表表达、交流。<br>摒弃繁杂，回归输入的本质——将你的思绪毫无阻碍地转化为文字。</p>
+</div>
+
+---
+
+<div style="text-align: center; margin: 2rem 0;">
+  <h2>🌿 素系列产品</h2>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 2rem;">
+  <a href="https://sustream.zhangjh.cn" target="_blank" rel="noreferrer" style="display: flex; align-items: center; gap: 16px; padding: 20px 24px; border: 1px solid var(--vp-c-border); border-radius: 12px; text-decoration: none; transition: all 0.2s ease; background: var(--vp-c-bg-soft);">
+    <div style="font-size: 2.5em; flex-shrink: 0;"><img src="/sustream_logo.png" alt="素流" style="width: 48px; height: 48px; border-radius: 8px;"></div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-weight: 600; color: var(--vp-c-brand); font-size: 1.05em;">素流 SuStream</div>
+      <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-top: 4px;">AI 原生文件资产管家</div>
+    </div>
+    <div style="color: var(--vp-c-brand); font-size: 1.2em; flex-shrink: 0;">→</div>
+  </a>
+  <div style="display: flex; align-items: center; gap: 16px; padding: 20px 24px; border: 1px solid var(--vp-c-border); border-radius: 12px; background: var(--vp-c-bg-soft); opacity: 0.7;">
+    <div style="font-size: 2.5em; flex-shrink: 0;">🔮</div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-weight: 600; color: var(--vp-c-text-1); font-size: 1.05em;">更多产品</div>
+      <div style="color: var(--vp-c-text-3); font-size: 0.9em; margin-top: 4px;">敬请期待...</div>
+    </div>
+  </div>
+</div>
+
 </div>
