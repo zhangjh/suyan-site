@@ -6,24 +6,10 @@
 
 基于 GitHub 加速镜像，点击即下，无需登录。
 
-<div style="display: flex; flex-direction: column; gap: 16px; margin: 32px 0; max-width: 400px;">
-  <a id="btn-dl-win" href="https://github.com/zhangjh/suyan-site/releases/latest" 
-     onclick="if(window.LA) LA.track('download_win')" 
-     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">
-    Windows 版下载 (获取中...)
-  </a>
-  
-  <a id="btn-dl-mac-arm" href="https://github.com/zhangjh/suyan-site/releases/latest" 
-     onclick="if(window.LA) LA.track('download_mac_arm')" 
-     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">
-    MacOS 版下载 - Apple Silicon (获取中...)
-  </a>
-  
-  <a id="btn-dl-mac-intel" href="https://github.com/zhangjh/suyan-site/releases/latest" 
-     onclick="if(window.LA) LA.track('download_mac_intel')" 
-     style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">
-    MacOS 版下载 - Intel (获取中...)
-  </a>
+<div style="display: flex; flex-direction: column; gap: 16px; margin: 32px 0; max-width: 480px;">
+  <a id="btn-dl-win" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_win')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">Windows 版下载 (获取中...)</a>
+  <a id="btn-dl-mac-arm" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_mac_arm')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">MacOS 版下载 - Apple Silicon (获取中...)</a>
+  <a id="btn-dl-mac-intel" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_mac_intel')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">MacOS 版下载 - Intel (获取中...)</a>
 </div>
 
 <script>
