@@ -52,9 +52,20 @@ if (typeof window !== 'undefined') {
 
 ---
 
+## 💾 网盘下载
+
+下载太慢？试试网盘，保存后随时下载：
+
+<div style="display: flex; flex-direction: column; gap: 12px; margin: 24px 0; max-width: 480px;">
+  <a href="https://pan.baidu.com/s/17edkwWljHl0OEbwT-sI7vA?pwd=7jw9" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_baidu')" style="display: flex; align-items: center; justify-content: center; background-color: #06a7ff; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">百度网盘下载</a>
+  <a href="https://pan.quark.cn/s/e3396f6a7ac7" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_quark')" style="display: flex; align-items: center; justify-content: center; background-color: #5d54e8; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">夸克网盘下载</a>
+</div>
+
+---
+
 ## 🌐 官方下载 (GitHub)
 
-如加速下载不可用或需下载历史版本，请访问 GitHub 官方仓库：
+如需下载历史版本，请访问 GitHub 官方仓库：
 
 - <a href="https://github.com/zhangjh/suyan-site/releases/latest" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_github')">前往 GitHub Releases 页面</a>
 
