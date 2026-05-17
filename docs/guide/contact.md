@@ -14,7 +14,7 @@
 
 如果您有其他私密问题或建议，可以通过邮件联系。
 
-- **Email**: [njhxzhangjihong@126.com](mailto:njhxzhangjihong@126.com)
+- **Email**: [support@zhangjh.cn](mailto:support@zhangjh.cn)
 
 ### 💻 GitHub 主页
 
