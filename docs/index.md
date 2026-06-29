@@ -222,13 +222,14 @@ features:
     </div>
     <div style="color: var(--vp-c-brand); font-size: 1.2em; flex-shrink: 0;">→</div>
   </a>
-  <div style="display: flex; align-items: center; gap: 16px; padding: 20px 24px; border: 1px solid var(--vp-c-border); border-radius: 12px; background: var(--vp-c-bg-soft); opacity: 0.7;">
-    <div style="font-size: 2.5em; flex-shrink: 0;">🔮</div>
+  <a href="https://verse-site.zhangjh.cn" target="_blank" rel="noreferrer" style="display: flex; align-items: center; gap: 16px; padding: 20px 24px; border: 1px solid var(--vp-c-border); border-radius: 12px; text-decoration: none; transition: all 0.2s ease; background: var(--vp-c-bg-soft);">
+    <div style="font-size: 2.5em; flex-shrink: 0;"><img src="/verse_logo.png" alt="素章" style="width: 48px; height: 48px; border-radius: 8px;"></div>
     <div style="flex: 1; min-width: 0;">
-      <div style="font-weight: 600; color: var(--vp-c-text-1); font-size: 1.05em;">更多产品</div>
-      <div style="color: var(--vp-c-text-3); font-size: 0.9em; margin-top: 4px;">敬请期待...</div>
+      <div style="font-weight: 600; color: var(--vp-c-brand); font-size: 1.05em;">素章 Verse</div>
+      <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-top: 4px;">随时记录，随手成文</div>
     </div>
-  </div>
+    <div style="color: var(--vp-c-brand); font-size: 1.2em; flex-shrink: 0;">→</div>
+  </a>
 </div>
 
 </div>
