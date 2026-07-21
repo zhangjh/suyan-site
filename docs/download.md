@@ -1,6 +1,6 @@
 # 📥 下载素言 (SuYan)
 
-请根据您的系统架构选择下载。目前素言完全免费开放，推荐使用**直链极速下载**。
+请根据您的系统架构选择下载。目前素言支持 **Windows、macOS、Ubuntu** 三大平台，完全免费开放，推荐使用**直链极速下载**。
 
 ## ⬇️ 极速下载 (推荐🚀)
 
@@ -10,6 +10,7 @@
   <a id="btn-dl-win" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_win')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">Windows 版下载 (获取中...)</a>
   <a id="btn-dl-mac-arm" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_mac_arm')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">MacOS 版下载 - Apple Silicon (获取中...)</a>
   <a id="btn-dl-mac-intel" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_mac_intel')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">MacOS 版下载 - Intel (获取中...)</a>
+  <a id="btn-dl-ubuntu" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_ubuntu')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">Ubuntu 版下载 (.deb) (获取中...)</a>
 </div>
 
 <script>
@@ -22,14 +23,16 @@ if (typeof window !== 'undefined') {
         const winBtn = document.getElementById('btn-dl-win');
         const macArmBtn = document.getElementById('btn-dl-mac-arm');
         const macIntelBtn = document.getElementById('btn-dl-mac-intel');
+        const ubuntuBtn = document.getElementById('btn-dl-ubuntu');
         
-        let winUrl = '', macArmUrl = '', macIntelUrl = '';
+        let winUrl = '', macArmUrl = '', macIntelUrl = '', ubuntuUrl = '';
         
         data.assets.forEach(asset => {
           const name = asset.name.toLowerCase();
           if (name.includes('windows') && name.endsWith('.exe')) winUrl = mirror + asset.browser_download_url;
           if (name.includes('macos') && name.includes('arm64') && name.endsWith('.pkg')) macArmUrl = mirror + asset.browser_download_url;
           if (name.includes('macos') && name.includes('x86_64') && name.endsWith('.pkg')) macIntelUrl = mirror + asset.browser_download_url;
+          if ((name.includes('ubuntu') || name.includes('linux')) && name.endsWith('.deb')) ubuntuUrl = mirror + asset.browser_download_url;
         });
         
         if (winBtn && winUrl) {
@@ -43,6 +46,10 @@ if (typeof window !== 'undefined') {
         if (macIntelBtn && macIntelUrl) {
           macIntelBtn.href = macIntelUrl;
           macIntelBtn.innerText = 'MacOS 版下载 - Intel (' + data.tag_name + ')';
+        }
+        if (ubuntuBtn && ubuntuUrl) {
+          ubuntuBtn.href = ubuntuUrl;
+          ubuntuBtn.innerText = 'Ubuntu 版下载 (.deb) (' + data.tag_name + ')';
         }
       }
     })
@@ -93,5 +100,6 @@ if (typeof window !== 'undefined') {
 
 - **Windows**: 下载 `.exe` 文件后双击运行，按提示安装即可。如遇 SmartScreen 拦截，请点击“更多信息” -> “仍要运行”。
 - **MacOS**: 根据芯片类型选择对应版本（Apple Silicon 或 Intel），下载 `.pkg` 文件后双击安装。安装后请在“系统设置 -> 键盘 -> 输入法”中添加素言。
+- **Ubuntu**: 下载 `.deb` 文件后，使用 `sudo dpkg -i SuYan-x.x.x-ubuntu.deb` 安装。安装后需在 Fcitx5 配置中启用素言。详见 [安装指南](/guide/install)。
 
 如有安装问题，请参考 [安装指南](/guide/install)。
