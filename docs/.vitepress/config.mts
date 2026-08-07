@@ -28,6 +28,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '帮助文档', link: '/guide/install' },
+      { text: '皮肤社区', link: '/community' },
       { text: '发布日志', link: 'https://github.com/zhangjh/suyan-site/releases' }
     ],
 
