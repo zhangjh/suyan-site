@@ -3,13 +3,87 @@ title: 皮肤社区
 ---
 
 <script setup>
-import { ref } from 'vue'
-import { data } from './community.data.mts'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+
+// 后端公开列表接口；审核通过的皮肤在这里实时可见，无需重新部署站点
+const API_BASE = 'https://api-verse.zhangjh.cn'
+const PAGE_SIZE = 24
+const TIMEOUT_MS = 15000
 
 const layoutLabels = { horizontal: '横排', vertical: '竖排' }
 
+const skins = ref([])
+const loading = ref(true)
+const loadingMore = ref(false)
+const errorMsg = ref('')
+const page = ref(1)
+const total = ref(0)
+const hasMore = ref(true)
 const copiedCode = ref('')
+const sentinelEl = ref(null)
 let resetTimer = null
+let observer = null
+
+async function fetchPage(p) {
+  const url = `${API_BASE}/api/suyan/community/skins?page=${p}&limit=${PAGE_SIZE}`
+  const res = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  return res.json()
+}
+
+async function loadFirst() {
+  loading.value = true
+  errorMsg.value = ''
+  try {
+    page.value = 1
+    const data = await fetchPage(1)
+    const list = Array.isArray(data?.skins) ? data.skins : []
+    skins.value = list
+    total.value = Number(data?.total ?? list.length)
+    hasMore.value = skins.value.length < total.value
+  } catch (err) {
+    errorMsg.value = '皮肤列表加载失败，请稍后刷新重试'
+    skins.value = []
+    total.value = 0
+    hasMore.value = false
+  } finally {
+    loading.value = false
+  }
+}
+
+async function loadMore() {
+  // 首屏还在加载、或正在翻页、或没有更多时直接跳过，避免 IntersectionObserver 反复触发
+  if (loading.value || loadingMore.value || !hasMore.value) return
+  loadingMore.value = true
+  try {
+    const next = page.value + 1
+    const data = await fetchPage(next)
+    const list = Array.isArray(data?.skins) ? data.skins : []
+    skins.value.push(...list)
+    page.value = next
+    hasMore.value = skins.value.length < total.value
+  } catch (err) {
+    // 翻页失败不打断已展示内容，用户再次滚动会重试
+  } finally {
+    loadingMore.value = false
+  }
+}
+
+function bindObserver() {
+  if (observer) return
+  observer = new IntersectionObserver((entries) => {
+    if (entries[0]?.isIntersecting) loadMore()
+  }, { rootMargin: '240px' })
+  if (sentinelEl.value) observer.observe(sentinelEl.value)
+}
+
+onMounted(() => {
+  loadFirst().then(bindObserver)
+})
+
+onBeforeUnmount(() => {
+  if (observer) { observer.disconnect(); observer = null }
+})
 
 async function writeClipboard(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -172,10 +246,98 @@ async function copyShareCode(code) {
   font-size: 0.9em;
   color: var(--vp-c-text-3);
 }
+.community-page .skin-status {
+  margin: 24px 0;
+  text-align: center;
+  color: var(--vp-c-text-2);
+}
+.community-page .skin-status .retry {
+  margin-left: 8px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--vp-c-brand);
+  background: transparent;
+  color: var(--vp-c-brand);
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+}
+.community-page .skin-status .retry:hover {
+  background: var(--vp-c-brand);
+  color: #fff;
+}
+.community-page .skin-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.community-page .skin-skeleton {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.community-page .skin-skeleton .ph-img {
+  height: 160px;
+  border-radius: 8px;
+  background: var(--vp-c-bg);
+  opacity: 0.6;
+  animation: skin-pulse 1.4s ease-in-out infinite;
+}
+.community-page .skin-skeleton .ph-line {
+  height: 14px;
+  margin-top: 12px;
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  opacity: 0.6;
+  animation: skin-pulse 1.4s ease-in-out infinite;
+}
+.community-page .skin-skeleton .ph-line.short { width: 50%; }
+.community-page .skin-skeleton .ph-code {
+  height: 32px;
+  margin-top: 12px;
+  border-radius: 8px;
+  background: var(--vp-c-bg);
+  opacity: 0.6;
+  animation: skin-pulse 1.4s ease-in-out infinite;
+}
+@keyframes skin-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+.community-page .skin-sentinel {
+  height: 1px;
+}
+.community-page .skin-loadmore {
+  text-align: center;
+  color: var(--vp-c-text-3);
+  font-size: 0.9em;
+  padding: 12px 0 24px;
+}
 </style>
 
-<div v-if="data.skins.length" class="skin-grid">
-  <div v-for="skin in data.skins" :key="skin.shareCode" class="skin-card">
+<!-- 首屏加载中：骨架屏 -->
+<div v-if="loading" class="skin-skeleton-grid">
+  <div v-for="n in 8" :key="n" class="skin-skeleton">
+    <div class="ph-img"></div>
+    <div class="ph-line"></div>
+    <div class="ph-line short"></div>
+    <div class="ph-code"></div>
+  </div>
+</div>
+
+<!-- 加载失败：提示 + 重试 -->
+<div v-else-if="errorMsg" class="skin-status">
+  <span>{{ errorMsg }}</span>
+  <button type="button" class="retry" @click="loadFirst">重试</button>
+</div>
+
+<!-- 有皮肤：卡片网格 -->
+<div v-else-if="skins.length" class="skin-grid">
+  <div v-for="skin in skins" :key="skin.shareCode" class="skin-card">
     <div class="skin-img-wrap">
       <img :src="skin.previewUrl" :alt="skin.skinName + ' 皮肤预览'" loading="lazy">
     </div>
@@ -197,11 +359,18 @@ async function copyShareCode(code) {
     </div>
   </div>
 </div>
+
+<!-- 空：还没有上架皮肤 -->
 <div v-else class="skin-empty">
   <strong>还没有已上架的共享皮肤</strong>
   <p>共享皮肤需要审核通过后才会出现在这里，稍后再来看看。</p>
   <p>也欢迎你在客户端的「皮肤设置 → 分享皮肤」分享自己的作品。</p>
 </div>
+
+<!-- 滚动加载哨兵：进入视口即拉取下一页 -->
+<div ref="sentinelEl" class="skin-sentinel"></div>
+<div v-if="loadingMore" class="skin-loadmore">加载更多中…</div>
+<div v-else-if="skins.length && !hasMore" class="skin-loadmore">已经到底啦，共 {{ total }} 个皮肤</div>
 
 </div>
 
