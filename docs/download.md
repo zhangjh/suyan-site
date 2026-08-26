@@ -1,16 +1,14 @@
 # 📥 下载素言 (SuYan)
 
-请根据您的系统架构选择下载。目前素言支持 **Windows、macOS、Ubuntu** 三大平台，完全免费开放，推荐使用**直链极速下载**。
+请根据您的系统架构选择下载。目前素言支持 **Windows、macOS（Intel & ARM）、Ubuntu** 三大平台，完全免费开放。
 
-## ⬇️ 极速下载 (推荐🚀)
+## 💾 网盘下载
 
-基于 GitHub 加速镜像，点击即下，无需登录。
+目前支持百度、夸克网盘，进入后选择最新版本目录，保存后随时下载：
 
-<div style="display: flex; flex-direction: column; gap: 16px; margin: 32px 0; max-width: 480px;">
-  <a id="btn-dl-win" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_win')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">Windows 版下载 (获取中...)</a>
-  <a id="btn-dl-mac-arm" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_mac_arm')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">MacOS 版下载 - Apple Silicon (获取中...)</a>
-  <a id="btn-dl-mac-intel" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_mac_intel')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">MacOS 版下载 - Intel (获取中...)</a>
-  <a id="btn-dl-ubuntu" href="https://github.com/zhangjh/suyan-site/releases/latest" onclick="if(window.LA) LA.track('download_ubuntu')" style="display: flex; align-items: center; justify-content: center; background-color: var(--vp-c-brand); color: white; padding: 16px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 56px; box-sizing: border-box; width: 100%;">Ubuntu 版下载 (.deb) (获取中...)</a>
+<div style="display: flex; flex-direction: column; gap: 12px; margin: 24px 0; max-width: 480px;">
+  <a id="btn-dl-baidu" href="https://pan.baidu.com/s/17edkwWljHl0OEbwT-sI7vA?pwd=7jw9" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_baidu')" style="display: flex; align-items: center; justify-content: center; background-color: #06a7ff; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">百度网盘下载 (获取中...)</a>
+  <a id="btn-dl-quark" href="https://pan.quark.cn/s/e3396f6a7ac7" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_quark')" style="display: flex; align-items: center; justify-content: center; background-color: #5d54e8; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">夸克网盘下载 (获取中...)</a>
 </div>
 
 <script>
@@ -18,67 +16,17 @@ if (typeof window !== 'undefined') {
   fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest')
     .then(res => res.json())
     .then(data => {
-      if (data.assets && data.assets.length > 0) {
-        const mirror = 'https://gh-proxy.org/';
-        const winBtn = document.getElementById('btn-dl-win');
-        const macArmBtn = document.getElementById('btn-dl-mac-arm');
-        const macIntelBtn = document.getElementById('btn-dl-mac-intel');
-        const ubuntuBtn = document.getElementById('btn-dl-ubuntu');
-        
-        let winUrl = '', macArmUrl = '', macIntelUrl = '', ubuntuUrl = '';
-        
-        data.assets.forEach(asset => {
-          const name = asset.name.toLowerCase();
-          if (name.includes('windows') && name.endsWith('.exe')) winUrl = mirror + asset.browser_download_url;
-          if (name.includes('macos') && name.includes('arm64') && name.endsWith('.pkg')) macArmUrl = mirror + asset.browser_download_url;
-          if (name.includes('macos') && name.includes('x86_64') && name.endsWith('.pkg')) macIntelUrl = mirror + asset.browser_download_url;
-          if ((name.includes('ubuntu') || name.includes('linux')) && name.endsWith('.deb')) ubuntuUrl = mirror + asset.browser_download_url;
-        });
-        
-        if (winBtn && winUrl) {
-          winBtn.href = winUrl;
-          winBtn.innerText = 'Windows 版下载 (' + data.tag_name + ')';
-        }
-        if (macArmBtn && macArmUrl) {
-          macArmBtn.href = macArmUrl;
-          macArmBtn.innerText = 'MacOS 版下载 - Apple Silicon (' + data.tag_name + ')';
-        }
-        if (macIntelBtn && macIntelUrl) {
-          macIntelBtn.href = macIntelUrl;
-          macIntelBtn.innerText = 'MacOS 版下载 - Intel (' + data.tag_name + ')';
-        }
-        if (ubuntuBtn && ubuntuUrl) {
-          ubuntuBtn.href = ubuntuUrl;
-          ubuntuBtn.innerText = 'Ubuntu 版下载 (.deb) (' + data.tag_name + ')';
-        }
+      if (data.tag_name) {
+        const baiduBtn = document.getElementById('btn-dl-baidu');
+        const quarkBtn = document.getElementById('btn-dl-quark');
+
+        if (baiduBtn) baiduBtn.innerText = '百度网盘下载 (' + data.tag_name + ')';
+        if (quarkBtn) quarkBtn.innerText = '夸克网盘下载 (' + data.tag_name + ')';
       }
     })
     .catch(err => console.error('Failed to fetch latest release:', err));
 }
 </script>
-
----
-
-## 💾 网盘下载
-
-下载太慢？试试网盘，保存后随时下载：
-
-<div style="display: flex; flex-direction: column; gap: 12px; margin: 24px 0; max-width: 480px;">
-  <a href="https://pan.baidu.com/s/17edkwWljHl0OEbwT-sI7vA?pwd=7jw9" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_baidu')" style="display: flex; align-items: center; justify-content: center; background-color: #06a7ff; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">百度网盘下载</a>
-  <a href="https://pan.quark.cn/s/e3396f6a7ac7" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_quark')" style="display: flex; align-items: center; justify-content: center; background-color: #5d54e8; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">夸克网盘下载</a>
-</div>
-
----
-
-## 🌐 官方下载 (GitHub)
-
-如需下载历史版本，请访问 GitHub 官方仓库：
-
-- <a href="https://github.com/zhangjh/suyan-site/releases/latest" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_github')">前往 GitHub Releases 页面</a>
-
-> **提示**：GitHub Release 页面可能受网络环境影响，若无法访问，请使用科学上网或多次刷新。下载时请认准带有版本号的 `.exe` (Win) 或 `.pkg` (Mac) 文件。
-
----
 
 ## ☕ 随缘赞助
 
