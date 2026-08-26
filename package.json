@@ -9,6 +9,7 @@
     "preview": "vitepress preview docs"
   },
   "devDependencies": {
+    "markdown-it": "14.1.0",
     "vitepress": "^1.0.0-rc.31",
     "vue": "^3.4.0"
   }

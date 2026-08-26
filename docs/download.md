@@ -1,3 +1,51 @@
+<script setup>
+import MarkdownIt from 'markdown-it'
+import { onMounted, ref } from 'vue'
+
+const markdown = new MarkdownIt({ html: false, linkify: true })
+const latestVersion = ref('获取中...')
+const releaseTitle = ref('')
+const releaseNotesHtml = ref('')
+
+function extractUpdateNotes(body) {
+  const lines = body.split(/\r?\n/)
+  const startIndex = lines.findIndex(line => /^#{1,6}\s+更新内容\s*$/.test(line))
+  if (startIndex === -1) return ''
+
+  const headingLevel = lines[startIndex].match(/^#+/)[0].length
+  const endIndex = lines.findIndex((line, index) => {
+    if (index <= startIndex) return false
+    const heading = line.match(/^(#{1,6})\s+/)
+    return heading && heading[1].length <= headingLevel
+  })
+
+  const sectionLines = lines.slice(startIndex + 1, endIndex === -1 ? undefined : endIndex)
+  while (sectionLines.length) {
+    const lastLine = sectionLines[sectionLines.length - 1].trim()
+    if (lastLine && !/^(?:-{3,}|\*{3,}|_{3,})$/.test(lastLine)) break
+    sectionLines.pop()
+  }
+
+  return sectionLines.join('\n').trim()
+}
+
+onMounted(() => {
+  fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest')
+    .then(res => res.json())
+    .then(data => {
+      if (data.tag_name) latestVersion.value = data.tag_name
+      if (data.body) {
+        const updateNotes = extractUpdateNotes(data.body)
+        if (updateNotes) {
+          releaseTitle.value = data.name || data.tag_name
+          releaseNotesHtml.value = markdown.render(updateNotes)
+        }
+      }
+    })
+    .catch(err => console.error('Failed to fetch latest release:', err))
+})
+</script>
+
 # 📥 下载素言 (SuYan)
 
 请根据您的系统架构选择下载。目前素言支持 **Windows、macOS（Intel & ARM）、Ubuntu** 三大平台，完全免费开放。
@@ -7,26 +55,14 @@
 目前支持百度、夸克网盘，进入后选择最新版本目录，保存后随时下载：
 
 <div style="display: flex; flex-direction: column; gap: 12px; margin: 24px 0; max-width: 480px;">
-  <a id="btn-dl-baidu" href="https://pan.baidu.com/s/17edkwWljHl0OEbwT-sI7vA?pwd=7jw9" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_baidu')" style="display: flex; align-items: center; justify-content: center; background-color: #06a7ff; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">百度网盘下载 (获取中...)</a>
-  <a id="btn-dl-quark" href="https://pan.quark.cn/s/e3396f6a7ac7" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_quark')" style="display: flex; align-items: center; justify-content: center; background-color: #5d54e8; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">夸克网盘下载 (获取中...)</a>
+  <a href="https://pan.baidu.com/s/17edkwWljHl0OEbwT-sI7vA?pwd=7jw9" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_baidu')" style="display: flex; align-items: center; justify-content: center; background-color: #06a7ff; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">百度网盘下载 ({{ latestVersion }})</a>
+  <a href="https://pan.quark.cn/s/e3396f6a7ac7" target="_blank" rel="noreferrer" onclick="if(window.LA) LA.track('download_quark')" style="display: flex; align-items: center; justify-content: center; background-color: #5d54e8; color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 48px; box-sizing: border-box; width: 100%;">夸克网盘下载 ({{ latestVersion }})</a>
 </div>
 
-<script>
-if (typeof window !== 'undefined') {
-  fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest')
-    .then(res => res.json())
-    .then(data => {
-      if (data.tag_name) {
-        const baiduBtn = document.getElementById('btn-dl-baidu');
-        const quarkBtn = document.getElementById('btn-dl-quark');
-
-        if (baiduBtn) baiduBtn.innerText = '百度网盘下载 (' + data.tag_name + ')';
-        if (quarkBtn) quarkBtn.innerText = '夸克网盘下载 (' + data.tag_name + ')';
-      }
-    })
-    .catch(err => console.error('Failed to fetch latest release:', err));
-}
-</script>
+<div v-if="releaseNotesHtml" style="margin: 32px 0; padding: 20px 24px; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-border); border-radius: 12px;">
+  <h3 style="margin: 0 0 16px;">更新内容 ({{ releaseTitle }})</h3>
+  <div v-html="releaseNotesHtml"></div>
+</div>
 
 ## ☕ 随缘赞助
 
