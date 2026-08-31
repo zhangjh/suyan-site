@@ -329,4 +329,8 @@ features:
   </a>
 </div>
 
+<div style="text-align: center; margin: 0.25rem 0 2rem;">
+  <a href="https://zhangjh.cn#works" target="_blank" rel="noreferrer" style="color: var(--vp-c-brand); text-decoration: none; font-size: 0.95em; border-bottom: 1px dashed var(--vp-c-brand); padding-bottom: 2px;">更多作品 →</a>
+</div>
+
 </div>

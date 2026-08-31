@@ -66,7 +66,7 @@ export default defineConfig({
 
     footer: {
       message: '极简于形，全能于心。',
-      copyright: 'Copyright © 2026-present zhangjh'
+      copyright: 'Copyright © 2026-present<br>Built by ZhangJH · <a href="https://zhangjh.cn" target="_blank" rel="noreferrer">访问个人主页 →</a>'
     },
     
     // 隐藏编辑链接，因为是私有库
