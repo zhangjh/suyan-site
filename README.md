@@ -5,7 +5,7 @@
 ## 功能板块
 
 - **首页** — 产品介绍、核心特性展示、功能演示视频
-- **下载** — Windows / macOS / Ubuntu 多平台安装包下载（GitHub Releases + 网盘）
+- **下载** — Windows / macOS / Ubuntu 多平台安装包下载
 - **帮助文档** — 安装指南、常见问题、特殊输入模式、自定义词库、致谢与联系
 - **皮肤社区** — 用户共享的自定义候选框皮肤，复制分享码即可导入使用
 - **企业定制** — 私有化部署、内网大模型对接、行业专属词库
@@ -60,10 +60,5 @@ suyan-site/
 ## 相关链接
 
 - [素言官网](https://suyan.zhangjh.cn)
-- [素言输入法主项目](https://github.com/zhangjh/SuYan)
 - [RIME 中州韵引擎](https://rime.im/)
 - [雾凇拼音词库](https://github.com/iDvel/rime-ice)
-
-## 许可证
-
-与[素言输入法主项目](https://github.com/zhangjh/SuYan)一致，基于 RIME 开源引擎开发，遵循相应的开源许可证。词库数据来自 [rime-ice](https://github.com/iDvel/rime-ice)。
