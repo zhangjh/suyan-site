@@ -109,7 +109,7 @@ function runTyping() {
     <!-- ============ Hero ============ -->
     <section class="hero container">
       <span class="hero-chip reveal"
-        ><span class="dot"></span>v5.0 · 端到端加密云同步已上线</span
+        ><span class="dot"></span>v5.2.1 · 新增极点五笔输入方案上线</span
       >
       <h1 class="reveal">回归输入的<span class="accent">本质</span></h1>
       <p class="hero-sub reveal">
@@ -587,6 +587,7 @@ function runTyping() {
 .btn:active { transform: translateY(1px); }
 .btn-primary { background: var(--primary); color: var(--on-primary); box-shadow: 0 1px 2px color-mix(in srgb, var(--fg) 18%, transparent); }
 .btn-primary:hover { background: var(--primary-hover); }
+.hero-ctas .btn-primary { color: #fff; }
 .btn-ghost { background: var(--surface); color: var(--fg); border-color: var(--border-strong); }
 .btn-ghost:hover { border-color: color-mix(in srgb, var(--fg) 34%, var(--bg)); transform: translateY(-1px); }
 .btn-lg { font-size: 15.5px; padding: 12px 24px; }
