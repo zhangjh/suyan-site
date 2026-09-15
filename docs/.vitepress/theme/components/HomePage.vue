@@ -1,5 +1,32 @@
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+
+/* ---------- 视频点击内嵌播放 ---------- */
+const playingVideo = ref(null)
+const videos = [
+  { bvid: 'BV1zDFozyETF', cover: '/demo-cover.jpg', label: '普通输入模式', desc: '打字、候选、皮肤切换全流程', coverAlt: '普通输入模式演示视频封面', w: 1920, h: 1080 },
+  { bvid: 'BV1vBcEzAE8z', cover: '/image-4.png', label: '语音输入模式', desc: '快捷键启动，即说即输', coverAlt: '语音输入模式演示视频封面', w: 534, h: 323 },
+]
+function playVideo(bvid) {
+  playingVideo.value = bvid
+}
+
+/* ---------- 图片点击放大灯箱 ---------- */
+const lightboxSrc = ref(null)
+const lightboxAlt = ref('')
+function openLightbox(src, alt) {
+  lightboxSrc.value = src
+  lightboxAlt.value = alt
+}
+function closeLightbox() {
+  lightboxSrc.value = null
+  lightboxAlt.value = ''
+}
+function handleKeydown(e) {
+  if (e.key === 'Escape' && lightboxSrc.value) closeLightbox()
+}
+onMounted(() => window.addEventListener('keydown', handleKeydown))
+onBeforeUnmount(() => window.removeEventListener('keydown', handleKeydown))
 
 /* ---------- 滚动渐显：默认内容可见，JavaScript 仅增强动画 ---------- */
 let io = null
@@ -336,52 +363,55 @@ function runTyping() {
         <p class="section-desc">真实使用场景录制，不过版本有点旧了。</p>
       </div>
       <div class="demo-videos">
-        <a class="video-card reveal" href="https://www.bilibili.com/video/BV1zDFozyETF" target="_blank" rel="noreferrer">
+        <div class="video-card reveal" v-for="v in videos" :key="v.bvid" @click="playingVideo !== v.bvid && playVideo(v.bvid)">
           <div class="video-thumb">
-            <img src="/demo-cover.jpg" alt="普通输入模式演示视频封面" width="1920" height="1080" loading="lazy" decoding="async" />
-            <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></span>
-            <span class="video-label">普通输入模式</span>
+            <template v-if="playingVideo === v.bvid">
+              <iframe
+                class="video-iframe"
+                :src="'https://player.bilibili.com/player.html?bvid=' + v.bvid + '&page=1&high_quality=1&autoplay=1&as_wide=1'"
+                scrolling="no"
+                border="0"
+                frameborder="no"
+                framespacing="0"
+                allowfullscreen="true"
+                title="视频播放"
+              ></iframe>
+            </template>
+            <template v-else>
+              <img :src="v.cover" :alt="v.coverAlt" :width="v.w" :height="v.h" loading="lazy" decoding="async" />
+              <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></span>
+              <span class="video-label">{{ v.label }}</span>
+            </template>
           </div>
           <div class="video-meta">
-            <span>打字、候选、皮肤切换全流程</span>
-            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7m0 0H9m8 0v8"/></svg>哔哩哔哩</span>
+            <span>{{ v.desc }}</span>
+            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>点击播放</span>
           </div>
-        </a>
-        <a class="video-card reveal" href="https://www.bilibili.com/video/BV1vBcEzAE8z" target="_blank" rel="noreferrer">
-          <div class="video-thumb">
-            <img src="/image-4.png" alt="语音输入模式演示视频封面" width="534" height="323" loading="lazy" decoding="async" />
-            <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></span>
-            <span class="video-label">语音输入模式</span>
-          </div>
-          <div class="video-meta">
-            <span>快捷键启动，即说即输</span>
-            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7m0 0H9m8 0v8"/></svg>哔哩哔哩</span>
-          </div>
-        </a>
+        </div>
       </div>
       <div class="shot-grid">
         <figure class="shot-card reveal">
-          <figure><img src="/image.png" alt="系统默认皮肤候选词框" width="820" height="284" loading="lazy" decoding="async" /></figure>
+          <figure @click="openLightbox('/image.png', '系统默认皮肤候选词框')" class="shot-img-wrap"><img src="/image.png" alt="系统默认皮肤候选词框" width="820" height="284" loading="lazy" decoding="async" /></figure>
           <figcaption>候选词框 · 默认皮肤 <em>horizontal</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-1.png" alt="自定义皮肤候选词框" width="873" height="393" loading="lazy" decoding="async" /></figure>
+          <figure @click="openLightbox('/image-1.png', '自定义皮肤候选词框')" class="shot-img-wrap"><img src="/image-1.png" alt="自定义皮肤候选词框" width="873" height="393" loading="lazy" decoding="async" /></figure>
           <figcaption>候选词框 · 自定义皮肤 <em>custom</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/ai-translate.webp" alt="AI 划词翻译浮窗" width="500" height="535" loading="lazy" decoding="async" /></figure>
+          <figure @click="openLightbox('/ai-translate.webp', 'AI 划词翻译浮窗')" class="shot-img-wrap"><img src="/ai-translate.webp" alt="AI 划词翻译浮窗" width="500" height="535" loading="lazy" decoding="async" /></figure>
           <figcaption>AI 划词翻译浮窗 <em>translate</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-3.png" alt="语音识别候选" width="534" height="398" loading="lazy" decoding="async" /></figure>
+          <figure @click="openLightbox('/image-3.png', '语音识别候选')" class="shot-img-wrap"><img src="/image-3.png" alt="语音识别候选" width="534" height="398" loading="lazy" decoding="async" /></figure>
           <figcaption>语音识别候选 <em>voice</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-2.png" alt="剪贴板历史记录" width="500" height="535" loading="lazy" decoding="async" /></figure>
+          <figure @click="openLightbox('/image-2.png', '剪贴板历史记录')" class="shot-img-wrap"><img src="/image-2.png" alt="剪贴板历史记录" width="500" height="535" loading="lazy" decoding="async" /></figure>
           <figcaption>剪贴板历史记录 <em>clipboard</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-5.png" alt="内置截图工具" width="1097" height="675" loading="lazy" decoding="async" /></figure>
+          <figure @click="openLightbox('/image-5.png', '内置截图工具')" class="shot-img-wrap"><img src="/image-5.png" alt="内置截图工具" width="1097" height="675" loading="lazy" decoding="async" /></figure>
           <figcaption>内置截图工具 <em>capture</em></figcaption>
         </figure>
       </div>
@@ -561,6 +591,16 @@ function runTyping() {
         <a href="https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw" target="_blank" rel="noreferrer">素言输入法：一款纯净、离线、注重隐私的桌面输入法<span class="src">但丁自留地</span></a>
       </div>
     </section>
+
+    <!-- ============ 图片灯箱 ============ -->
+    <Teleport to="body">
+      <div v-if="lightboxSrc" class="sy-lightbox" @click="closeLightbox">
+        <img :src="lightboxSrc" :alt="lightboxAlt" class="sy-lightbox-img" @click.stop />
+        <button class="sy-lightbox-close" @click="closeLightbox" aria-label="关闭">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </Teleport>
   </main>
 </template>
 
@@ -704,11 +744,12 @@ function runTyping() {
 
 /* ===== Demo ===== */
 .demo-videos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.video-card { position: relative; display: block; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--surface); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+.video-card { position: relative; display: block; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--surface); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; cursor: pointer; }
 .video-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
 .video-thumb { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
 .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.video-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(10, 14, 12, 0.55)); }
+.video-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(10, 14, 12, 0.55)); pointer-events: none; }
+.video-iframe { width: 100%; height: 100%; border: 0; display: block; }
 .video-play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 54px; height: 54px; border-radius: 999px; z-index: 2; background: rgba(255, 255, 255, 0.92); color: #1b2b63; display: grid; place-items: center; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28); transition: transform 0.2s ease; }
 .video-card:hover .video-play { transform: translate(-50%, -50%) scale(1.08); }
 .video-play svg { width: 20px; height: 20px; margin-left: 2px; }
@@ -720,6 +761,9 @@ function runTyping() {
 .shot-card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
 .shot-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
 .shot-card > figure { background: var(--surface-2); aspect-ratio: 16 / 10; display: grid; place-items: center; overflow: hidden; margin: 0; }
+.shot-img-wrap { cursor: zoom-in; position: relative; }
+.shot-img-wrap::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--primary) 0%, transparent); transition: background 0.2s ease; pointer-events: none; }
+.shot-img-wrap:hover::after { background: color-mix(in srgb, var(--primary) 8%, transparent); }
 .shot-card img { max-height: 100%; max-width: 92%; object-fit: contain; }
 .shot-card figcaption { padding: 11px 15px; font-size: 12.5px; color: var(--muted); display: flex; align-items: center; justify-content: space-between; }
 .shot-card figcaption em { font-style: normal; font-size: 11px; color: var(--faint); font-family: var(--sy-font-mono); }
@@ -833,5 +877,56 @@ function runTyping() {
   .ent-delivery th, .ent-delivery td { padding: 10px 14px; font-size: 12.5px; }
   .product-card { padding: 16px; gap: 14px; }
   .product-card img { width: 40px; height: 40px; }
+}
+</style>
+
+<style>
+/* ===== 图片灯箱（Teleport 到 body，需非 scoped） ===== */
+.sy-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: sy-lightbox-in 0.2s ease-out;
+  cursor: zoom-out;
+}
+@keyframes sy-lightbox-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.sy-lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  object-fit: contain;
+}
+.sy-lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.sy-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.sy-lightbox-close svg {
+  width: 20px;
+  height: 20px;
 }
 </style>
