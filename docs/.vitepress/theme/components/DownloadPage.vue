@@ -56,7 +56,6 @@ onMounted(() => {
       </p>
       <div class="version-row">
         <span class="version-badge"><span class="dot"></span>最新版本 {{ latestVersion }}</span>
-        <span class="version-date">版本号与更新内容实时拉取自 GitHub Releases</span>
       </div>
     </section>
 
