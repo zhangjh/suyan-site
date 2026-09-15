@@ -214,3 +214,45 @@
   color: var(--faint);
   font-size: 12.5px;
 }
+
+/* ============================================================
+   移动端全局留白
+   layout: page 的自定义页面（首页/下载/社区）由 VPPage 包裹，
+   在此为其统一提供水平留白，确保任何缩放的页面都不贴屏幕边缘。
+   ============================================================ */
+@media (max-width: 767px) {
+  /* 全页水平保险丝：无论内部容器是否生效，页面根都留出边距 */
+  .VPPage {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* 组件内 .container 自带的 24px/20px 水平内边距改为交给 .VPPage 统一控制，
+     避免重复留白导致内容过窄 */
+  .VPPage .container,
+  .VPPage .section,
+  .VPPage .page-head {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* 企业深色区块在移动端统一向外收缩 0，由 .VPPage 留白接管 */
+  .enterprise {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* 自定义页根垂直节奏也顺手统一，保证各区块之间有足够呼吸 */
+  .sy-home .section,
+  .sy-download .section,
+  .sy-community .section {
+    padding-top: clamp(48px, 10vw, 72px) !important;
+  }
+
+  /* 页头在窄屏下收敛，避免首屏被大留白占据 */
+  .sy-home .hero,
+  .sy-download .page-head,
+  .sy-community .page-head {
+    padding-top: clamp(24px, 6vw, 40px) !important;
+  }
+}

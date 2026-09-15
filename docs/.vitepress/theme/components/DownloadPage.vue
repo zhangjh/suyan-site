@@ -331,5 +331,11 @@ onMounted(() => {
   .release-head { padding: 16px 18px; }
   .release-body { padding: 18px; }
   .release-head .src { margin-left: 0; }
+  .page-head h1 { font-size: clamp(28px, 8vw, 36px); }
+  .page-head .sub { font-size: 15px; }
+  .dl-card { padding: 20px; }
+  .os-card { padding: 20px 18px; }
+  .sponsor { padding: 28px 20px; }
+  .sponsor-qr .qr-frame img { width: 160px; height: 160px; }
 }
 </style>

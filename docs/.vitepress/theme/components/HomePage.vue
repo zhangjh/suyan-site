@@ -327,7 +327,7 @@ function runTyping() {
       <div class="section-head reveal">
         <p class="eyebrow">Demo · 眼见为实</p>
         <h2 class="section-title">看它如何工作</h2>
-        <p class="section-desc">真实使用场景录制，来自 B 站。</p>
+        <p class="section-desc">真实使用场景录制，不过版本有点旧了。</p>
       </div>
       <div class="demo-videos">
         <a class="video-card reveal" href="https://www.bilibili.com/video/BV1zDFozyETF" target="_blank" rel="noreferrer">
@@ -548,6 +548,9 @@ function runTyping() {
         </a>
       </div>
       <div class="articles reveal">
+        <a href="https://mp.weixin.qq.com/s/N8UdTwUFyCVq_CqfU5NWCA" target="_blank" rel="noreferrer">素言新版本5.2.1发布：五笔爱好者福音<span class="src">但丁自留地</span></a>
+        <a href="https://mp.weixin.qq.com/s/63I3Llu4IT65SIkefTFYUA" target="_blank" rel="noreferrer">素言新增自定义皮肤共享&皮肤社区<span class="src">但丁自留地</span></a>
+        <a href="https://mp.weixin.qq.com/s/nbBbmLFPT0f4nsgvCqSe0w" target="_blank" rel="noreferrer">素言5.0发布：云同步、AI翻译集成，还有Ubuntu<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/p_OWf4GYqzPzYiDehMPAeg" target="_blank" rel="noreferrer">素言 v3.6.0 发布：你提的建议，我都做到了<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw" target="_blank" rel="noreferrer">素言输入法：一款纯净、离线、注重隐私的桌面输入法<span class="src">但丁自留地</span></a>
       </div>
@@ -589,24 +592,24 @@ function runTyping() {
 .btn-lg { font-size: 15.5px; padding: 12px 24px; }
 
 /* ===== Hero ===== */
-.hero { padding: clamp(64px, 8vw, 110px) 0 0; text-align: center; overflow: hidden; }
+.hero { padding: clamp(20px, 3vw, 36px) 0 0; text-align: center; overflow: hidden; }
 .hero-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 550; color: var(--primary); background: var(--primary-soft); border: 1px solid var(--primary-border); border-radius: 999px; padding: 5px 14px; }
 .hero-chip .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--primary); }
-.hero h1 { margin: 26px auto 0; max-width: 720px; font-size: clamp(40px, 6.4vw, 64px); font-weight: 650; line-height: 1.14; letter-spacing: -0.015em; }
+.hero h1 { margin: 20px auto 0; max-width: 720px; font-size: clamp(40px, 6.4vw, 64px); font-weight: 650; line-height: 1.14; letter-spacing: -0.015em; }
 .hero h1 .accent { color: var(--primary); }
-.hero-sub { margin: 20px auto 0; max-width: 560px; font-size: 17px; color: var(--muted); }
-.hero-ctas { margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.hero-sub { margin: 16px auto 0; max-width: 560px; font-size: 17px; color: var(--muted); }
+.hero-ctas { margin-top: 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .hero-ctas .note { width: 100%; margin-top: 14px; font-size: 13px; color: var(--faint); }
-.hero-visual { margin: clamp(44px, 6vw, 72px) auto 0; max-width: 860px; position: relative; }
+.hero-visual { margin: clamp(18px, 2.5vw, 32px) auto 0; max-width: 860px; position: relative; }
 .hero-visual::before { content: ''; position: absolute; inset: -40px -80px -60px; z-index: -1; background: radial-gradient(closest-side, color-mix(in srgb, var(--primary) 7%, transparent), transparent 72%); }
 .editor-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden; text-align: left; }
-.editor-body { padding: 40px 44px 30px; min-height: 128px; }
+.editor-body { padding: 32px 44px 26px; min-height: 128px; }
 .editor-text { font-size: 21px; line-height: 2; color: var(--fg); font-weight: 500; letter-spacing: 0.01em; min-height: 42px; }
 .editor-text .caret { display: inline-block; width: 2px; height: 1.15em; vertical-align: -0.2em; background: var(--primary); margin-left: 2px; animation: caret-blink 1.1s steps(1) infinite; }
 @keyframes caret-blink { 50% { opacity: 0; } }
 .editor-placeholder { color: var(--faint); font-weight: 400; }
-.candidate-bar { display: flex; align-items: stretch; border-top: 1px solid var(--border); background: var(--surface-2); }
-.cand-pinyin { display: flex; align-items: center; gap: 8px; padding: 10px 18px; min-width: 148px; font-family: var(--sy-font-mono); font-size: 14px; color: var(--muted); border-right: 1px solid var(--border); }
+.candidate-bar { display: flex; align-items: stretch; border-top: 1px solid var(--border); background: var(--surface-2); height: 42px; overflow: hidden; }
+.cand-pinyin { display: flex; align-items: center; gap: 8px; padding: 10px 18px; min-width: 148px; font-family: var(--sy-font-mono); font-size: 14px; color: var(--muted); border-right: 1px solid var(--border); white-space: nowrap; flex-shrink: 0; }
 .cand-pinyin .kbd-mini { font-family: var(--sy-font-sans); font-size: 10.5px; font-weight: 600; color: var(--faint); border: 1px solid var(--border-strong); border-radius: 4px; padding: 0 5px; line-height: 1.5; }
 .cand-list { display: flex; align-items: center; flex: 1; padding: 6px 10px; gap: 2px; overflow: hidden; }
 .cand { display: flex; align-items: baseline; gap: 5px; padding: 4px 12px; border-radius: 6px; font-size: 15px; color: var(--muted); white-space: nowrap; }
@@ -614,12 +617,12 @@ function runTyping() {
 .cand.is-first { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
 .cand.is-first .num { color: var(--primary); }
 .cand-more { margin-left: auto; padding: 0 14px; font-size: 12px; color: var(--faint); font-family: var(--sy-font-mono); }
-.hero-hint { margin-top: 18px; display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; font-size: 12.5px; color: var(--faint); }
+.hero-hint { margin-top: 14px; display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; font-size: 12.5px; color: var(--faint); }
 .hero-hint span { display: inline-flex; align-items: center; gap: 7px; }
 .hero-hint kbd { font-family: var(--sy-font-mono); font-size: 11px; border: 1px solid var(--border-strong); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; color: var(--muted); }
 
 /* ===== Trust ===== */
-.trust { padding: clamp(40px, 5vw, 64px) 0 var(--section-gap); }
+.trust { padding: clamp(40px, 5vw, 64px) 0 clamp(40px, 5vw, 64px); }
 .trust-inner { display: flex; justify-content: center; align-items: center; gap: 14px 40px; flex-wrap: wrap; }
 .trust-item { display: inline-flex; align-items: center; gap: 9px; font-size: 13.5px; font-weight: 500; color: var(--muted); }
 .trust-item svg { width: 17px; height: 17px; color: var(--faint); flex: none; }
@@ -745,7 +748,7 @@ function runTyping() {
 .enterprise .eyebrow::before { background: var(--ent-divider); }
 .enterprise .section-title { color: var(--ent-fg-strong); }
 .enterprise .section-desc { color: var(--ent-muted); }
-.enterprise .section-head { max-width: 620px; }
+.enterprise .section-head { max-width: 720px; }
 .ent-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(32px, 5vw, 64px); margin-top: 48px; align-items: start; }
 .ent-points { display: grid; gap: 20px; list-style: none; }
 .ent-points li { display: flex; gap: 14px; }
@@ -790,11 +793,37 @@ function runTyping() {
 }
 @media (max-width: 639px) {
   .feature-grid, .demo-videos, .shot-grid, .product-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 20px; }
   .editor-body { padding: 26px 22px 20px; }
   .cand-pinyin { min-width: 0; padding: 10px 14px; }
   .hero-ctas .btn { width: 100%; }
   .compare th, .compare td { padding: 12px 14px; }
   .enterprise { margin: var(--section-gap) 16px 0; }
   .trust-sep { display: none; }
+  .hero h1 { font-size: clamp(28px, 8vw, 40px); }
+  .hero-sub { font-size: 15px; }
+  .hero-ctas { gap: 10px; }
+  .hero-visual::before { display: none; }
+  .section { padding: clamp(48px, 8vw, 72px) 0 0; }
+  .section-head { margin-bottom: 36px; }
+  .trust { padding: clamp(28px, 5vw, 40px) 0; }
+  .trust-inner { gap: 12px 24px; }
+  .trust-item { font-size: 12.5px; }
+  .sync-device { padding: 12px; }
+  .sync-device ul { gap: 3px; }
+  .sync-device li { font-size: 11px; }
+  .mock-sync { grid-template-columns: 1fr; gap: 12px; }
+  .sync-mid { order: -1; }
+  .deep-points li { font-size: 13.5px; }
+  .ent-points li { gap: 10px; }
+  .enterprise .section-title { font-size: clamp(21px, 6vw, 26px); }
+  .enterprise .section-desc { font-size: 14px; line-height: 1.7; }
+  .ent-points .pt-icon { width: 32px; height: 32px; }
+  .ent-points .pt-icon svg { width: 15px; height: 15px; }
+  .ent-points strong { font-size: 14px; }
+  .ent-points span { font-size: 12.5px; }
+  .ent-delivery th, .ent-delivery td { padding: 10px 14px; font-size: 12.5px; }
+  .product-card { padding: 16px; gap: 14px; }
+  .product-card img { width: 40px; height: 40px; }
 }
 </style>
