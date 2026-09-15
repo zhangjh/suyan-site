@@ -1,11 +1,35 @@
 <script setup>
 import MarkdownIt from 'markdown-it'
-import { onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const markdown = new MarkdownIt({ html: false, linkify: true })
 const latestVersion = ref('获取中...')
 const releaseTitle = ref('')
 const releaseNotesHtml = ref('')
+const releaseLoaded = ref(false)
+
+let io = null
+
+function observeReveals(root) {
+  if (!('IntersectionObserver' in window)) {
+    root.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => el.classList.add('is-visible'))
+    return
+  }
+  if (!io) {
+    io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible')
+            io.unobserve(e.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+    )
+  }
+  root.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => io.observe(el))
+}
 
 function extractUpdateNotes(body) {
   const lines = body.split(/\r?\n/)
@@ -30,9 +54,16 @@ function extractUpdateNotes(body) {
 }
 
 onMounted(() => {
+  /* ---------- 滚动渐显（与首页一致） ---------- */
+  observeReveals(document.querySelector('.sy-download'))
+
   fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest')
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      return res.json()
+    })
     .then((data) => {
+      releaseLoaded.value = true
       if (data.tag_name) latestVersion.value = data.tag_name
       if (data.body) {
         const updateNotes = extractUpdateNotes(data.body)
@@ -42,8 +73,19 @@ onMounted(() => {
         }
       }
     })
-    .catch((err) => console.error('Failed to fetch latest release:', err))
+    .catch((err) => {
+      releaseLoaded.value = true
+      console.error('Failed to fetch latest release:', err)
+    })
 })
+
+watch(releaseNotesHtml, () => {
+  nextTick(() => {
+    const section = document.querySelector('.sy-download [data-component="Release Notes"]')
+    if (section) observeReveals(section)
+  })
+})
+onBeforeUnmount(() => io && io.disconnect())
 </script>
 
 <template>
@@ -75,7 +117,6 @@ onMounted(() => {
               <p>pan.baidu.com</p>
             </div>
           </div>
-          <p class="dl-desc">进入后选择最新版本目录，包含 Windows / macOS（Intel &amp; ARM）/ Ubuntu 全平台安装包。</p>
           <a
             class="btn btn-primary btn-lg"
             href="https://pan.baidu.com/s/17edkwWljHl0OEbwT-sI7vA?pwd=7jw9"
@@ -96,7 +137,6 @@ onMounted(() => {
               <p>pan.quark.cn</p>
             </div>
           </div>
-          <p class="dl-desc">不限速下载渠道，保存到自己的网盘后随时获取最新版本。</p>
           <a
             class="btn btn-primary btn-lg"
             href="https://pan.quark.cn/s/e3396f6a7ac7"
@@ -109,6 +149,43 @@ onMounted(() => {
           </a>
           <div class="dl-meta"><span>无需提取码</span><span>· 全平台安装包</span></div>
         </article>
+      </div>
+    </section>
+
+    <!-- ============ 更新内容 ============ -->
+    <section v-if="releaseLoaded && releaseNotesHtml" class="section container" data-component="Release Notes">
+      <div class="section-head reveal">
+        <p class="eyebrow">Changelog · 更新内容</p>
+        <h2 class="section-title">最新版本带来了什么</h2>
+      </div>
+      <div class="release reveal" data-component="Release Card">
+        <div class="release-head">
+          <h3>更新内容</h3>
+          <span class="tag">{{ releaseTitle }}</span>
+          <span class="src">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9 9 9 0 0 0-9-9Zm0 0c2.5 2.4 4 5.7 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.7-4-9s1.5-6.6 4-9ZM3.5 9h17m-17 6h17"/></svg>
+            数据来源 GitHub Releases
+          </span>
+        </div>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div class="release-body" v-html="releaseNotesHtml"></div>
+      </div>
+    </section>
+
+    <!-- ============ 随缘赞助 ============ -->
+    <section class="section container" data-component="Sponsor">
+      <div class="sponsor reveal" data-component="Sponsor Card">
+        <div>
+          <p class="eyebrow">Sponsor · 随缘赞助</p>
+          <h3>永久免费，无广告，纯本地运行</h3>
+          <p>
+            素言承诺永久免费、无广告、纯本地运行。如果它为您节省了宝贵的时间，或您认同这种「回归纯粹」的产品理念，欢迎请开发者喝杯咖啡——每一分善意都将用于维系官网服务器与下载带宽的成本。
+          </p>
+        </div>
+        <div class="sponsor-qr">
+          <div class="qr-frame"><img src="/sponsor-code.png" alt="微信赞助二维码" width="200" height="200" /></div>
+          <small>「 感谢您的支持与信任 」</small>
+        </div>
       </div>
     </section>
 
@@ -139,7 +216,7 @@ onMounted(() => {
           </ol>
           <div class="callout warn" data-component="Warning Callout">
             <span class="co-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4v.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span>
-            <p><strong>SmartScreen 拦截提示</strong>：素言未购买 Windows 签名证书，安装时可能弹出拦截，请点击「更多信息 → 仍要运行」。</p>
+            <p><strong>SmartScreen 拦截提示</strong>：素言未购买 Windows 商业签名证书，安装时可能弹出拦截，请点击「更多信息 → 仍要运行」。</p>
           </div>
         </article>
 
@@ -160,7 +237,7 @@ onMounted(() => {
           </ol>
           <div class="callout" data-component="Info Callout">
             <span class="co-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M12 11v5"/></svg></span>
-            <p><strong>无法打字？</strong>请确认已在「键盘 → 输入法」中添加素言，并在「隐私与安全性 → 辅助功能」中授予相应权限。</p>
+            <p><strong>无法打字/截图/翻译？</strong>请确认已在「键盘 → 输入法」中添加素言，并在「隐私与安全性 → 辅助功能」中授予相应权限。</p>
           </div>
         </article>
 
@@ -185,43 +262,6 @@ onMounted(() => {
         </article>
       </div>
     </section>
-
-    <!-- ============ 更新内容 ============ -->
-    <section class="section container" data-component="Release Notes">
-      <div class="section-head reveal">
-        <p class="eyebrow">Changelog · 更新内容</p>
-        <h2 class="section-title">最新版本带来了什么</h2>
-      </div>
-      <div v-if="releaseNotesHtml" class="release reveal" data-component="Release Card">
-        <div class="release-head">
-          <h3>更新内容</h3>
-          <span class="tag">{{ releaseTitle }}</span>
-          <span class="src">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9 9 9 0 0 0-9-9Zm0 0c2.5 2.4 4 5.7 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.7-4-9s1.5-6.6 4-9ZM3.5 9h17m-17 6h17"/></svg>
-            数据来源 GitHub Releases
-          </span>
-        </div>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="release-body" v-html="releaseNotesHtml"></div>
-      </div>
-    </section>
-
-    <!-- ============ 随缘赞助 ============ -->
-    <section class="section container" data-component="Sponsor">
-      <div class="sponsor reveal" data-component="Sponsor Card">
-        <div>
-          <p class="eyebrow">Sponsor · 随缘赞助</p>
-          <h3>永久免费，无广告，纯本地运行</h3>
-          <p>
-            素言承诺永久免费、无广告、纯本地运行。如果它为您节省了宝贵的时间，或您认同这种「回归纯粹」的产品理念，欢迎请开发者喝杯咖啡——每一分善意都将用于维系官网服务器与下载带宽的成本。
-          </p>
-        </div>
-        <div class="sponsor-qr">
-          <div class="qr-frame"><img src="/sponsor-code.png" alt="微信赞助二维码" width="200" height="200" /></div>
-          <small>「 感谢您的支持与信任 」</small>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -238,6 +278,7 @@ onMounted(() => {
 
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
 .reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
 .page-head { padding: clamp(52px, 6vw, 84px) 0 0; }
 .page-head h1 { font-size: clamp(32px, 4.4vw, 46px); font-weight: 650; line-height: 1.2; letter-spacing: -0.015em; }
