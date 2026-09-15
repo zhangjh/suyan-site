@@ -1,3 +1,66 @@
+---
+title: 常见问题（FAQ）
+description: 素言输入法常见问题解答：安装安全提示、macOS 权限、横竖排切换、AI 划词翻译、Ubuntu 配置、隐私安全等。
+head:
+  - - script
+    - type: application/ld+json
+    - |
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "为什么 Windows 会提示“未知发布者”或杀毒软件拦截？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "素言由个人开发者维护，未购买 Windows 数字签名证书。安装时若被 SmartScreen 拦截，请点击“更多信息”→ “仍要运行”。素言代码完全开源，绝无任何恶意行为，建议将安装目录加入白名单。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "macOS 安装提示“无法验证开发者”或“恶意软件”怎么办？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "由于未购买 Apple 开发者证书，macOS 默认拦截安装包。请在拦截提示中点击“完成”，然后在“系统设置 → 隐私与安全性”中找到提示并点击“仍要打开”，输入密码后即可安装。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "如何切换横排/竖排？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Windows 使用 Ctrl + Shift + L，macOS 使用 Command + Shift + L 快速切换，也可以在设置菜单中更改默认行为。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "如何导入以前搜狗/百度的词库？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "素言基于 RIME 引擎，不支持直接导入加密词库文件（如 .scel）。建议使用深蓝词库转换工具转换为 RIME 格式的文本文件，再通过素言的“词库管理”功能导入。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "云同步会泄露我的隐私吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不会。素言采用端到端加密方案，数据在本地加密后上传，服务器仅作为“盲盒”存储，不持有密钥、无法解密内容。同步为可选项，不登录或不开通则完全不联网。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "素言真的完全不联网吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "素言的输入核心进程从不主动联网，每次击键只保存在本地。云同步、AI 划词翻译、检查更新均为可选功能，不开启则完全离线运行。"
+            }
+          }
+        ]
+      }
+---
+
 # 常见问题
 
 ## 安装与安全

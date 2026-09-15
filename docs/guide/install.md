@@ -1,3 +1,8 @@
+---
+title: 素言安装指南 — Windows / macOS / Ubuntu
+description: 素言输入法 Windows、macOS（Intel & ARM）与 Ubuntu（Fcitx5）三大平台安装教程，含升级与卸载说明。
+---
+
 # 安装指南
 
 ## Windows

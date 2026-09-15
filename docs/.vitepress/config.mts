@@ -1,4 +1,14 @@
 import { defineConfig } from 'vitepress'
+import type { HeadConfig } from 'vitepress'
+
+// 素言官网公开站点地址（SEO 相关绝对 URL 统一使用该域名）
+const BASE_URL = 'https://suyan.zhangjh.cn'
+
+// 配合 cleanUrls 生成规范链接：无 .html、无尾斜杠（首页除外）
+function canonicalOf(page: string): string {
+  const path = page.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
+  return `${BASE_URL}/${path}`
+}
 
 export default defineConfig({
   title: '素言 SuYan',
@@ -7,7 +17,17 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }],
-    ['script', { charset: 'UTF-8', id: 'LA_COLLECT', src: 'https://sdk.51.la/js-sdk-pro.min.js' }],
+    ['meta', { property: 'og:site_name', content: '素言 SuYan' }],
+    ['meta', { property: 'og:locale', content: 'zh_CN' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:image', content: `${BASE_URL}/og-cover.png` }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { property: 'og:image:alt', content: '素言 SuYan — 回归输入的本质' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: `${BASE_URL}/og-cover.png` }],
+    // 51.la 统计脚本异步加载，消除渲染阻塞（下方轮询式 init 保证加载完成后初始化）
+    ['script', { charset: 'UTF-8', id: 'LA_COLLECT', src: 'https://sdk.51.la/js-sdk-pro.min.js', async: true }],
     ['script', {}, `
       (function() {
         var checkLA = setInterval(function() {
@@ -21,6 +41,28 @@ export default defineConfig({
   ],
 
   cleanUrls: true,
+
+  // 由 VitePress 原生 sitemap 配置生成 sitemap.xml（含全部页面，URL 无 .html）
+  sitemap: {
+    hostname: BASE_URL,
+  },
+
+  // 逐页注入 canonical 与页面级 OG/Twitter 卡片
+  transformHead({ page, pageData, description }) {
+    const canonical = canonicalOf(page)
+    const pageTitle = pageData.title || '素言 SuYan'
+    const pageDescription =
+      description || '素言输入法：拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台中英文输入法'
+    const head: HeadConfig[] = [
+      ['link', { rel: 'canonical', href: canonical }],
+      ['meta', { property: 'og:url', content: canonical }],
+      ['meta', { property: 'og:title', content: pageTitle }],
+      ['meta', { property: 'og:description', content: pageDescription }],
+      ['meta', { name: 'twitter:title', content: pageTitle }],
+      ['meta', { name: 'twitter:description', content: pageDescription }],
+    ]
+    return head
+  },
 
   themeConfig: {
     logo: '/logo.png',

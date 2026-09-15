@@ -1,0 +1,17 @@
+# 素言官网 robots.txt
+# 显式放行所有搜索引擎抓取，覆盖 Cloudflare 默认占位配置
+User-agent: *
+Allow: /
+
+# AI 训练抓取声明：素言为公开站点，对常见 AI 抓取器同样放行
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# 站点地图
+Sitemap: https://suyan.zhangjh.cn/sitemap.xml
