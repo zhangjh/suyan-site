@@ -1,0 +1,216 @@
+/* ============================================================
+   素言官网设计令牌 · 极简留白 / 工具感 · 墨蓝 Ink Blue
+   所有页面组件通过 --seed-* 令牌派生颜色
+   ============================================================ */
+:root {
+  --seed-bg: #fafaf9;
+  --seed-fg: #1b1f1e;
+  --seed-primary: #1e4fd8;
+  --seed-accent: #1e4fd8;
+  --seed-surface: #ffffff;
+  --seed-radius: 12px;
+
+  --bg: var(--seed-bg);
+  --surface: var(--seed-surface);
+  --surface-2: color-mix(in srgb, var(--seed-fg) 4%, var(--seed-surface));
+  --surface-3: color-mix(in srgb, var(--seed-fg) 7%, var(--seed-surface));
+  --fg: var(--seed-fg);
+  --muted: color-mix(in srgb, var(--seed-fg) 64%, var(--seed-bg));
+  --faint: color-mix(in srgb, var(--seed-fg) 44%, var(--seed-bg));
+  --border: color-mix(in srgb, var(--seed-fg) 10%, var(--seed-bg));
+  --border-strong: color-mix(in srgb, var(--seed-fg) 20%, var(--seed-bg));
+  --primary: var(--seed-primary);
+  --primary-hover: color-mix(in srgb, var(--seed-primary) 80%, var(--seed-fg));
+  --primary-soft: color-mix(in srgb, var(--seed-primary) 10%, var(--seed-surface));
+  --primary-border: color-mix(in srgb, var(--seed-primary) 30%, var(--seed-surface));
+  --on-primary: color-mix(in srgb, var(--seed-primary) 14%, var(--seed-bg));
+  --radius: var(--seed-radius);
+  --radius-sm: calc(var(--seed-radius) * 0.58);
+  --radius-lg: calc(var(--seed-radius) * 1.35);
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--seed-fg) 6%, transparent);
+  --shadow-md:
+    0 2px 10px color-mix(in srgb, var(--seed-fg) 7%, transparent),
+    0 12px 36px color-mix(in srgb, var(--seed-fg) 6%, transparent);
+  --sy-font-sans:
+    'Inter', 'HarmonyOS Sans SC', 'PingFang SC', 'MiSans', 'Microsoft YaHei UI',
+    'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  --sy-font-mono:
+    'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', Consolas, Menlo, monospace;
+  --container: 1120px;
+  --section-gap: clamp(72px, 9vw, 128px);
+
+  /* 企业深色区块（明暗主题下恒定） */
+  --ent-bg: #0d1218;
+  --ent-fg: #eceef2;
+  --ent-fg-strong: #f4f6f9;
+  --ent-muted: #a9b2bf;
+  --ent-faint: #7d8695;
+  --ent-divider: #2b3540;
+  --ent-accent: #6d9bff;
+  --ent-accent-hover: #8fb2ff;
+  --ent-on-accent: #0d1830;
+  --ent-accent-soft: #9db9ff;
+  --ent-body-1: #d7dde6;
+}
+
+.dark {
+  /* 暗色主题仅重设种子令牌，其余由 :root 派生公式计算 */
+  --seed-bg: #101312;
+  --seed-fg: #ecefee;
+  --seed-surface: #171b1a;
+  --seed-primary: #6d9bff;
+}
+
+/* ============================================================
+   VitePress 默认主题变量映射
+   ============================================================ */
+:root {
+  --vp-font-family: var(--sy-font-sans);
+  --vp-font-family-mono: var(--sy-font-mono);
+  --vp-c-bg: var(--bg);
+  --vp-c-bg-alt: var(--surface);
+  --vp-c-bg-elv: var(--surface);
+  --vp-c-bg-soft: var(--surface-2);
+  --vp-c-text-1: var(--fg);
+  --vp-c-text-2: var(--muted);
+  --vp-c-text-3: var(--faint);
+  --vp-c-border: var(--border);
+  --vp-c-divider: var(--border);
+  --vp-c-gutter: var(--border);
+  --vp-c-brand-1: var(--primary);
+  --vp-c-brand-2: var(--primary);
+  --vp-c-brand-3: var(--primary-hover);
+  --vp-c-brand-soft: var(--primary-soft);
+  --vp-c-brand: var(--primary);
+  --vp-button-brand-bg: var(--primary);
+  --vp-button-brand-hover-bg: var(--primary-hover);
+  --vp-c-sponsor: var(--primary);
+  --vp-home-hero-name-color: var(--fg);
+  --vp-nav-height: 64px;
+  --vp-layout-max-width: 1440px;
+}
+
+.dark {
+  --vp-c-bg: var(--bg);
+  --vp-c-bg-alt: var(--surface);
+  --vp-c-bg-elv: var(--surface);
+  --vp-c-bg-soft: var(--surface-2);
+  --vp-c-text-1: var(--fg);
+  --vp-c-text-2: var(--muted);
+  --vp-c-text-3: var(--faint);
+  --vp-c-border: var(--border);
+  --vp-c-divider: var(--border);
+  --vp-c-gutter: var(--border);
+}
+
+/* ============================================================
+   全局导航 / 页脚精修
+   ============================================================ */
+.VPNav {
+  font-family: var(--sy-font-sans);
+}
+
+.vp-navbar:not(.top) {
+  background: color-mix(in srgb, var(--bg) 82%, transparent) !important;
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+}
+
+.VPNavBar {
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease;
+}
+
+.VPNavBar.has-sidebar .content-body,
+.VPNavBar:not(.home) .content-body {
+  background: transparent !important;
+  backdrop-filter: none;
+}
+
+.VPNavBar:not(.home).top .content-body {
+  background: transparent !important;
+}
+
+.VPNavBar:not(.home):not(.top) {
+  border-bottom-color: var(--border);
+}
+
+.VPNavBarMenuLink {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 导航右侧「立即下载」CTA */
+.VPNavBarExtra .item,
+.VPNavBar .content .curtain {
+  color: var(--muted);
+}
+
+/* 全定制页面（layout: page）容器铺满 */
+.sy-page {
+  padding-top: 0;
+}
+
+.sy-page .VPContent {
+  padding-top: 0 !important;
+}
+
+/* 文档页内容排版精修 */
+.VPDoc .container .content {
+  font-size: 15.5px;
+  line-height: 1.85;
+}
+
+.VPDoc h1 {
+  letter-spacing: -0.01em;
+  font-weight: 650;
+}
+
+.VPDoc h2 {
+  letter-spacing: -0.01em;
+  border-top: none;
+  padding-top: 0.6em;
+  margin-top: 1.6em;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.VPDoc h3 {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* 自定义提示条（callout）样式增强 */
+.custom-block {
+  border-radius: var(--radius-sm);
+  border-width: 1px;
+}
+
+.custom-block.tip {
+  border-color: var(--primary-border);
+  background: var(--primary-soft);
+  color: var(--muted);
+}
+
+.custom-block.tip .custom-block-title {
+  color: var(--primary);
+}
+
+.custom-block.warning {
+  border-color: color-mix(in srgb, #c98a2a 36%, var(--bg));
+  background: color-mix(in srgb, #c98a2a 6%, var(--surface));
+}
+
+/* 链接 */
+.VPDoc a {
+  font-weight: 550;
+  text-decoration: none;
+}
+
+/* 页脚 */
+.VPFooter {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--faint);
+  font-size: 12.5px;
+}
