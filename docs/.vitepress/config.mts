@@ -9,7 +9,7 @@ import { loadReleaseNotes } from './data/release'
 
 // 素言官网公开站点地址（SEO 相关绝对 URL 统一使用该域名）
 const BASE_URL = 'https://suyan.zhangjh.cn'
-const OG_IMAGE_URL = `${BASE_URL}/og-cover.png?v=20260915`
+const OG_IMAGE_URL = `${BASE_URL}/og-cover.png`
 const DOCS_ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)), '..')
 const [BUILD_COMMUNITY_DATA, BUILD_RELEASE_DATA] = await Promise.all([
   loadCommunityData(),
