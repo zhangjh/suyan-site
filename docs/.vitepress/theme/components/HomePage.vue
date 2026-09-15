@@ -111,7 +111,7 @@ function runTyping() {
       <span class="hero-chip reveal"
         ><span class="dot"></span>v5.2.1 · 新增极点五笔输入方案上线</span
       >
-      <h1 class="reveal">回归输入的<span class="accent">本质</span></h1>
+      <h1 class="reveal">素言，回归输入的<span class="accent">本质</span></h1>
       <p class="hero-sub reveal">
         拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台中英文输入法
       </p>
