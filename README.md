@@ -60,10 +60,5 @@ suyan-site/
 ## 相关链接
 
 - [素言官网](https://suyan.zhangjh.cn)
-- [素言输入法主项目](https://github.com/zhangjh/SuYan)
 - [RIME 中州韵引擎](https://rime.im/)
 - [雾凇拼音词库](https://github.com/iDvel/rime-ice)
-
-## 许可证
-
-与[素言输入法主项目](https://github.com/zhangjh/SuYan)一致，基于 RIME 开源引擎开发，遵循相应的开源许可证。词库数据来自 [rime-ice](https://github.com/iDvel/rime-ice)。
