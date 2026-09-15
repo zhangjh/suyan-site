@@ -348,5 +348,10 @@ async function copyShareCode(code) {
   .skin-grid { grid-template-columns: 1fr; }
   .filter-count { margin-left: 0; width: 100%; }
   .actions { width: 100%; }
+  .page-head h1 { font-size: clamp(28px, 8vw, 36px); }
+  .page-head .sub { font-size: 15px; }
+  .gallery { padding-top: 32px; }
+  .share-cta { padding: 26px 20px; }
+  .skin-card { margin: 0; }
 }
 </style>
