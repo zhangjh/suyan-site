@@ -139,7 +139,7 @@ function runTyping() {
         </div>
         <div class="hero-hint" aria-hidden="true">
           <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> 横竖排切换</span>
-          <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Y</kbd> 语音输入</span>
+          <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> 语音输入</span>
           <span>最大候选视野 5 × 9</span>
         </div>
       </div>
@@ -181,7 +181,7 @@ function runTyping() {
       <div class="section-head reveal">
         <p class="eyebrow">Features · 核心能力</p>
         <h2 class="section-title">一个输入法，装下你的日常输入</h2>
-        <p class="section-desc">每一项能力都围绕「不打扰、不越界」设计——先是一个好用的输入法，然后才是更多。</p>
+        <p class="section-desc">围绕「不打扰、不越界」设计——先是一个好用的输入法，然后才是更多。</p>
       </div>
       <div class="feature-grid">
         <article class="feature-card reveal" data-component="Feature Card">
@@ -229,7 +229,6 @@ function runTyping() {
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>流式响应</strong>：基于 OpenAI 兼容 SSE 接口逐字返回，长文本不卡顿</span></li>
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>企业版专属</strong>：可对接私有部署的 Qwen、Llama 等内网模型，数据不出企业边界</span></li>
           </ul>
-          <a class="deep-more" href="/guide/special-modes">了解更多<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
         </div>
         <div class="deep-visual reveal">
           <div class="mock mock-translate" role="img" aria-label="划词翻译浮窗示意">
@@ -268,7 +267,6 @@ function runTyping() {
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>低延迟</strong>：本地推理，说完即出字，无需等待网络响应</span></li>
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>无缝切换</strong>：快捷键一键启动，与打字模式自由切换，会议记录、日常对话均可胜任</span></li>
           </ul>
-          <a class="deep-more" href="/guide/faq">了解更多<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
         </div>
         <div class="deep-visual reveal">
           <div class="mock mock-voice" role="img" aria-label="语音输入面板示意">
@@ -294,9 +292,8 @@ function runTyping() {
           <ul class="deep-points">
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>配置与偏好</strong>：方案、皮肤、快捷键，新装设备秒级复刻你的环境</span></li>
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>词库与词频</strong>：自定义短语一处添加处处可用，高频词排序多端一致</span></li>
-            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>AES-256 盲盒存储</strong>：数据在本地加密后上传，服务器无法解密，也绝不上传按键流</span></li>
+            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>盲盒存储</strong>：服务器仅作黑盒存储渠道，无法解密，也绝不上传按键流</span></li>
           </ul>
-          <a class="deep-more" href="/guide/faq">了解更多<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
         </div>
         <div class="deep-visual reveal">
           <div class="mock mock-sync" role="img" aria-label="端到端加密同步示意">
@@ -310,7 +307,6 @@ function runTyping() {
             </div>
             <div class="sync-mid">
               <span class="sync-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
-              <small>AES-256</small>
             </div>
             <div class="sync-device">
               <p class="dev-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M10 18h4"/></svg>家里 · macOS</p>
@@ -331,7 +327,7 @@ function runTyping() {
       <div class="section-head reveal">
         <p class="eyebrow">Demo · 眼见为实</p>
         <h2 class="section-title">看它如何工作</h2>
-        <p class="section-desc">真实使用场景录制，来自 B 站「但丁自留地」。</p>
+        <p class="section-desc">真实使用场景录制，来自 B 站。</p>
       </div>
       <div class="demo-videos">
         <a class="video-card reveal" href="https://www.bilibili.com/video/BV1zDFozyETF" target="_blank" rel="noreferrer">
