@@ -46,7 +46,7 @@ head:
             "name": "云同步会泄露我的隐私吗？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "不会。素言采用端到端加密方案，数据在本地加密后上传，服务器仅作为“盲盒”存储，不持有密钥、无法解密内容。同步为可选项，不登录或不开通则完全不联网。"
+              "text": "不会。素言采用端到端加密方案，数据在本地加密后上传，服务器仅作为“盲盒”存储，不持有密钥、无法解密内容。同步为可选项，不登录账号或者不开启同步则不会发生同步，输入核心仍保持离线。"
             }
           },
           {
@@ -77,11 +77,11 @@ head:
 这是正常现象，请按以下步骤操作放行：
 
 1.  在拦截弹窗中点击 **「完成」** (Done)。
-    ![拦截提示](/mac-install-block.png)
+    <img src="/mac-install-block.png" alt="macOS 无法验证开发者的拦截提示" width="506" height="436" loading="lazy" decoding="async">
 
 2.  打开 **系统设置** -> **隐私与安全性** (Privacy & Security)。
 3.  向下滑动找到“安全性”区域，你会看到“已阻止...以保护 Mac”的提示，点击右侧的 **「仍要打开」** (Open Anyway) 按钮。
-    ![仍要打开](/mac-install-allow.jpg)
+    <img src="/mac-install-allow.jpg" alt="macOS 隐私与安全性中的仍要打开按钮" width="1335" height="434" loading="lazy" decoding="async">
 
 4.  在随后弹出的确认框中输入开机密码，即可正常安装。
 
@@ -213,7 +213,7 @@ Ubuntu 版本没有 Windows/macOS 上的「中/EN」托盘指示器，设置入�
 2. 在「输入法」标签页的当前输入法列表中选中 **素言**。
 3. 点击配置（齿轮）按钮，即可打开「素言设置」面板。
 
-![Ubuntu 下打开素言设置](/Ubuntu_setting.png)
+<img src="/Ubuntu_setting.png" alt="Ubuntu 下通过 Fcitx5 打开素言设置" width="842" height="653" loading="lazy" decoding="async">
 
 面板中可以调整候选词数量、自动检查更新，并进入词库管理、模糊音设置、皮肤设置、快捷键设置等更多设置。
 

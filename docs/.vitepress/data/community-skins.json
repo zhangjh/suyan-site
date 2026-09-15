@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-09-15T14:30:00.000Z",
+  "total": 14,
+  "skins": [
+    { "shareCode": "RCT6WWN7", "skinName": "miku", "authorName": "白日做梦", "layout": "horizontal", "hasBackgroundImage": true, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/RCT6WWN7/preview.png", "createdAt": 1787802048738 },
+    { "shareCode": "1VDBANP0", "skinName": "曜石橙", "authorName": "但丁", "layout": "vertical", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/1VDBANP0/preview.png", "createdAt": 1786184303372 },
+    { "shareCode": "FNWKTJNY", "skinName": "暮山紫", "authorName": "但丁", "layout": "vertical", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/FNWKTJNY/preview.png", "createdAt": 1786184293886 },
+    { "shareCode": "FJN9S177", "skinName": "墨白", "authorName": "但丁", "layout": "vertical", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/FJN9S177/preview.png", "createdAt": 1786184285425 },
+    { "shareCode": "RE79SP2N", "skinName": "青瓷", "authorName": "但丁", "layout": "vertical", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/RE79SP2N/preview.png", "createdAt": 1786184274592 },
+    { "shareCode": "0XN41MJ2", "skinName": "樱雪", "authorName": "但丁", "layout": "vertical", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/0XN41MJ2/preview.png", "createdAt": 1786184265148 },
+    { "shareCode": "2HWEEHGF", "skinName": "玻璃蓝", "authorName": "但丁", "layout": "vertical", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/2HWEEHGF/preview.png", "createdAt": 1786184255794 },
+    { "shareCode": "X87778G0", "skinName": "青瓷", "authorName": "但丁", "layout": "horizontal", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/X87778G0/preview.png", "createdAt": 1786183416835 },
+    { "shareCode": "KXCQPAPH", "skinName": "玻璃蓝", "authorName": "但丁", "layout": "horizontal", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/KXCQPAPH/preview.png", "createdAt": 1786183407003 },
+    { "shareCode": "BZ2E6V71", "skinName": "暮山紫", "authorName": "但丁", "layout": "horizontal", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/BZ2E6V71/preview.png", "createdAt": 1786183397423 },
+    { "shareCode": "2SYFSHBB", "skinName": "曜石橙", "authorName": "但丁", "layout": "horizontal", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/2SYFSHBB/preview.png", "createdAt": 1786183282354 },
+    { "shareCode": "A9MVY9D8", "skinName": "墨白", "authorName": "但丁", "layout": "horizontal", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/A9MVY9D8/preview.png", "createdAt": 1786183268751 },
+    { "shareCode": "TDKBKC1N", "skinName": "樱雪", "authorName": "但丁", "layout": "horizontal", "hasBackgroundImage": false, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/TDKBKC1N/preview.png", "createdAt": 1786183251857 },
+    { "shareCode": "GAASVRZH", "skinName": "仿微信", "authorName": "但丁", "layout": "horizontal", "hasBackgroundImage": true, "previewUrl": "https://api-verse.zhangjh.cn/api/suyan/community/skins/GAASVRZH/preview.png", "createdAt": 1786095966500 }
+  ]
+}

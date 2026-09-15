@@ -1,0 +1,5 @@
+{
+  "title": "SuYan v5.2.1",
+  "publishedAt": "2026-09-04T08:08:25.000Z",
+  "notesMarkdown": "1. 五笔输入方案（极点五笔 86）\n2. Ubuntu 截图功能支持\n3. 修复 Ubuntu 24.04+ 剪贴板无法呼出问题\n4. 修复其他已知问题"
+}

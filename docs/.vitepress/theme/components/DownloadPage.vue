@@ -1,95 +1,65 @@
 <script setup>
-import MarkdownIt from 'markdown-it'
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-const markdown = new MarkdownIt({ html: false, linkify: true })
+const props = defineProps({
+  releaseData: { type: Object, required: true },
+})
+
 const latestVersion = ref('获取中...')
-const releaseTitle = ref('')
-const releaseNotesHtml = ref('')
-const releaseLoaded = ref(false)
-
 let io = null
+let releaseController = null
 
 function observeReveals(root) {
-  if (!('IntersectionObserver' in window)) {
-    root.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => el.classList.add('is-visible'))
-    return
-  }
-  if (!io) {
-    io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible')
-            io.unobserve(e.target)
-          }
-        })
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
-    )
-  }
-  root.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => io.observe(el))
-}
-
-function extractUpdateNotes(body) {
-  const lines = body.split(/\r?\n/)
-  const startIndex = lines.findIndex((line) => /^#{1,6}\s+更新内容\s*$/.test(line))
-  if (startIndex === -1) return ''
-
-  const headingLevel = lines[startIndex].match(/^#+/)[0].length
-  const endIndex = lines.findIndex((line, index) => {
-    if (index <= startIndex) return false
-    const heading = line.match(/^(#{1,6})\s+/)
-    return heading && heading[1].length <= headingLevel
+  if (!root || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('is-reveal-pending')
+          entry.target.classList.add('is-visible')
+          io.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+  )
+  root.querySelectorAll('.reveal').forEach((el) => {
+    el.classList.add('is-reveal-pending')
+    io.observe(el)
   })
-
-  const sectionLines = lines.slice(startIndex + 1, endIndex === -1 ? undefined : endIndex)
-  while (sectionLines.length) {
-    const lastLine = sectionLines[sectionLines.length - 1].trim()
-    if (lastLine && !/^(?:-{3,}|\*{3,}|_{3,})$/.test(lastLine)) break
-    sectionLines.pop()
-  }
-
-  return sectionLines.join('\n').trim()
 }
 
 onMounted(() => {
-  /* ---------- 滚动渐显（与首页一致） ---------- */
   observeReveals(document.querySelector('.sy-download'))
 
-  fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest')
-    .then((res) => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      return res.json()
+  releaseController = new AbortController()
+  const timeout = setTimeout(() => releaseController.abort(), 12_000)
+  fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest', {
+    headers: { Accept: 'application/vnd.github+json' },
+    signal: releaseController.signal,
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      return response.json()
     })
-    .then((data) => {
-      releaseLoaded.value = true
-      if (data.tag_name) latestVersion.value = data.tag_name
-      if (data.body) {
-        const updateNotes = extractUpdateNotes(data.body)
-        if (updateNotes) {
-          releaseTitle.value = data.name || data.tag_name
-          releaseNotesHtml.value = markdown.render(updateNotes)
-        }
-      }
+    .then((release) => {
+      if (release.tag_name) latestVersion.value = release.tag_name
     })
-    .catch((err) => {
-      releaseLoaded.value = true
-      console.error('Failed to fetch latest release:', err)
+    .catch((error) => {
+      if (error?.name !== 'AbortError') console.error('Failed to fetch latest release:', error)
+      latestVersion.value = '暂时无法获取'
     })
+    .finally(() => clearTimeout(timeout))
 })
 
-watch(releaseNotesHtml, () => {
-  nextTick(() => {
-    const section = document.querySelector('.sy-download [data-component="Release Notes"]')
-    if (section) observeReveals(section)
-  })
+onBeforeUnmount(() => {
+  io?.disconnect()
+  releaseController?.abort()
 })
-onBeforeUnmount(() => io && io.disconnect())
 </script>
 
 <template>
-  <div class="sy-download">
+  <main class="sy-download">
     <!-- ============ 页头 ============ -->
     <section class="page-head container">
       <h1>下载素言</h1>
@@ -153,22 +123,22 @@ onBeforeUnmount(() => io && io.disconnect())
     </section>
 
     <!-- ============ 更新内容 ============ -->
-    <section v-if="releaseLoaded && releaseNotesHtml" class="section container" data-component="Release Notes">
+    <section v-if="props.releaseData.notesHtml" class="section container" data-component="Release Notes">
       <div class="section-head reveal">
         <p class="eyebrow">Changelog · 更新内容</p>
-        <h2 class="section-title">最新版本带来了什么</h2>
+        <h2 class="section-title">{{ props.releaseData.title }} 更新内容</h2>
       </div>
       <div class="release reveal" data-component="Release Card">
         <div class="release-head">
-          <h3>更新内容</h3>
-          <span class="tag">{{ releaseTitle }}</span>
+          <h3>主要变化</h3>
+          <span class="tag">{{ props.releaseData.title }}</span>
           <span class="src">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9 9 9 0 0 0-9-9Zm0 0c2.5 2.4 4 5.7 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.7-4-9s1.5-6.6 4-9ZM3.5 9h17m-17 6h17"/></svg>
-            数据来源 GitHub Releases
+            数据来源 GitHub Releases · 构建时同步
           </span>
         </div>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="release-body" v-html="releaseNotesHtml"></div>
+        <!-- 构建期 MarkdownIt 已关闭原始 HTML，只输出经过约束的 release Markdown。 -->
+        <div class="release-body" v-html="props.releaseData.notesHtml"></div>
       </div>
     </section>
 
@@ -177,13 +147,13 @@ onBeforeUnmount(() => io && io.disconnect())
       <div class="sponsor reveal" data-component="Sponsor Card">
         <div>
           <p class="eyebrow">Sponsor · 随缘赞助</p>
-          <h3>永久免费，无广告，纯本地运行</h3>
+          <h2>永久免费，无广告，纯本地运行</h2>
           <p>
             素言承诺永久免费、无广告、纯本地运行。如果它为您节省了宝贵的时间，或您认同这种「回归纯粹」的产品理念，欢迎请开发者喝杯咖啡——每一分善意都将用于维系官网服务器与下载带宽的成本。
           </p>
         </div>
         <div class="sponsor-qr">
-          <div class="qr-frame"><img src="/sponsor-code.png" alt="微信赞助二维码" width="200" height="200" /></div>
+          <div class="qr-frame"><img src="/sponsor-code.png" alt="微信赞助二维码" width="200" height="200" loading="lazy" decoding="async" /></div>
           <small>「 感谢您的支持与信任 」</small>
         </div>
       </div>
@@ -262,7 +232,7 @@ onBeforeUnmount(() => io && io.disconnect())
         </article>
       </div>
     </section>
-  </div>
+  </main>
 </template>
 
 <style scoped>
@@ -276,7 +246,8 @@ onBeforeUnmount(() => io && io.disconnect())
 .sy-download a { color: inherit; text-decoration: none; }
 .sy-download img { max-width: 100%; display: block; }
 
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+.reveal { opacity: 1; transform: none; }
+.reveal.is-reveal-pending { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
 .reveal.is-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
@@ -357,7 +328,7 @@ onBeforeUnmount(() => io && io.disconnect())
 .release-body :deep(a) { color: var(--primary); }
 
 .sponsor { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: 1fr auto; gap: clamp(28px, 4vw, 56px); align-items: center; }
-.sponsor h3 { font-size: 21px; font-weight: 600; }
+.sponsor h2 { font-size: 21px; font-weight: 600; }
 .sponsor > div > p:not(.eyebrow) { margin-top: 12px; font-size: 14.5px; color: var(--muted); line-height: 1.8; max-width: 460px; }
 .sponsor-qr { display: grid; place-items: center; gap: 12px; }
 .sponsor-qr .qr-frame { background: #fff; padding: 12px; border-radius: 16px; box-shadow: var(--shadow-md); border: 1px solid var(--border); }

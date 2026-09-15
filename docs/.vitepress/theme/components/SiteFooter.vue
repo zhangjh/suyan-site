@@ -5,7 +5,7 @@
         <div class="footer-brand">
           <a class="brand" href="/" aria-label="素言 SuYan 首页">
             <span class="brand-mark" aria-hidden="true">
-              <img src="/logo.png" alt="" />
+              <img src="/logo.png" alt="" width="30" height="30" decoding="async" />
             </span>
             素言<small>SuYan</small>
           </a>
@@ -13,7 +13,7 @@
           <p>摒弃繁杂，回归输入的本质。</p>
         </div>
         <nav class="footer-col" aria-label="产品">
-          <h4>Product</h4>
+          <p class="footer-title">Product</p>
           <ul>
             <li><a href="/download">下载素言</a></li>
             <li><a href="/community">皮肤社区</a></li>
@@ -21,7 +21,7 @@
           </ul>
         </nav>
         <nav class="footer-col" aria-label="指南">
-          <h4>Guide</h4>
+          <p class="footer-title">Guide</p>
           <ul>
             <li><a href="/guide/install">安装指南</a></li>
             <li><a href="/guide/faq">常见问题</a></li>
@@ -30,7 +30,7 @@
           </ul>
         </nav>
         <nav class="footer-col" aria-label="社区">
-          <h4>Community</h4>
+          <p class="footer-title">Community</p>
           <ul>
             <li><a href="https://github.com/zhangjh/suyan-site/issues" target="_blank" rel="noreferrer">GitHub Issues</a></li>
             <li><a href="https://rime.im/" target="_blank" rel="noreferrer">RIME 中州韵</a></li>
@@ -64,7 +64,7 @@
 .brand small { font-weight: 450; color: var(--faint); font-size: 13px; margin-left: 2px; }
 
 .footer-brand p { margin-top: 14px; font-size: 13.5px; color: var(--muted); max-width: 300px; line-height: 1.7; }
-.footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); font-family: var(--sy-font-mono); margin-bottom: 16px; }
+.footer-title { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); font-family: var(--sy-font-mono); margin-bottom: 16px; }
 .footer-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .footer-col a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.18s ease; }
 .footer-col a:hover { color: var(--fg); }
@@ -115,7 +115,7 @@
     column-gap: 20px;
   }
   .footer-col ul { gap: 12px; }
-  .footer-col h4 { margin-bottom: 12px; }
+  .footer-title { margin-bottom: 12px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
   .sy-footer { padding: 40px 0 36px; }
   .footer-inner { padding: 0 20px; }

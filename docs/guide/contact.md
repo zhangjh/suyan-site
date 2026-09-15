@@ -34,4 +34,4 @@ description: 素言输入法问题反馈渠道：GitHub Issues、邮件 support@
 - 📖 [素言v3.6.0发布：你提的建议，我都做到了](https://mp.weixin.qq.com/s/p_OWf4GYqzPzYiDehMPAeg)
 - 📖 [素言输入法：一款纯净、离线、注重隐私的桌面输入法](https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw)
 
-![但丁自留地](/wechat-qr.jpg)
+<img src="/wechat-qr.jpg" alt="但丁自留地微信公众号二维码" width="430" height="430" loading="lazy" decoding="async">

@@ -1,29 +1,35 @@
 <script setup>
 import { onMounted, onBeforeUnmount } from 'vue'
 
-/* ---------- 滚动渐显 ---------- */
+/* ---------- 滚动渐显：默认内容可见，JavaScript 仅增强动画 ---------- */
 let io = null
 onMounted(() => {
   const els = document.querySelectorAll('.sy-home .reveal')
-  if ('IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible')
-            io.unobserve(e.target)
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('is-reveal-pending')
+            entry.target.classList.add('is-visible')
+            io.unobserve(entry.target)
           }
         })
       },
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
     )
-    els.forEach((el) => io.observe(el))
-  } else {
-    els.forEach((el) => el.classList.add('is-visible'))
+    els.forEach((el) => {
+      el.classList.add('is-reveal-pending')
+      io.observe(el)
+    })
   }
   runTyping()
 })
-onBeforeUnmount(() => io && io.disconnect())
+onBeforeUnmount(() => {
+  io?.disconnect()
+  timers.forEach((timer) => clearTimeout(timer))
+  timers = []
+})
 
 /* ---------- Hero 候选框打字动效 ---------- */
 const steps = [
@@ -105,13 +111,13 @@ function runTyping() {
 </script>
 
 <template>
-  <div class="sy-home">
+  <main class="sy-home">
     <!-- ============ Hero ============ -->
     <section class="hero container">
       <span class="hero-chip reveal"
         ><span class="dot"></span>v5.2.1 · 新增极点五笔输入方案上线</span
       >
-      <h1 class="reveal">素言，回归输入的<span class="accent">本质</span></h1>
+      <h1>素言，回归输入的<span class="accent">本质</span></h1>
       <p class="hero-sub reveal">
         拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台中英文输入法
       </p>
@@ -222,7 +228,7 @@ function runTyping() {
       <div class="deep">
         <div class="deep-copy reveal">
           <p class="deep-tag">01 · AI Translate</p>
-          <h3>系统级划词翻译，不止浏览器</h3>
+          <h2>系统级划词翻译，不止浏览器</h2>
           <p class="deep-lead">看英文文档、读外文资料、回复海外同事——选中即译，无需切换第三方软件。</p>
           <ul class="deep-points">
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>覆盖所有桌面应用</strong>：基于系统辅助能力（Windows UIA / macOS Accessibility），Word、PDF、IDE、聊天工具全支持</span></li>
@@ -260,7 +266,7 @@ function runTyping() {
       <div class="deep flip">
         <div class="deep-copy reveal">
           <p class="deep-tag">02 · Voice Input</p>
-          <h3>语音识别，完全离线</h3>
+          <h2>语音识别，完全离线</h2>
           <p class="deep-lead">素言是目前极少数支持完全离线语音识别的桌面输入法——从麦克风到文字，全程在本机完成。</p>
           <ul class="deep-points">
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>零上传</strong>：音频数据不出本机，从根源杜绝语音隐私泄露</span></li>
@@ -287,7 +293,7 @@ function runTyping() {
       <div class="deep">
         <div class="deep-copy reveal">
           <p class="deep-tag">03 · Encrypted Sync</p>
-          <h3>云同步，但服务器是个盲盒</h3>
+          <h2>云同步，但服务器是个盲盒</h2>
           <p class="deep-lead">素言 v5.0 引入端到端加密的云同步：输入习惯随账号流转，而非困在单机。</p>
           <ul class="deep-points">
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>配置与偏好</strong>：方案、皮肤、快捷键，新装设备秒级复刻你的环境</span></li>
@@ -332,7 +338,7 @@ function runTyping() {
       <div class="demo-videos">
         <a class="video-card reveal" href="https://www.bilibili.com/video/BV1zDFozyETF" target="_blank" rel="noreferrer">
           <div class="video-thumb">
-            <img src="/demo-cover.jpg" alt="普通输入模式演示视频封面" />
+            <img src="/demo-cover.jpg" alt="普通输入模式演示视频封面" width="1920" height="1080" loading="lazy" decoding="async" />
             <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></span>
             <span class="video-label">普通输入模式</span>
           </div>
@@ -343,7 +349,7 @@ function runTyping() {
         </a>
         <a class="video-card reveal" href="https://www.bilibili.com/video/BV1vBcEzAE8z" target="_blank" rel="noreferrer">
           <div class="video-thumb">
-            <img src="/image-4.png" alt="语音输入模式演示视频封面" />
+            <img src="/image-4.png" alt="语音输入模式演示视频封面" width="534" height="323" loading="lazy" decoding="async" />
             <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></span>
             <span class="video-label">语音输入模式</span>
           </div>
@@ -355,27 +361,27 @@ function runTyping() {
       </div>
       <div class="shot-grid">
         <figure class="shot-card reveal">
-          <figure><img src="/image.png" alt="系统默认皮肤候选词框" /></figure>
+          <figure><img src="/image.png" alt="系统默认皮肤候选词框" width="820" height="284" loading="lazy" decoding="async" /></figure>
           <figcaption>候选词框 · 默认皮肤 <em>horizontal</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-1.png" alt="自定义皮肤候选词框" /></figure>
+          <figure><img src="/image-1.png" alt="自定义皮肤候选词框" width="873" height="393" loading="lazy" decoding="async" /></figure>
           <figcaption>候选词框 · 自定义皮肤 <em>custom</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/ai-translate.webp" alt="AI 划词翻译浮窗" /></figure>
+          <figure><img src="/ai-translate.webp" alt="AI 划词翻译浮窗" width="500" height="535" loading="lazy" decoding="async" /></figure>
           <figcaption>AI 划词翻译浮窗 <em>translate</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-3.png" alt="语音识别候选" /></figure>
+          <figure><img src="/image-3.png" alt="语音识别候选" width="534" height="398" loading="lazy" decoding="async" /></figure>
           <figcaption>语音识别候选 <em>voice</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-2.png" alt="剪贴板历史记录" /></figure>
+          <figure><img src="/image-2.png" alt="剪贴板历史记录" width="500" height="535" loading="lazy" decoding="async" /></figure>
           <figcaption>剪贴板历史记录 <em>clipboard</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure><img src="/image-5.png" alt="内置截图工具" /></figure>
+          <figure><img src="/image-5.png" alt="内置截图工具" width="1097" height="675" loading="lazy" decoding="async" /></figure>
           <figcaption>内置截图工具 <em>capture</em></figcaption>
         </figure>
       </div>
@@ -531,7 +537,7 @@ function runTyping() {
       </div>
       <div class="product-grid">
         <a class="product-card reveal" href="https://sustream.zhangjh.cn" target="_blank" rel="noreferrer">
-          <img src="/sustream_logo.png" alt="素流 Logo" />
+          <img src="/sustream_logo.png" alt="素流 Logo" width="96" height="96" loading="lazy" decoding="async" />
           <div>
             <p class="p-name">素流 SuStream</p>
             <p class="p-desc">AI 原生文件资产管家</p>
@@ -539,7 +545,7 @@ function runTyping() {
           <span class="p-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
         </a>
         <a class="product-card reveal" href="https://verse-site.zhangjh.cn" target="_blank" rel="noreferrer">
-          <img src="/verse_logo.png" alt="素章 Logo" />
+          <img src="/verse_logo.png" alt="素章 Logo" width="200" height="174" loading="lazy" decoding="async" />
           <div>
             <p class="p-name">素章 Verse</p>
             <p class="p-desc">随时记录，随手成文</p>
@@ -555,7 +561,7 @@ function runTyping() {
         <a href="https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw" target="_blank" rel="noreferrer">素言输入法：一款纯净、离线、注重隐私的桌面输入法<span class="src">但丁自留地</span></a>
       </div>
     </section>
-  </div>
+  </main>
 </template>
 
 <style scoped>
@@ -569,7 +575,8 @@ function runTyping() {
 .sy-home a { color: inherit; text-decoration: none; }
 .sy-home img { max-width: 100%; display: block; }
 
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+.reveal { opacity: 1; transform: none; }
+.reveal.is-reveal-pending { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
 .reveal.is-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
@@ -643,7 +650,7 @@ function runTyping() {
 .deep + .deep { margin-top: var(--section-gap); }
 .deep.flip .deep-visual { order: 2; }
 .deep-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--sy-font-mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 16px; }
-.deep h3 { font-size: clamp(24px, 2.8vw, 30px); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.deep h2 { font-size: clamp(24px, 2.8vw, 30px); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
 .deep-lead { margin-top: 12px; font-size: 16px; color: var(--muted); }
 .deep-points { margin-top: 22px; display: grid; gap: 13px; list-style: none; }
 .deep-points li { display: flex; gap: 12px; font-size: 14.5px; color: var(--muted); line-height: 1.65; }

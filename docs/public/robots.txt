@@ -13,5 +13,9 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+# X/Twitter 链接卡片抓取器
+User-agent: Twitterbot
+Allow: /
+
 # 站点地图
 Sitemap: https://suyan.zhangjh.cn/sitemap.xml

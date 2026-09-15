@@ -1,78 +1,114 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
-// 后端公开列表接口；审核通过的皮肤在这里实时可见，无需重新部署站点
+const props = defineProps({
+  initialSkins: { type: Array, default: () => [] },
+  initialTotal: { type: Number, default: 0 },
+  snapshotGeneratedAt: { type: String, default: '' },
+  staticPage: { type: [String, Number], default: 1 },
+  pageCount: { type: Number, default: 0 },
+  detailCodes: { type: Array, default: () => [] },
+})
+
 const API_BASE = 'https://api-verse.zhangjh.cn'
 const PAGE_SIZE = 24
-const TIMEOUT_MS = 15000
-
+const TIMEOUT_MS = 15_000
 const layoutLabels = { horizontal: '横排', vertical: '竖排' }
 
-const skins = ref([])
-const loading = ref(true)
+const staticPageNumber = Math.max(1, Number(props.staticPage) || 1)
+const isArchivePage = staticPageNumber > 1
+const skins = ref([...props.initialSkins])
+const loading = ref(!skins.value.length)
 const loadingMore = ref(false)
 const errorMsg = ref('')
-const page = ref(1)
-const total = ref(0)
-const hasMore = ref(true)
+const refreshWarning = ref('')
+const page = ref(staticPageNumber)
+const total = ref(Number(props.initialTotal) || skins.value.length)
+const hasMore = ref(!isArchivePage && skins.value.length < total.value)
 const copiedCode = ref('')
-const activeFilter = ref('all') // all | horizontal | vertical
+const activeFilter = ref('all')
 const sentinelEl = ref(null)
 let resetTimer = null
 let observer = null
 
+const detailCodeSet = new Set(props.detailCodes.map(String))
+const snapshotPageCount = Math.max(1, props.pageCount || Math.ceil(props.initialTotal / PAGE_SIZE))
 const filteredSkins = computed(() => {
   if (activeFilter.value === 'all') return skins.value
-  return skins.value.filter((s) => s.layout === activeFilter.value)
+  return skins.value.filter((skin) => skin.layout === activeFilter.value)
 })
+const previousPageUrl = computed(() => {
+  if (staticPageNumber <= 1) return ''
+  return staticPageNumber === 2 ? '/community' : `/community/page/${staticPageNumber - 1}`
+})
+const nextPageUrl = computed(() =>
+  staticPageNumber < snapshotPageCount ? `/community/page/${staticPageNumber + 1}` : '',
+)
 
-async function fetchPage(p) {
-  const url = `${API_BASE}/api/suyan/community/skins?page=${p}&limit=${PAGE_SIZE}`
-  const res = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) })
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  return res.json()
+function detailUrl(skin) {
+  return detailCodeSet.has(String(skin.shareCode)) ? `/community/skins/${skin.shareCode}` : ''
+}
+
+async function fetchPage(pageNumber) {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
+  try {
+    const url = `${API_BASE}/api/suyan/community/skins?page=${pageNumber}&limit=${PAGE_SIZE}`
+    const response = await fetch(url, { headers: { Accept: 'application/json' }, signal: controller.signal })
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    return await response.json()
+  } finally {
+    clearTimeout(timer)
+  }
 }
 
 async function loadFirst() {
-  loading.value = true
+  const hasSnapshot = skins.value.length > 0
+  if (!hasSnapshot) loading.value = true
   errorMsg.value = ''
+  refreshWarning.value = ''
   try {
-    page.value = 1
     const data = await fetchPage(1)
     const list = Array.isArray(data?.skins) ? data.skins : []
     skins.value = list
+    page.value = 1
     total.value = Number(data?.total ?? list.length)
     hasMore.value = skins.value.length < total.value
-  } catch (err) {
-    errorMsg.value = '皮肤列表加载失败，请稍后刷新重试'
-    skins.value = []
-    total.value = 0
-    hasMore.value = false
+  } catch {
+    if (hasSnapshot) {
+      refreshWarning.value = '实时数据暂时不可用，当前展示最近一次构建快照'
+      hasMore.value = skins.value.length < total.value
+    } else {
+      errorMsg.value = '皮肤列表加载失败，请稍后刷新重试'
+      total.value = 0
+      hasMore.value = false
+    }
   } finally {
     loading.value = false
   }
 }
 
 async function loadMore() {
-  // 首屏还在加载、或正在翻页、或没有更多时直接跳过，避免 IntersectionObserver 反复触发
-  if (loading.value || loadingMore.value || !hasMore.value) return
+  if (isArchivePage || loading.value || loadingMore.value || !hasMore.value) return
   loadingMore.value = true
   try {
-    const next = page.value + 1
-    const data = await fetchPage(next)
+    const nextPage = page.value + 1
+    const data = await fetchPage(nextPage)
     const list = Array.isArray(data?.skins) ? data.skins : []
-    skins.value.push(...list)
-    page.value = next
-    hasMore.value = skins.value.length < total.value
-  } catch (err) {
-    // 翻页失败不打断已展示内容，用户再次滚动会重试
+    const existingCodes = new Set(skins.value.map((skin) => skin.shareCode))
+    skins.value.push(...list.filter((skin) => !existingCodes.has(skin.shareCode)))
+    page.value = nextPage
+    total.value = Number(data?.total ?? total.value)
+    hasMore.value = list.length > 0 && skins.value.length < total.value
+  } catch {
+    refreshWarning.value = '加载下一页失败，滚动到页面底部可再次尝试'
   } finally {
     loadingMore.value = false
   }
 }
 
 function bindObserver() {
-  if (observer) return
+  if (isArchivePage || observer || !('IntersectionObserver' in window)) return
   observer = new IntersectionObserver(
     (entries) => {
       if (entries[0]?.isIntersecting) loadMore()
@@ -83,45 +119,42 @@ function bindObserver() {
 }
 
 onMounted(() => {
-  loadFirst().then(bindObserver)
+  if (!isArchivePage) loadFirst().then(bindObserver)
 })
 
 onBeforeUnmount(() => {
-  if (observer) {
-    observer.disconnect()
-    observer = null
-  }
+  observer?.disconnect()
+  clearTimeout(resetTimer)
 })
 
 async function writeClipboard(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
+  if (navigator.clipboard?.writeText) {
     try {
       await navigator.clipboard.writeText(text)
       return true
-    } catch (err) {
-      // 剪贴板权限被拒时走下面的降级路径
+    } catch {
+      // 剪贴板权限被拒时使用兼容路径。
     }
   }
-  const ta = document.createElement('textarea')
-  ta.value = text
-  ta.setAttribute('readonly', '')
-  ta.style.position = 'fixed'
-  ta.style.opacity = '0'
-  document.body.appendChild(ta)
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.setAttribute('readonly', '')
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
   try {
-    ta.select()
+    textarea.select()
     document.execCommand('copy')
     return true
-  } catch (err) {
+  } catch {
     return false
   } finally {
-    document.body.removeChild(ta)
+    document.body.removeChild(textarea)
   }
 }
 
 async function copyShareCode(code) {
-  const ok = await writeClipboard(code)
-  if (ok) {
+  if (await writeClipboard(code)) {
     copiedCode.value = code
     clearTimeout(resetTimer)
     resetTimer = setTimeout(() => (copiedCode.value = ''), 1600)
@@ -130,18 +163,20 @@ async function copyShareCode(code) {
 </script>
 
 <template>
-  <div class="sy-community">
+  <main class="sy-community">
     <!-- ============ 页头 ============ -->
     <section class="page-head container">
-      <h1>皮肤社区</h1>
+      <h1>皮肤社区<template v-if="isArchivePage"> · 第 {{ staticPageNumber }} 页</template></h1>
       <p class="sub">
         用皮肤码定制你的候选框——配色、字体、圆角，甚至自定义背景图片。这里陈列着社区创作者的作品，审核通过后实时可见。
       </p>
-      <span class="live-note"><span class="pulse"></span>列表实时同步自社区后端</span>
+      <span class="live-note"><span class="pulse"></span>{{ isArchivePage ? '可抓取的社区静态快照' : '静态快照首屏 · 客户端实时更新' }}</span>
     </section>
 
     <!-- ============ 画廊 ============ -->
     <section class="container gallery" data-component="Skin Gallery">
+      <h2 class="gallery-title">社区皮肤作品</h2>
+      <p v-if="refreshWarning" class="refresh-warning" role="status">{{ refreshWarning }}</p>
       <div class="filter-row" role="group" aria-label="布局筛选" data-component="Filter Row">
         <button type="button" class="filter-chip" :class="{ 'is-active': activeFilter === 'all' }" @click="activeFilter = 'all'">全部</button>
         <button type="button" class="filter-chip" :class="{ 'is-active': activeFilter === 'horizontal' }" @click="activeFilter = 'horizontal'">
@@ -175,13 +210,18 @@ async function copyShareCode(code) {
 
       <!-- 有皮肤：卡片网格 -->
       <div v-else-if="filteredSkins.length" class="skin-grid">
-        <div v-for="skin in filteredSkins" :key="skin.shareCode" class="skin-card" data-component="Skin Card">
-          <div class="skin-img-wrap">
-            <img :src="skin.previewUrl" :alt="skin.skinName + ' 皮肤预览'" loading="lazy" />
-          </div>
+        <article v-for="skin in filteredSkins" :key="skin.shareCode" class="skin-card" data-component="Skin Card">
+          <component
+            :is="detailUrl(skin) ? 'a' : 'div'"
+            class="skin-img-wrap"
+            :href="detailUrl(skin) || undefined"
+            :aria-label="detailUrl(skin) ? '查看 ' + skin.skinName + ' 皮肤详情' : undefined"
+          >
+            <img :src="skin.previewUrl" :alt="skin.skinName + ' 皮肤预览'" loading="lazy" decoding="async" />
+          </component>
           <div class="skin-meta">
             <div class="skin-title-row">
-              <h3>{{ skin.skinName }}</h3>
+              <h3><a v-if="detailUrl(skin)" :href="detailUrl(skin)">{{ skin.skinName }}</a><template v-else>{{ skin.skinName }}</template></h3>
               <span class="layout-tag">
                 <svg v-if="skin.layout === 'vertical'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 4v16M16 4v16"/></svg>
                 <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
@@ -204,7 +244,7 @@ async function copyShareCode(code) {
               </button>
             </div>
           </div>
-        </div>
+        </article>
       </div>
 
       <!-- 筛选后为空 -->
@@ -219,15 +259,21 @@ async function copyShareCode(code) {
         <p>也欢迎你在客户端的「皮肤设置 → 分享皮肤」分享自己的作品。</p>
       </div>
 
-      <!-- 滚动加载哨兵：进入视口即拉取下一页 -->
-      <div ref="sentinelEl" class="skin-sentinel"></div>
-      <div v-if="loadingMore" class="loading-more">
+      <!-- 实时页面继续支持无限滚动；普通链接为搜索引擎和无脚本访问提供分页。 -->
+      <div v-if="!isArchivePage" ref="sentinelEl" class="skin-sentinel"></div>
+      <div v-if="!isArchivePage && loadingMore" class="loading-more">
         <span class="spinner"></span>
         <p>加载更多中…</p>
       </div>
-      <div v-else-if="skins.length && !hasMore && activeFilter === 'all'" class="loading-more">
+      <div v-else-if="!isArchivePage && skins.length && !hasMore && activeFilter === 'all'" class="loading-more">
         <p>已经到底啦，共 {{ total }} 款皮肤</p>
       </div>
+
+      <nav v-if="snapshotPageCount > 1" class="pagination" aria-label="皮肤社区分页">
+        <a v-if="previousPageUrl" class="pagination-prev" :href="previousPageUrl" rel="prev">← 上一页</a>
+        <span>第 {{ staticPageNumber }} / {{ snapshotPageCount }} 页</span>
+        <a v-if="nextPageUrl" class="pagination-next" :href="nextPageUrl" rel="next">下一页 →</a>
+      </nav>
     </section>
 
     <!-- ============ 导入 & 分享 ============ -->
@@ -253,7 +299,7 @@ async function copyShareCode(code) {
         </div>
       </div>
     </section>
-  </div>
+  </main>
 </template>
 
 <style scoped>
@@ -276,6 +322,8 @@ async function copyShareCode(code) {
 @keyframes pulse { 50% { opacity: 0.35; } }
 
 .gallery { padding-top: 44px; }
+.gallery-title { margin: 0 0 22px; font-size: clamp(24px, 3vw, 32px); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.refresh-warning { margin: -8px 0 18px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--muted); font-size: 13px; }
 .filter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
 .filter-chip { font-size: 13.5px; font-weight: 550; color: var(--muted); border: 1px solid var(--border); background: var(--surface); padding: 7px 16px; border-radius: 999px; display: inline-flex; align-items: center; gap: 7px; transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease; cursor: pointer; font-family: inherit; }
 .filter-chip svg { width: 12px; height: 12px; }
@@ -320,6 +368,11 @@ async function copyShareCode(code) {
 .skin-sentinel { height: 1px; }
 .loading-more { display: grid; place-items: center; gap: 12px; padding: 48px 0 8px; }
 .loading-more p { font-size: 13px; color: var(--faint); margin: 0; }
+.pagination { margin-top: 32px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; font-size: 13.5px; color: var(--faint); }
+.pagination a { width: fit-content; padding: 8px 13px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--fg); font-weight: 600; }
+.pagination-prev { grid-column: 1; justify-self: start; }
+.pagination-next { grid-column: 3; justify-self: end; }
+.pagination span { grid-column: 2; grid-row: 1; text-align: center; }
 .spinner { width: 22px; height: 22px; border-radius: 999px; border: 2px solid var(--border); border-top-color: var(--border-strong); animation: spin 0.9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
