@@ -300,8 +300,9 @@ onBeforeUnmount(() => io && io.disconnect())
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; font-weight: 600; letter-spacing: 0.02em; padding: 9px 18px; border-radius: var(--radius-sm); border: 1px solid transparent; transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease; white-space: nowrap; }
 .btn svg { width: 15px; height: 15px; flex: none; }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--primary); color: var(--on-primary); box-shadow: 0 1px 2px color-mix(in srgb, var(--fg) 18%, transparent); }
+.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 1px 2px color-mix(in srgb, var(--fg) 18%, transparent); }
 .btn-primary:hover { background: var(--primary-hover); }
+.dl-card .btn-primary, .dl-card .btn-primary:hover, .dl-card .btn-primary:active { color: #fff; }
 .btn-lg { font-size: 15.5px; padding: 12px 24px; }
 
 .dl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
@@ -365,7 +366,7 @@ onBeforeUnmount(() => io && io.disconnect())
 @media (max-width: 1023px) {
   .platform-grid { grid-template-columns: 1fr; }
   .sponsor { grid-template-columns: 1fr; }
-  .sponsor-qr { justify-items: start; }
+  .sponsor-qr { justify-items: center; }
 }
 @media (max-width: 639px) {
   .dl-grid { grid-template-columns: 1fr; }
