@@ -80,9 +80,6 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/zhangjh/suyan-site' },
     ],
 
-    footer: {
-      message: '素言基于 RIME 开源引擎构建，永久免费 · 无广告 · 无捆绑',
-      copyright: 'Copyright © 2026-present<br>Built by ZhangJH · <a href="https://zhangjh.cn" target="_blank" rel="noreferrer">访问个人主页 →</a>',
-    },
+    // 页脚由主题 SiteFooter 组件统一渲染（layout-bottom 插槽），不使用默认 footer 配置
   },
 })
