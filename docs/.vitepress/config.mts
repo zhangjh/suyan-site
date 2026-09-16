@@ -88,6 +88,11 @@ export default defineConfig({
   title: '素言 SuYan',
   description: '拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台中英文输入法',
   lang: 'zh-CN',
+  // 关闭 VitePress 路由级链接预取，避免与 Cloudflare Speed Brain 的
+  // Speculation Rules 预取冲突，导致静态资源 net::ERR_ABORTED 503
+  router: {
+    prefetchLinks: false,
+  },
 
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }],
