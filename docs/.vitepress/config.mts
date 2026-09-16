@@ -96,6 +96,8 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }],
+    // 百度站长平台 HTML 标签验证（站长为 suyan.zhangjh.cn）
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-FUmMC9FhKu' }],
     ['meta', { property: 'og:site_name', content: '素言 SuYan' }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
     ['meta', { property: 'og:type', content: 'website' }],
