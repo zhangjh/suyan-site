@@ -34,10 +34,8 @@ onMounted(() => {
 
   releaseController = new AbortController()
   const timeout = setTimeout(() => releaseController.abort(), 12_000)
-  fetch('https://api.github.com/repos/zhangjh/suyan-site/releases/latest', {
-    headers: { Accept: 'application/vnd.github+json' },
-    signal: releaseController.signal,
-  })
+  // 同源 Pages Function 代理（服务端带 token 实时请求 GitHub，不缓存）
+  fetch('/api/latest-release', { signal: releaseController.signal })
     .then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
       return response.json()
