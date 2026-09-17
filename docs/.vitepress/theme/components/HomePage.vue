@@ -245,7 +245,7 @@ function runTyping() {
         <article class="feature-card reveal" data-component="Feature Card">
           <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V3"/><path d="M14 21H9m2.5-6v6M9 3h2l1 2 1-2h2"/></svg></span>
           <h3>内置生产力工具</h3>
-          <p>截图、剪贴板历史、取色器一键调用，自定义皮肤随心换。高效，不打断工作流。</p>
+          <p>截图、剪贴板历史一键调用，无须额外软件依赖，自定义皮肤随心换。高效，不打断工作流。</p>
         </article>
       </div>
     </section>
