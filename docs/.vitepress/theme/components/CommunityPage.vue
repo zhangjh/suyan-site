@@ -170,7 +170,6 @@ async function copyShareCode(code) {
       <p class="sub">
         用皮肤码定制你的候选框——配色、字体、圆角，甚至自定义背景图片。这里陈列着社区创作者的作品，审核通过后实时可见。
       </p>
-      <span class="live-note"><span class="pulse"></span>{{ isArchivePage ? '可抓取的社区静态快照' : '静态快照首屏 · 客户端实时更新' }}</span>
     </section>
 
     <!-- ============ 画廊 ============ -->
