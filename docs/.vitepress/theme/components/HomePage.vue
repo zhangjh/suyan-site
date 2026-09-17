@@ -449,7 +449,7 @@ function runTyping() {
             </tr>
             <tr>
               <td>翻译</td>
-              <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span>仅限浏览器或特定应用</td>
+              <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span>不支持</td>
               <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg></span>不支持</td>
               <td class="col-suyan"><span class="mark mark-good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>系统级划词，覆盖所有桌面应用</td>
             </tr>
@@ -475,7 +475,7 @@ function runTyping() {
               <td>内置工具</td>
               <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span>捆绑大量无用功能</td>
               <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg></span>仅基础输入</td>
-              <td class="col-suyan"><span class="mark mark-good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>截图 / 剪贴板 / 取色，按需调用</td>
+              <td class="col-suyan"><span class="mark mark-good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>截图 / 剪贴板，克制集成办公必须，按需调用</td>
             </tr>
           </tbody>
         </table>
