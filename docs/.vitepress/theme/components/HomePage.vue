@@ -583,14 +583,36 @@ function runTyping() {
           <span class="p-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
         </a>
       </div>
-      <div class="articles reveal">
+    </section>
+
+    <!-- ============ 更多作品 ============ -->
+    <section class="section container" data-component="More Works">
+      <div class="section-head reveal">
+        <p class="eyebrow">Other Works · 更多作品</p>
+        <h2 class="section-title">更多作品</h2>
+      </div>
+      <div class="product-grid">
+        <a class="product-card reveal" href="https://playwhat.cc" target="_blank" rel="noreferrer">
+          <img src="/playwhat_logo.png" alt="玩什么 Logo" width="200" height="200" loading="lazy" decoding="async" />
+          <div>
+            <p class="p-name">PlayWhat · 玩什么</p>
+            <p class="p-desc">一款 H5 小游戏网站</p>
+          </div>
+          <span class="p-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ 公众号文章 ============ -->
+    <div class="container articles-news reveal">
+      <div class="articles">
         <a href="https://mp.weixin.qq.com/s/N8UdTwUFyCVq_CqfU5NWCA" target="_blank" rel="noreferrer">素言新版本5.2.1发布：五笔爱好者福音<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/63I3Llu4IT65SIkefTFYUA" target="_blank" rel="noreferrer">素言新增自定义皮肤共享&皮肤社区<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/nbBbmLFPT0f4nsgvCqSe0w" target="_blank" rel="noreferrer">素言5.0发布：云同步、AI翻译集成，还有Ubuntu<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/p_OWf4GYqzPzYiDehMPAeg" target="_blank" rel="noreferrer">素言 v3.6.0 发布：你提的建议，我都做到了<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/txePM7bdF5GCP9neVgvsFw" target="_blank" rel="noreferrer">素言输入法：一款纯净、离线、注重隐私的桌面输入法<span class="src">但丁自留地</span></a>
       </div>
-    </section>
+    </div>
 
     <!-- ============ 图片灯箱 ============ -->
     <Teleport to="body">
