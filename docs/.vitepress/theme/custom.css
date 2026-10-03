@@ -256,3 +256,15 @@
     padding-top: clamp(24px, 6vw, 40px) !important;
   }
 }
+
+/* 截图占位块：新功能文档中暂未拍摄的截图先用虚线框占位，后续替换为真实截图 */
+.screenshot-placeholder {
+  border: 1.5px dashed var(--vp-c-border);
+  border-radius: 10px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  padding: 28px 20px;
+  margin: 16px 0;
+  text-align: center;
+  font-size: 14px;
+}
