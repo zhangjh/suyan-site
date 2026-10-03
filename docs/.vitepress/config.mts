@@ -233,6 +233,7 @@ export default defineConfig({
           text: '进阶',
           items: [
             { text: '词库管理', link: '/guide/dictionary' },
+            { text: '自定义输入方案', link: '/guide/custom-schemes' },
             { text: '特殊输入模式', link: '/guide/special-modes' },
           ],
         },
