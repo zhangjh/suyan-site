@@ -355,6 +355,39 @@ function runTyping() {
       </div>
     </section>
 
+    <!-- ============ 深度区块：自定义输入方案 ============ -->
+    <section class="section container" data-component="Deep Dive Custom Schemes">
+      <div class="deep">
+        <div class="deep-copy reveal">
+          <p class="deep-tag">04 · Custom Schemes</p>
+          <h2>输入方案自由：RIME 生态，拿来即用<span class="pill-coming">即将上线</span></h2>
+          <p class="deep-lead">新版本带来「输入方案管理」：预置模板一键勾选，自己的 RIME 方案也能上传导入——部署后自动出现在切换菜单，素言的适用边界由你定义。</p>
+          <ul class="deep-points">
+            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>预置模板一键勾选</strong>：雾凇拼音、双拼 7 种码表（小鹤/自然码/微软/智能ABC/搜狗/紫光/拼音加加）、极点五笔 86、注音，勾选即用</span></li>
+            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>上传自己的方案</strong>：本地 RIME 方案文件（.schema.yaml）经校验后导入，点确定自动部署生效</span></li>
+            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>切换菜单自动出现</strong>：新方案即时进入方案切换菜单，小众方案自理、无需等待官方适配</span></li>
+          </ul>
+          <p class="deep-more"><a href="/guide/custom-schemes">查看自定义输入方案指南 →</a></p>
+        </div>
+        <div class="deep-visual reveal">
+          <div class="mock mock-schemes" role="img" aria-label="支持的输入方案示意">
+            <span class="scheme-chip">雾凇拼音</span>
+            <span class="scheme-chip">小鹤双拼</span>
+            <span class="scheme-chip">自然码</span>
+            <span class="scheme-chip">微软双拼</span>
+            <span class="scheme-chip">智能ABC</span>
+            <span class="scheme-chip">搜狗双拼</span>
+            <span class="scheme-chip">紫光双拼</span>
+            <span class="scheme-chip">拼音加加</span>
+            <span class="scheme-chip">注音</span>
+            <span class="scheme-chip">五笔 86</span>
+            <span class="scheme-chip scheme-chip-more">+ 上传自己的方案…</span>
+          </div>
+          <p class="mock-caption">预置模板 + 上传导入，部署后自动进入切换菜单</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ 演示 ============ -->
     <section class="section container" data-component="Demo Gallery">
       <div class="section-head reveal">
@@ -724,6 +757,15 @@ function runTyping() {
 .deep-more svg { width: 14px; height: 14px; }
 .deep-visual .mock { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden; }
 .mock-caption { margin-top: 14px; text-align: center; font-size: 12.5px; color: var(--faint); }
+
+/* custom schemes mock：方案 chips 云 */
+.mock-schemes { display: flex; flex-wrap: wrap; gap: 10px; padding: 26px 24px; align-content: flex-start; }
+.scheme-chip { padding: 8px 14px; border-radius: 999px; font-size: 14px; background: var(--surface-3); border: 1px solid var(--border); color: var(--fg); }
+.scheme-chip-more { border-style: dashed; color: var(--muted); background: transparent; }
+.pill-coming { display: inline-block; vertical-align: middle; margin-left: 10px; padding: 3px 10px; font-size: 12px; font-weight: 600; border-radius: 999px; color: var(--primary); background: var(--primary-soft); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); }
+.deep-more { margin-top: 16px; font-size: 14px; }
+.deep-more a { color: var(--primary); text-decoration: none; }
+.deep-more a:hover { text-decoration: underline; }
 
 /* translate mock */
 .mock-translate { padding: 26px 28px 30px; }
