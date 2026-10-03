@@ -360,7 +360,7 @@ function runTyping() {
       <div class="deep">
         <div class="deep-copy reveal">
           <p class="deep-tag">04 · Custom Schemes</p>
-          <h2>输入方案自由：RIME 生态，拿来即用<span class="pill-coming">即将上线</span></h2>
+          <h2>输入方案自由：RIME 生态，拿来即用</h2>
           <p class="deep-lead">新版本带来「输入方案管理」：预置模板一键勾选，自己的 RIME 方案也能上传导入——部署后自动出现在切换菜单，素言的适用边界由你定义。</p>
           <ul class="deep-points">
             <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>预置模板一键勾选</strong>：雾凇拼音、双拼 7 种码表（小鹤/自然码/微软/智能ABC/搜狗/紫光/拼音加加）、极点五笔 86、注音，勾选即用</span></li>
@@ -762,7 +762,6 @@ function runTyping() {
 .mock-schemes { display: flex; flex-wrap: wrap; gap: 10px; padding: 26px 24px; align-content: flex-start; }
 .scheme-chip { padding: 8px 14px; border-radius: 999px; font-size: 14px; background: var(--surface-3); border: 1px solid var(--border); color: var(--fg); }
 .scheme-chip-more { border-style: dashed; color: var(--muted); background: transparent; }
-.pill-coming { display: inline-block; vertical-align: middle; margin-left: 10px; padding: 3px 10px; font-size: 12px; font-weight: 600; border-radius: 999px; color: var(--primary); background: var(--primary-soft); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); }
 .deep-more { margin-top: 16px; font-size: 14px; }
 .deep-more a { color: var(--primary); text-decoration: none; }
 .deep-more a:hover { text-decoration: underline; }
