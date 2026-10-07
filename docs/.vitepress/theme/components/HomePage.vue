@@ -142,7 +142,7 @@ function runTyping() {
     <!-- ============ Hero ============ -->
     <section class="hero container">
       <span class="hero-chip reveal"
-        ><span class="dot"></span>v5.2.1 · 新增极点五笔输入方案上线</span
+        ><span class="dot"></span>v5.3.0 · 新增自定义输入方案上线</span
       >
       <h1>素言，回归输入的<span class="accent">本质</span></h1>
       <p class="hero-sub reveal">
