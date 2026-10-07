@@ -37,8 +37,7 @@ head:
 
 1. 右键点击托盘中的「中/EN」语言指示器，打开设置菜单（详见 [FAQ：设置菜单怎么打开？](/guide/faq#设置菜单怎么打开))。
 2. 进入「基本设置」，点击 **「输入方案管理...」** 按钮，打开「输入方案管理」对话框。
-
-<div class="screenshot-placeholder">📷 截图占位：「基本设置」中的「输入方案管理...」入口</div>
+    <img src="/custom-schemes-entry.png" alt="基本设置菜单中的「输入方案管理...」入口" width="419" height="412" loading="lazy" decoding="async">
 
 ## 预置方案：一键勾选
 
@@ -60,8 +59,7 @@ head:
 :::
 
 修改完成后点击 **「确定」**，素言会自动重新部署 Rime，新方案随即出现在方案切换菜单中；点击「取消」则放弃本次修改。
-
-<div class="screenshot-placeholder">📷 截图占位：「输入方案管理」对话框（预置方案勾选 + 码表下拉）</div>
+<img src="/custom-schemes-manager.png" alt="输入方案管理对话框：预置方案勾选与双拼码表下拉" width="431" height="531" loading="lazy" decoding="async">
 
 ## 上传自己的 RIME 方案
 
