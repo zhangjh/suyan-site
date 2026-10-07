@@ -639,7 +639,7 @@ function runTyping() {
     <!-- ============ 公众号文章 ============ -->
     <div class="container articles-news reveal">
       <div class="articles">
-        <a href="https://mp.weixin.qq.com/s/LdhB4zrgTLQOdgug-76yyg" target="_blank" rel="noreferrer">素言新版本5.3.0发布，灵活性提升的一大步！全新适配各种输入方案<span class="src">但丁自留地</span></a>
+        <a href="https://mp.weixin.qq.com/s/LdhB4zrgTLQOdgug-76yyg" target="_blank" rel="noreferrer">素言5.3.0发布，灵活性提升，全新适配多种输入方案<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/N8UdTwUFyCVq_CqfU5NWCA" target="_blank" rel="noreferrer">素言新版本5.2.1发布：五笔爱好者福音<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/63I3Llu4IT65SIkefTFYUA" target="_blank" rel="noreferrer">素言新增自定义皮肤共享&皮肤社区<span class="src">但丁自留地</span></a>
         <a href="https://mp.weixin.qq.com/s/nbBbmLFPT0f4nsgvCqSe0w" target="_blank" rel="noreferrer">素言5.0发布：云同步、AI翻译集成，还有Ubuntu<span class="src">但丁自留地</span></a>
