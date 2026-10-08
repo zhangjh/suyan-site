@@ -1,13 +1,16 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { fetchLatestReleaseRuntime } from '../../data/release'
 
 const props = defineProps({
   releaseData: { type: Object, required: true },
 })
 
 const latestVersion = ref('获取中...')
+// 更新内容：先渲染构建期烘入的旧内容，运行时拿到更新的 release 再换新
+const notesTitle = ref(props.releaseData.title)
+const notesHtml = ref(props.releaseData.notesHtml)
 let io = null
-let releaseController = null
 
 function observeReveals(root) {
   if (!root || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -32,27 +35,28 @@ function observeReveals(root) {
 onMounted(() => {
   observeReveals(document.querySelector('.sy-download'))
 
-  releaseController = new AbortController()
-  const timeout = setTimeout(() => releaseController.abort(), 12_000)
-  // 同源 Pages Function 代理（服务端带 token 实时请求 GitHub，不缓存）
-  fetch('/api/latest-release', { signal: releaseController.signal })
-    .then((response) => {
-      if (!response.ok) throw new Error(`HTTP ${response.status}`)
-      return response.json()
-    })
-    .then((release) => {
-      if (release.tag_name) latestVersion.value = release.tag_name
+  // 版本号徽章 + 更新内容：运行时从同源 Pages Function 获取（边缘缓存 60 秒），
+  // 失败时保留构建期内容降级展示
+  fetchLatestReleaseRuntime()
+    .then((fresh) => {
+      if (!fresh) {
+        latestVersion.value = '暂时无法获取'
+        return
+      }
+      latestVersion.value = fresh.tagName
+      if (fresh.title !== props.releaseData.title) {
+        notesTitle.value = fresh.title
+        notesHtml.value = fresh.notesHtml
+      }
     })
     .catch((error) => {
-      if (error?.name !== 'AbortError') console.error('Failed to fetch latest release:', error)
+      console.error('Failed to refresh latest release:', error)
       latestVersion.value = '暂时无法获取'
     })
-    .finally(() => clearTimeout(timeout))
 })
 
 onBeforeUnmount(() => {
   io?.disconnect()
-  releaseController?.abort()
 })
 </script>
 
@@ -121,22 +125,22 @@ onBeforeUnmount(() => {
     </section>
 
     <!-- ============ 更新内容 ============ -->
-    <section v-if="props.releaseData.notesHtml" class="section container" data-component="Release Notes">
+    <section v-if="notesHtml" class="section container" data-component="Release Notes">
       <div class="section-head reveal">
         <p class="eyebrow">Changelog · 更新内容</p>
-        <h2 class="section-title">{{ props.releaseData.title }} 更新内容</h2>
+        <h2 class="section-title">{{ notesTitle }} 更新内容</h2>
       </div>
       <div class="release reveal" data-component="Release Card">
         <div class="release-head">
           <h3>主要变化</h3>
-          <span class="tag">{{ props.releaseData.title }}</span>
+          <span class="tag">{{ notesTitle }}</span>
           <span class="src">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9 9 9 0 0 0-9-9Zm0 0c2.5 2.4 4 5.7 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.7-4-9s1.5-6.6 4-9ZM3.5 9h17m-17 6h17"/></svg>
-            数据来源 GitHub Releases · 构建时同步
+            数据来源 GitHub Releases · 分钟级自动同步
           </span>
         </div>
         <!-- 构建期 MarkdownIt 已关闭原始 HTML，只输出经过约束的 release Markdown。 -->
-        <div class="release-body" v-html="props.releaseData.notesHtml"></div>
+        <div class="release-body" v-html="notesHtml"></div>
       </div>
     </section>
 

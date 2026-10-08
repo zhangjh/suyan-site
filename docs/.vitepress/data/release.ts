@@ -75,3 +75,36 @@ export function loadReleaseNotes(): Promise<ReleaseNotesData> {
   })
   return releasePromise
 }
+
+export interface FreshReleaseInfo {
+  tagName: string
+  title: string
+  notesHtml: string
+}
+
+/**
+ * 运行时从同源 Pages Function 获取最新 release（服务端带 token，边缘缓存 60 秒）。
+ * 成功返回 { tagName, title, notesHtml }；任何失败返回 null，
+ * 调用方保留构建期烘入的旧内容做降级展示。
+ */
+export async function fetchLatestReleaseRuntime(): Promise<FreshReleaseInfo | null> {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+  try {
+    const response = await fetch(PROXY_API_URL, {
+      headers: { Accept: 'application/json' },
+      signal: controller.signal,
+    })
+    if (!response.ok) return null
+    const release = await response.json()
+    const tagName = String(release.tag_name || '')
+    const title = String(release.name || tagName || '')
+    const notes = extractUpdateNotes(String(release.body ?? ''))
+    if (!tagName || !notes) return null
+    return { tagName, title, notesHtml: markdown.render(notes) }
+  } catch {
+    return null
+  } finally {
+    clearTimeout(timer)
+  }
+}
