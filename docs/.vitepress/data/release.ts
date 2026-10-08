@@ -23,11 +23,11 @@ function extractUpdateNotes(body: string): string {
   const startIndex = lines.findIndex((line) => /^#{1,6}\s+更新内容\s*$/.test(line))
   if (startIndex === -1) return ''
 
-  const headingLevel = lines[startIndex].match(/^#+/)?.[0].length ?? 6
+  // 更新日志可能是分段的多个同级小节（更新内容、问题修复和优化……），
+  // 一直取到"下载"小节之前；"下载"之后是安装包/系统要求等非日志内容。
   const endIndex = lines.findIndex((line, index) => {
     if (index <= startIndex) return false
-    const heading = line.match(/^(#{1,6})\s+/)
-    return Boolean(heading && heading[1].length <= headingLevel)
+    return /^#{1,6}\s+下载\s*$/.test(line)
   })
   const sectionLines = lines.slice(startIndex + 1, endIndex === -1 ? undefined : endIndex)
   while (sectionLines.length) {

@@ -44,7 +44,8 @@ onMounted(() => {
         return
       }
       latestVersion.value = fresh.tagName
-      if (fresh.title !== props.releaseData.title) {
+      // 标题相同不代表内容相同（如 release 正文被编辑过），按渲染后的正文比对
+      if (fresh.notesHtml !== props.releaseData.notesHtml) {
         notesTitle.value = fresh.title
         notesHtml.value = fresh.notesHtml
       }
