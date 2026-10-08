@@ -20,19 +20,20 @@ export interface ReleaseNotesData {
 
 function extractUpdateNotes(body: string): string {
   const lines = body.split(/\r?\n/)
-  const startIndex = lines.findIndex((line) => /^#{1,6}\s+更新内容\s*$/.test(line))
-  if (startIndex === -1) return ''
-
-  // 更新日志可能是分段的多个同级小节（更新内容、问题修复和优化……），
-  // 一直取到"下载"小节之前；"下载"之后是安装包/系统要求等非日志内容。
-  const endIndex = lines.findIndex((line, index) => {
-    if (index <= startIndex) return false
-    return /^#{1,6}\s+下载\s*$/.test(line)
-  })
-  const sectionLines = lines.slice(startIndex + 1, endIndex === -1 ? undefined : endIndex)
+  // 发布内容固定格式：第一条水平分隔线之前全部是更新日志（分段 markdown，
+  // 可含加粗、多级标题），分隔线之后是下载/系统要求等固定内容。直接取分隔线之前。
+  const sepIndex = lines.findIndex((line) => /^(?:-{3,}|\*{3,}|_{3,})$/.test(line.trim()))
+  const sectionLines = (sepIndex === -1 ? lines : lines.slice(0, sepIndex)).slice()
+  // 去掉顶部空行和一级/二级标题（卡片已有版本标题，避免重复）
+  while (sectionLines.length) {
+    const firstLine = sectionLines[0].trim()
+    if (!firstLine) { sectionLines.shift(); continue }
+    if (/^#{1,2}\s/.test(firstLine)) { sectionLines.shift(); continue }
+    break
+  }
   while (sectionLines.length) {
     const lastLine = sectionLines.at(-1)?.trim() ?? ''
-    if (lastLine && !/^(?:-{3,}|\*{3,}|_{3,})$/.test(lastLine)) break
+    if (lastLine) break
     sectionLines.pop()
   }
   return sectionLines.join('\n').trim()
