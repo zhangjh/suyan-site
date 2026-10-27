@@ -1,7 +1,8 @@
 ---
 layout: page
-title: 下载素言 SuYan
-description: 素言输入法下载：支持 Windows、macOS（Intel & ARM）、Ubuntu 三大平台，完全免费开放。
+title: 下载素言输入法 — Windows / macOS / Ubuntu 全平台安装包
+titleTemplate: ':title'
+description: 下载素言输入法最新版本：支持 Windows、macOS（Intel 与 Apple Silicon）、Ubuntu 三大平台，提供官网直链与网盘下载，完全免费、无广告。
 ---
 
 <script setup>

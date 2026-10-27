@@ -1,6 +1,6 @@
 ---
-title: 特殊输入模式（RIME 高阶用法）
-description: 素言内置的 RIME 特殊模式速查与教程：v 符号模式、Emoji、日期时间、大写金额、Unicode 反查、英文直通、整词上屏等。
+title: 特殊输入模式 （RIME 高阶用法） — 符号、日期、Emoji 快捷输入速查
+description: 素言内置的 RIME 特殊输入模式速查：vfh 符号大全、vvv Emoji、rq 日期、sj 时间、大写金额、Unicode 反查、英文直通与整词上屏等技巧。
 ---
 
 # 特殊输入模式

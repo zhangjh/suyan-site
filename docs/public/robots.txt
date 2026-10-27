@@ -3,19 +3,101 @@
 User-agent: *
 Allow: /
 
-# AI 训练抓取声明：素言为公开站点，对常见 AI 抓取器同样放行
-User-agent: GPTBot
+# --- 传统搜索引擎 ---
+User-agent: Googlebot
 Allow: /
 
-User-agent: ChatGPT-User
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# --- AI 训练抓取声明 ---
+# 素言为公开站点，对常见 AI 训练抓取器同样放行
+User-agent: GPTBot
 Allow: /
 
 User-agent: CCBot
 Allow: /
 
-# X/Twitter 链接卡片抓取器
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# --- AI 搜索 / 答案引擎抓取（GEO：让生成式引擎能引用本站内容） ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# --- 社交平台链接卡片抓取器 ---
 User-agent: Twitterbot
 Allow: /
 
-# 站点地图
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# --- 站点地图与 AI 内容索引 ---
+# llms.txt 为面向大模型的内容索引（https://llmstxt.org 约定）
 Sitemap: https://suyan.zhangjh.cn/sitemap.xml

@@ -1,6 +1,6 @@
 ---
-title: 素言安装指南 — Windows / macOS / Ubuntu
-description: 素言输入法 Windows、macOS（Intel & ARM）与 Ubuntu（Fcitx5）三大平台安装教程，含升级与卸载说明。
+title: 安装指南 — Windows / macOS / Ubuntu 安装与升级教程
+description: 素言输入法在 Windows、macOS 与 Ubuntu（Fcitx5）三大平台的安装教程，含 SmartScreen 与 Gatekeeper 拦截放行、输入法添加、升级与卸载步骤。
 ---
 
 # 安装指南

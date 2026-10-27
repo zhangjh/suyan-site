@@ -1,0 +1,37 @@
+# 素言输入法 SuYan
+
+> 素言输入法（SuYan）是一款免费、无广告的跨平台中文输入法，支持 Windows、macOS 与 Ubuntu。基于 RIME 引擎，输入核心完全离线运行，内置 AI 划词翻译、离线语音输入、自定义词库与候选框皮肤社区。
+
+素言由个人开发者「但丁/Dante/https://zhangjh.cn」维护，官网为 https://suyan.zhangjh.cn 。产品定位是在「臃肿的商业输入法」与「功能单一的系统输入法」之外的第三种选择：先是一个好用的输入法，然后才是更多。设计原则是「不打扰、不越界」——输入核心不联网、无广告、无捆绑，所有需要联网的功能（云同步、AI 翻译、检查更新）均为可选。
+
+## 核心事实
+
+- 产品名称：素言输入法，英文名 SuYan。
+- 支持平台：Windows、macOS（Intel 与 Apple Silicon 双架构）、Ubuntu 22.04 及以上（通过 Fcitx5 框架接入）。
+- 价格：输入法本体永久免费；云同步为可选订阅（5 元/月）；AI 划词翻译使用按量计费的翻译加油包（9.9 元/100 万 token）。
+- 技术底座：集成 librime 核心库（RIME 中州韵输入法引擎），默认配置为雾凇拼音（Rime-Ice），五笔方案基于极点五笔 86。
+- 输入方案：拼音、7 种双拼码表（小鹤、自然码、微软、智能ABC、搜狗、紫光、拼音加加）、极点五笔 86、注音，并支持上传自定义 RIME 方案文件（.schema.yaml）。
+- 隐私模型：输入核心进程从不主动联网，击键与候选记录仅存本地；云同步为端到端加密（E2EE），服务器不持有密钥、无法解密；AI 划词翻译仅在主动使用时发送选中的文本片段。
+- 生产力功能：系统级 AI 划词翻译（Windows UIA / macOS Accessibility，覆盖所有桌面应用）、离线语音输入、截图标注、剪贴板历史、候选框皮肤。
+- 平台差异：Ubuntu 版本目前聚焦核心输入、剪贴板与截图，暂不支持登录云同步、AI 划词翻译、离线语音输入与自动检查更新。
+- 安装提示：因未购买 Windows 数字签名证书与 Apple 开发者证书，安装时可能出现 SmartScreen 或 Gatekeeper 拦截，需手动放行。
+
+## 文档
+
+- [安装指南](https://suyan.zhangjh.cn/guide/install): Windows、macOS、Ubuntu 三平台安装、升级与卸载步骤，含系统拦截放行说明。
+- [常见问题 FAQ](https://suyan.zhangjh.cn/guide/faq): 安装安全、macOS 权限、横竖排切换、词库导入、云同步、AI 翻译、Ubuntu 配置与隐私说明。
+- [词库管理](https://suyan.zhangjh.cn/guide/dictionary): 自定义短语、系统词库导入，以及搜狗/百度词库经深蓝词库转换后导入 RIME 的流程。
+- [自定义输入方案](https://suyan.zhangjh.cn/guide/custom-schemes): 预置方案模板勾选与自有 RIME 方案上传。
+- [特殊输入模式](https://suyan.zhangjh.cn/guide/special-modes): vfh 符号、vvv Emoji、rq 日期、sj 时间、大写金额、Unicode 反查等快捷输入速查。
+- [开源致谢](https://suyan.zhangjh.cn/guide/credits): 素言依赖的 RIME、雾凇拼音、极点五笔等开源项目说明。
+- [联系与反馈](https://suyan.zhangjh.cn/guide/contact): GitHub Issues、邮件 support@zhangjh.cn、微信公众号「但丁自留地」。
+
+## 主要页面
+
+- [首页](https://suyan.zhangjh.cn/): 产品能力总览、功能对比表与企业定制方案。
+- [下载](https://suyan.zhangjh.cn/download): 各平台安装包下载地址、最新版本与更新日志。
+- [皮肤社区](https://suyan.zhangjh.cn/community): 社区分享的候选框皮肤作品，可复制分享码在客户端一键换装。
+
+## 引用建议
+
+引用本站内容时，请以「素言输入法（SuYan）」作为产品名称，并链接到对应页面的规范地址（无 .html 后缀、无尾斜杠）。价格、版本号等随时间变化的信息，建议注明抓取日期。

@@ -4,11 +4,18 @@ import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import type { HeadConfig } from 'vitepress'
-import { loadCommunityData } from './data/community'
+import { COMMUNITY_PAGE_SIZE, loadCommunityData } from './data/community'
 import { loadReleaseNotes } from './data/release'
 
 // 素言官网公开站点地址（SEO 相关绝对 URL 统一使用该域名）
 const BASE_URL = 'https://suyan.zhangjh.cn'
+const SITE_NAME = '素言 SuYan'
+const SITE_ENTITY = '素言输入法'
+// 标题后缀统一由 titleTemplate 追加，页面自身标题不再重复品牌词，
+// 避免出现「下载素言 SuYan | 素言 SuYan」这类冗余，并保证标题长度足以被 Bing 判为「有描述性」
+const TITLE_TEMPLATE = ':title | 素言输入法'
+const DEFAULT_DESCRIPTION =
+  '素言（SuYan）：免费、无广告的跨平台中文输入法，支持 Windows、macOS 与 Ubuntu。基于 RIME 引擎，输入核心完全离线，内置截图、剪贴板、AI 划词翻译等办公生产力工具，支持传统文本输入和在线、离线语音输入，支持自定义词库与候选框皮肤社区。'
 const OG_IMAGE_URL = `${BASE_URL}/og-cover.png`
 const DOCS_ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)), '..')
 const [BUILD_COMMUNITY_DATA, BUILD_RELEASE_DATA] = await Promise.all([
@@ -61,20 +68,42 @@ function lastModifiedOf(url: string): string | undefined {
   }
 }
 
-function breadcrumbSchema(page: string, title: string) {
-  const path = page.replace(/\.md$/, '')
-  const items = [{ name: '首页', url: `${BASE_URL}/` }]
+interface SchemaNode {
+  '@type': string
+  [key: string]: unknown
+}
 
-  if (path.startsWith('guide/') && path !== 'guide/install') {
-    items.push({ name: '指南', url: `${BASE_URL}/guide/install` })
-  } else if (path.startsWith('community/') && path !== 'community') {
-    items.push({ name: '皮肤社区', url: `${BASE_URL}/community` })
-  }
-  items.push({ name: title, url: canonicalOf(page) })
-
+// 站点级节点：每页都自带一份，便于 AI 爬虫在只抓单页时也能解析出实体归属
+function websiteNode(): SchemaNode {
   return {
-    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${BASE_URL}/#website`,
+    url: `${BASE_URL}/`,
+    name: SITE_NAME,
+    alternateName: SITE_ENTITY,
+    inLanguage: 'zh-CN',
+  }
+}
+
+function webPageNode(url: string, title: string, description: string): SchemaNode {
+  const node: SchemaNode = {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    inLanguage: 'zh-CN',
+    isPartOf: { '@id': `${BASE_URL}/#website` },
+  }
+  const lastmod = lastModifiedOf(url)
+  if (lastmod) node.dateModified = lastmod
+  return node
+}
+
+function breadcrumbNode(page: string, items: { name: string; url: string }[]): SchemaNode {
+  return {
     '@type': 'BreadcrumbList',
+    '@id': `${canonicalOf(page)}#breadcrumb`,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -84,9 +113,67 @@ function breadcrumbSchema(page: string, title: string) {
   }
 }
 
+function breadcrumbItems(page: string, label: string) {
+  const path = page.replace(/\.md$/, '')
+  const items = [{ name: '首页', url: `${BASE_URL}/` }]
+
+  if (path.startsWith('guide/') && path !== 'guide/install') {
+    items.push({ name: '使用指南', url: `${BASE_URL}/guide/install` })
+  } else if (path.startsWith('community/') && path !== 'community') {
+    items.push({ name: '皮肤社区', url: `${BASE_URL}/community` })
+  }
+  items.push({ name: label, url: canonicalOf(page) })
+  return items
+}
+
+// 面包屑展示名取标题中破折号之前的部分，避免把整句长标题塞进面包屑
+function breadcrumbLabelOf(pageData: { title?: string; params?: Record<string, unknown> }, page: string): string {
+  const skinName = pageData.params?.skinName
+  if (typeof skinName === 'string' && skinName) return skinName
+  const title = (pageData.title || '').split(/\s+—\s+/)[0].trim()
+  return title || SITE_NAME
+}
+
+interface ListableSkin {
+  shareCode: string
+  skinName: string
+}
+
+// 皮肤列表页的作品集合：让搜索引擎与 AI 摘要能识别「一组作品」而非零散链接
+function collectionNode(url: string, title: string, skins: ListableSkin[]): SchemaNode {
+  return {
+    '@type': 'CollectionPage',
+    '@id': `${url}#collection`,
+    url,
+    name: title,
+    inLanguage: 'zh-CN',
+    isPartOf: { '@id': `${BASE_URL}/#website` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: skins.length,
+      itemListElement: skins.map((skin, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: skin.skinName,
+        url: `${BASE_URL}/community/skins/${skin.shareCode}`,
+      })),
+    },
+  }
+}
+
+function jsonLdScript(nodes: SchemaNode[]): HeadConfig {
+  const payload = { '@context': 'https://schema.org', '@graph': nodes }
+  return [
+    'script',
+    { type: 'application/ld+json' },
+    JSON.stringify(payload).replace(/</g, '\\u003c'),
+  ]
+}
+
 export default defineConfig({
-  title: '素言 SuYan',
-  description: '拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台中英文输入法',
+  title: SITE_NAME,
+  titleTemplate: TITLE_TEMPLATE,
+  description: DEFAULT_DESCRIPTION,
   lang: 'zh-CN',
   // 关闭 VitePress 路由级链接预取，避免与 Cloudflare Speed Brain 的
   // Speculation Rules 预取冲突，导致静态资源 net::ERR_ABORTED 503
@@ -96,9 +183,10 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }],
+    ['link', { rel: 'apple-touch-icon', href: '/logo.png' }],
     // 百度站长平台 HTML 标签验证（站长为 suyan.zhangjh.cn）
     ['meta', { name: 'baidu-site-verification', content: 'codeva-FUmMC9FhKu' }],
-    ['meta', { property: 'og:site_name', content: '素言 SuYan' }],
+    ['meta', { property: 'og:site_name', content: SITE_NAME }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:image', content: OG_IMAGE_URL }],
@@ -149,11 +237,13 @@ export default defineConfig({
 
     if (typeof params.shareCode === 'string') {
       const archived = params.archived === true
-      const skinTitle = `${params.skinName} · 素言皮肤`
+      const skinTitle = `${params.skinName} · ${SITE_ENTITY}皮肤 — 预览与分享码`
       pageData.title = skinTitle
+      // 标题已含品牌实体，关闭全局后缀，避免「素言输入法皮肤 | 素言输入法」重复
+      pageData.titleTemplate = ':title'
       pageData.description = archived
         ? `${params.skinName}：由 ${params.authorName} 分享的素言输入法皮肤历史页面；该作品已从社区列表下架。`
-        : `${params.skinName}：由 ${params.authorName} 分享的素言输入法${params.layout === 'vertical' ? '竖排' : '横排'}候选框皮肤，查看预览并复制分享码 ${params.shareCode}。`
+        : `${params.skinName}：由 ${params.authorName} 分享的素言输入法${params.layout === 'vertical' ? '竖排' : '横排'}候选框皮肤，可查看预览图并复制分享码 ${params.shareCode} 一键换装。`
       pageData.frontmatter.layout = 'page'
       const skinHead: HeadConfig[] = [
         [
@@ -162,14 +252,19 @@ export default defineConfig({
           JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'CreativeWork',
+            '@id': `${BASE_URL}/community/skins/${params.shareCode}#creativework`,
             name: skinTitle,
+            description: pageData.description,
             creator: { '@type': 'Person', name: params.authorName },
             image: params.previewUrl,
+            thumbnailUrl: params.previewUrl,
             url: `${BASE_URL}/community/skins/${params.shareCode}`,
-            isPartOf: { '@id': `${BASE_URL}/community` },
+            keywords: ['素言输入法', '输入法皮肤', '候选框皮肤', params.layout === 'vertical' ? '竖排皮肤' : '横排皮肤'],
+            isPartOf: { '@id': `${BASE_URL}/community#collection` },
             dateCreated: new Date(params.createdAt).toISOString(),
+            dateModified: new Date(params.createdAt).toISOString(),
             inLanguage: 'zh-CN',
-          }),
+          }).replace(/</g, '\\u003c'),
         ],
       ]
       if (archived) skinHead.push(['meta', { name: 'robots', content: 'noindex, follow' }])
@@ -178,22 +273,21 @@ export default defineConfig({
     }
 
     if (typeof params.page === 'string') {
-      pageData.title = `皮肤社区第 ${params.page} 页`
-      pageData.description = `浏览素言输入法皮肤社区第 ${params.page} 页的候选框皮肤作品，查看预览并复制皮肤分享码。`
+      pageData.title = `皮肤社区第 ${params.page} 页 — 候选框皮肤作品列表`
+      pageData.description = `浏览素言输入法皮肤社区第 ${params.page} 页的候选框皮肤作品（共 ${params.total} 款 / ${params.pageCount} 页），查看横排与竖排皮肤预览并复制皮肤分享码。`
       pageData.frontmatter.layout = 'page'
     }
   },
 
-  // 逐页注入 canonical、页面级社交卡片和面包屑结构化数据。
+  // 逐页注入 canonical、页面级社交卡片、WebPage 与面包屑结构化数据。
   transformHead({ page, pageData, description }) {
     if (pageData.isNotFound || page === '404.md') {
       return [['meta', { name: 'robots', content: 'noindex, follow' }]]
     }
 
     const canonical = canonicalOf(page)
-    const pageTitle = pageData.title || '素言 SuYan'
-    const pageDescription =
-      description || '素言输入法：拒绝臃肿与监控 · 内置生产力工具 · 越用越懂你的跨平台中英文输入法'
+    const pageTitle = pageData.title || SITE_NAME
+    const pageDescription = description || DEFAULT_DESCRIPTION
     const head: HeadConfig[] = [
       ['link', { rel: 'canonical', href: canonical }],
       ['meta', { property: 'og:url', content: canonical }],
@@ -202,15 +296,32 @@ export default defineConfig({
       ['meta', { name: 'twitter:title', content: pageTitle }],
       ['meta', { name: 'twitter:description', content: pageDescription }],
     ]
+
+    // 首页的 WebSite / WebPage / Organization / SoftwareApplication / FAQPage 实体图
+    // 由 index.md 的 frontmatter 直接维护，此处不再重复生成，避免 @id 冲突
+    const nodes: SchemaNode[] = []
     if (page !== 'index.md') {
-      head.push(['script', { type: 'application/ld+json' }, JSON.stringify(breadcrumbSchema(page, pageTitle))])
+      nodes.push(websiteNode(), webPageNode(canonical, pageTitle, pageDescription))
+      nodes.push(breadcrumbNode(page, breadcrumbItems(page, breadcrumbLabelOf(pageData, page))))
     }
+
+    // 社区列表页与分页页补充 CollectionPage + ItemList
+    const listedSkins = page === 'community.md'
+      ? BUILD_COMMUNITY_DATA.skins.slice(0, COMMUNITY_PAGE_SIZE)
+      : Array.isArray(pageData.params?.skins)
+        ? (pageData.params.skins as ListableSkin[])
+        : null
+    if (listedSkins && listedSkins.length) {
+      nodes.push(collectionNode(canonical, pageTitle, listedSkins))
+    }
+
+    if (nodes.length) head.push(jsonLdScript(nodes))
     return head
   },
 
   themeConfig: {
     logo: '/logo.png',
-    siteTitle: '素言 SuYan',
+    siteTitle: SITE_NAME,
 
     nav: [
       { text: '首页', link: '/' },

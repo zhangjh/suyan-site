@@ -1,6 +1,6 @@
 ---
-title: 常见问题（FAQ）
-description: 素言输入法常见问题解答：安装安全提示、macOS 权限、横竖排切换、自定义输入方案、截图标注、Emoji 开关、AI 划词翻译、Ubuntu 配置、隐私安全等。
+title: 常见问题 FAQ — 安装、云同步、AI 翻译与隐私解答
+description: 素言输入法常见问题解答：Windows 未知发布者与杀毒误报、macOS 权限授予、横竖排切换、词库导入、自定义输入方案、截图标注、Emoji开关、云同步与端到端加密、AI 翻译、Ubuntu 配置与隐私说明。
 head:
   - - script
     - type: application/ld+json
@@ -8,6 +8,9 @@ head:
       {
         "@context": "https://schema.org",
         "@type": "FAQPage",
+        "@id": "https://suyan.zhangjh.cn/guide/faq#faq",
+        "isPartOf": { "@id": "https://suyan.zhangjh.cn/guide/faq#webpage" },
+        "inLanguage": "zh-CN",
         "mainEntity": [
           {
             "@type": "Question",
@@ -73,6 +76,9 @@ head:
               "text": "安全。剪贴板内容与词库一样，在传出设备前已在本地加密，服务端只存储密文、无法解密查看。同步是可选项，不开启则不上传任何剪贴板数据。"
             }
           },
+          {
+            "@type": "Question",
+            "name": "云同步会泄露我的隐私吗？",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "不会。素言采用端到端加密方案，数据在本地加密后上传，服务器仅作为“盲盒”存储，不持有密钥、无法解密内容。同步为可选项，不登录账号或者不开启同步则不会发生同步，输入核心仍保持离线。"

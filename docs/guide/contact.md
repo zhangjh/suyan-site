@@ -1,6 +1,6 @@
 ---
-title: 联系与反馈
-description: 素言输入法问题反馈渠道：GitHub Issues、邮件 support@zhangjh.cn、开发者主页、微信公众号但丁自留地。
+title: 联系与反馈 — 问题反馈与商务合作渠道
+description: 素言输入法的问题反馈与合作渠道：GitHub Issues 提交 Bug 与建议、support@zhangjh.cn 邮件联系，以及微信公众号「但丁自留地」。
 ---
 
 # 联系与反馈
