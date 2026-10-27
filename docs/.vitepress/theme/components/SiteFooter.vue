@@ -35,7 +35,7 @@
             <li><a href="https://github.com/zhangjh/suyan-site/issues" target="_blank" rel="noreferrer">GitHub Issues</a></li>
             <li><a href="https://rime.im/" target="_blank" rel="noreferrer">RIME 中州韵</a></li>
             <li><a href="https://github.com/iDvel/rime-ice" target="_blank" rel="noreferrer">雾凇拼音</a></li>
-            <li><a href="https://personal-site-9qt.pages.dev" target="_blank" rel="noreferrer">更多作品 · 个人主页</a></li>
+            <li><a href="https://zhangjh.cn" target="_blank" rel="noreferrer">更多作品 · 个人主页</a></li>
           </ul>
         </nav>
       </div>
