@@ -67,7 +67,7 @@ onBeforeUnmount(() => {
     <section class="page-head container">
       <h1>下载素言</h1>
       <p class="sub">
-        支持 <strong>Windows、macOS（Intel &amp; ARM）、Ubuntu</strong> 三大平台，完全免费开放，无广告、无捆绑。
+        支持 <strong>Windows 10+、macOS 15.0+、Ubuntu 22.04+</strong> 三大平台，完全免费开放，无广告、无捆绑。
       </p>
       <div class="version-row">
         <span class="version-badge"><span class="dot"></span>最新版本 {{ latestVersion }}</span>
@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
             </span>
             <div>
               <h3>Windows</h3>
-              <small>.exe 安装包</small>
+              <small>.exe · Windows 10 64位+</small>
             </div>
           </div>
           <ol class="os-steps">
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
             </span>
             <div>
               <h3>macOS</h3>
-              <small>.pkg · Intel / Apple Silicon</small>
+              <small>.pkg · macOS 15.0+ · Intel / Apple Silicon</small>
             </div>
           </div>
           <ol class="os-steps">
@@ -221,7 +221,7 @@ onBeforeUnmount(() => {
             </span>
             <div>
               <h3>Ubuntu</h3>
-              <small>.deb · 22.04+ · Fcitx5</small>
+              <small>.deb · Ubuntu 22.04+ · Fcitx5</small>
             </div>
           </div>
           <ol class="os-steps">

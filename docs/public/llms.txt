@@ -7,7 +7,7 @@
 ## 核心事实
 
 - 产品名称：素言输入法，英文名 SuYan。
-- 支持平台：Windows、macOS（Intel 与 Apple Silicon 双架构）、Ubuntu 22.04 及以上（通过 Fcitx5 框架接入）。
+- 支持平台与最低系统版本：Windows 10（64 位）及以上；macOS 15.0 (Sequoia) 及以上（Intel 与 Apple Silicon 双架构，分别提供安装包）；Ubuntu 22.04 LTS 及以上（amd64，通过 Fcitx5 框架接入，兼容 24.04 / 26.04）。
 - 价格：输入法本体永久免费；云同步为可选订阅（5 元/月）；AI 划词翻译使用按量计费的翻译加油包（9.9 元/100 万 token）。
 - 技术底座：集成 librime 核心库（RIME 中州韵输入法引擎），默认配置为雾凇拼音（Rime-Ice），五笔方案基于极点五笔 86。
 - 输入方案：拼音、7 种双拼码表（小鹤、自然码、微软、智能ABC、搜狗、紫光、拼音加加）、极点五笔 86、注音，并支持上传自定义 RIME 方案文件（.schema.yaml）。

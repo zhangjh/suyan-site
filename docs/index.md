@@ -52,7 +52,7 @@ head:
             "alternateName": "素言 SuYan",
             "applicationCategory": "UtilitiesApplication",
             "applicationSubCategory": "输入法",
-            "operatingSystem": "Windows, macOS, Ubuntu",
+            "operatingSystem": "Windows 10+, macOS 15.0+, Ubuntu 22.04+",
             "description": "免费无广告的跨平台中英文输入法：基于 RIME 引擎，输入核心完全离线，支持自定义输入方案，内置 AI 划词翻译、离线语音输入、词库自由与生产力工具。",
             "publisher": {
               "@id": "https://suyan.zhangjh.cn/#publisher"
