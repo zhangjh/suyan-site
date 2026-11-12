@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { COMMUNITY_API_BASE } from '../../data/community-api'
 
 const props = defineProps({
   initialSkins: { type: Array, default: () => [] },
@@ -10,7 +11,7 @@ const props = defineProps({
   detailCodes: { type: Array, default: () => [] },
 })
 
-const API_BASE = 'https://api-verse.zhangjh.cn'
+const API_BASE = COMMUNITY_API_BASE
 const PAGE_SIZE = 24
 const TIMEOUT_MS = 15_000
 const layoutLabels = { horizontal: '横排', vertical: '竖排' }

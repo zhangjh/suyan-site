@@ -1,6 +1,7 @@
 import cachedCommunity from './community-skins.json'
+import { COMMUNITY_API_BASE, COMMUNITY_API_HOST } from './community-api'
 
-export const COMMUNITY_API_BASE = 'https://api-verse.zhangjh.cn'
+export { COMMUNITY_API_BASE }
 export const COMMUNITY_PAGE_SIZE = 24
 const REQUEST_TIMEOUT_MS = 12_000
 
@@ -35,7 +36,7 @@ function isSkin(value: unknown): value is CommunitySkin {
     const preview = new URL(skin.previewUrl)
     return (
       preview.protocol === 'https:' &&
-      preview.hostname === 'api-verse.zhangjh.cn' &&
+      preview.hostname === COMMUNITY_API_HOST &&
       preview.pathname === `/api/suyan/community/skins/${shareCode}/preview.png`
     )
   } catch {
