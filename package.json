@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
+    "dev:admin": "npm --prefix admin run dev",
+    "build": "vitepress build docs && npm --prefix admin ci --no-audit --no-fund && npm --prefix admin run build",
+    "build:site": "vitepress build docs",
+    "build:admin": "npm --prefix admin run build",
     "preview": "vitepress preview docs"
   },
   "devDependencies": {

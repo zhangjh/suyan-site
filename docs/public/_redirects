@@ -1,0 +1,2 @@
+# 素言管理后台 canonical URL：统一带斜杠，避免 /admin 与 /admin/ 双份
+/admin  /admin/  301

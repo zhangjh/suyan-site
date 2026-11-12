@@ -1,4 +1,6 @@
 node_modules
+admin/node_modules/
+admin/.env
 **/.vitepress/cache/
 **/.vitepress/dist/
 qwenwork/
