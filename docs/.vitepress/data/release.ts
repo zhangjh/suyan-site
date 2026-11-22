@@ -11,11 +11,29 @@ const isBrowser = typeof window !== 'undefined'
 const REQUEST_TIMEOUT_MS = 12_000
 const markdown = new MarkdownIt({ html: false, linkify: true })
 
+export interface ReleaseAsset {
+  name: string
+  downloadUrl: string
+}
+
 export interface ReleaseNotesData {
   title: string
   publishedAt: string
   notesHtml: string
   source: 'remote' | 'cache'
+}
+
+function parseReleaseAssets(rawAssets: unknown): ReleaseAsset[] {
+  if (!Array.isArray(rawAssets)) return []
+  return rawAssets
+    .map((asset) => {
+      const item = asset as Record<string, unknown>
+      return {
+        name: String(item.name || ''),
+        downloadUrl: String(item.browser_download_url || ''),
+      }
+    })
+    .filter((asset) => asset.name && asset.downloadUrl)
 }
 
 function extractUpdateNotes(body: string): string {
@@ -81,12 +99,13 @@ export interface FreshReleaseInfo {
   tagName: string
   title: string
   notesHtml: string
+  assets: ReleaseAsset[]
 }
 
 /**
  * 运行时从同源 Pages Function 获取最新 release（服务端带 token，边缘缓存 60 秒）。
- * 成功返回 { tagName, title, notesHtml }；任何失败返回 null，
- * 调用方保留构建期烘入的旧内容做降级展示。
+ * 成功返回 { tagName, title, notesHtml, assets }；任何失败返回 null，
+ * 调用方保留构建期烘入的旧内容做降级展示。assets 用于生成 GitHub 加速直链。
  */
 export async function fetchLatestReleaseRuntime(): Promise<FreshReleaseInfo | null> {
   const controller = new AbortController()
@@ -101,8 +120,14 @@ export async function fetchLatestReleaseRuntime(): Promise<FreshReleaseInfo | nu
     const tagName = String(release.tag_name || '')
     const title = String(release.name || tagName || '')
     const notes = extractUpdateNotes(String(release.body ?? ''))
-    if (!tagName || !notes) return null
-    return { tagName, title, notesHtml: markdown.render(notes) }
+    if (!tagName) return null
+    const assets = parseReleaseAssets(release.assets)
+    return {
+      tagName,
+      title,
+      notesHtml: notes ? markdown.render(notes) : '',
+      assets,
+    }
   } catch {
     return null
   } finally {

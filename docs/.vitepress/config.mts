@@ -15,7 +15,7 @@ const SITE_ENTITY = '素言输入法'
 // 避免出现「下载素言 SuYan | 素言 SuYan」这类冗余，并保证标题长度足以被 Bing 判为「有描述性」
 const TITLE_TEMPLATE = ':title | 素言输入法'
 const DEFAULT_DESCRIPTION =
-  '素言（SuYan）：免费、无广告的跨平台中文输入法，支持 Windows、macOS 与 Ubuntu。基于 RIME 引擎，输入核心完全离线，内置截图、剪贴板、AI 划词翻译等办公生产力工具，支持传统文本输入和在线、离线语音输入，支持自定义词库与候选框皮肤社区。'
+  '素言（SuYan）：免费、无广告的跨平台中文输入法，支持 Windows、macOS 与 Ubuntu。基于 RIME 引擎，输入核心完全离线，内置截图、剪贴板、AI 划词翻译等办公生产力工具，支持传统文本输入和内置云语音输入（原样 / 润色），支持自定义词库与候选框皮肤社区。'
 const OG_IMAGE_URL = `${BASE_URL}/og-cover.png`
 const DOCS_ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)), '..')
 const [BUILD_COMMUNITY_DATA, BUILD_RELEASE_DATA] = await Promise.all([

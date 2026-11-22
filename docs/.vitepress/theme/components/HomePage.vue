@@ -5,7 +5,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 const playingVideo = ref(null)
 const videos = [
   { bvid: 'BV1zDFozyETF', cover: '/demo-cover.jpg', label: '普通输入模式', desc: '打字、候选、皮肤切换全流程', coverAlt: '普通输入模式演示视频封面', w: 1920, h: 1080 },
-  { bvid: 'BV1vBcEzAE8z', cover: '/image-4.png', label: '语音输入模式', desc: '快捷键启动，即说即输', coverAlt: '语音输入模式演示视频封面', w: 534, h: 323 },
+  { bvid: 'BV1vBcEzAE8z', cover: '/image-4.png', label: '语音输入模式', desc: '旧版演示 · 快捷键启动，即说即输', coverAlt: '语音输入模式演示视频封面', w: 534, h: 323 },
 ]
 function playVideo(bvid) {
   playingVideo.value = bvid
@@ -142,7 +142,7 @@ function runTyping() {
     <!-- ============ Hero ============ -->
     <section class="hero container">
       <span class="hero-chip reveal"
-        ><span class="dot"></span>v5.3.0 · 新增适配多种输入方案</span
+        ><span class="dot"></span>v5.4.1 语音输入重构，开箱即用</span
       >
       <h1>素言，回归输入的<span class="accent">本质</span></h1>
       <p class="hero-sub reveal">
@@ -229,8 +229,8 @@ function runTyping() {
         </article>
         <article class="feature-card reveal" data-component="Feature Card">
           <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
-          <h3>离线语音输入</h3>
-          <p>内置本地语音识别引擎，音频绝不上传。按下快捷键即说即输，中文识别流畅自然。</p>
+          <h3>内置云语音输入</h3>
+          <p>语音走内置云端识别，无需下载模型或配置 API Key。输出模式在设置里提前选好：原样直出，或润色后上屏。</p>
         </article>
         <article class="feature-card reveal" data-component="Feature Card">
           <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1 0-8 5.5 5.5 0 0 1 10.6 1.5A3.5 3.5 0 0 1 17 18H7Z"/><path d="M8 21h8"/></svg></span>
@@ -293,24 +293,29 @@ function runTyping() {
       <div class="deep flip">
         <div class="deep-copy reveal">
           <p class="deep-tag">02 · Voice Input</p>
-          <h2>语音识别，完全离线</h2>
-          <p class="deep-lead">素言是目前极少数支持完全离线语音识别的桌面输入法——从麦克风到文字，全程在本机完成。</p>
+          <h2>内置云语音，说话即输入</h2>
+          <p class="deep-lead">重构后的语音输入统一走内置云端识别：不用下载离线模型，也不用自己配置 API Key。原样 / 润色在设置里提前配好，录音结束按预设模式上屏。</p>
           <ul class="deep-points">
-            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>零上传</strong>：音频数据不出本机，从根源杜绝语音隐私泄露</span></li>
-            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>低延迟</strong>：本地推理，说完即出字，无需等待网络响应</span></li>
-            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>无缝切换</strong>：快捷键一键启动，与打字模式自由切换，会议记录、日常对话均可胜任</span></li>
+            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>内置云端识别</strong>：开箱即用，免模型下载、免 API Key 配置，识别能力随服务升级</span></li>
+            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>设置中预设输出模式</strong>：选择「原样」则保留识别原文，一字不改；选择「润色」则整理措辞与标点，输出更通顺的书面表达</span></li>
+            <li><span class="pt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>实时可视化</strong>：录音时显示音量波纹、时长、进度与流式识别预览，松开上屏，<kbd>Esc</kbd> 可随时取消</span></li>
           </ul>
         </div>
         <div class="deep-visual reveal">
-          <div class="mock mock-voice" role="img" aria-label="语音输入面板示意">
-            <span class="voice-state"><span class="rec-dot"></span>正在聆听</span>
+          <div class="mock mock-voice" role="img" aria-label="内置云语音输入浮条，输出模式在设置中预设为原样或润色">
+            <div class="voice-mode-head"><span class="voice-state"><span class="rec-dot"></span>正在听…</span><span class="voice-cloud">内置云端识别</span></div>
             <div class="wave" aria-hidden="true">
               <i style="animation-delay: 0s"></i><i style="animation-delay: .12s"></i><i style="animation-delay: .24s"></i><i style="animation-delay: .36s"></i><i style="animation-delay: .48s"></i><i style="animation-delay: .6s"></i><i style="animation-delay: .72s"></i><i style="animation-delay: .84s"></i><i style="animation-delay: .96s"></i><i style="animation-delay: 1.08s"></i><i style="animation-delay: .18s"></i><i style="animation-delay: .42s"></i>
             </div>
-            <p class="voice-text">会议记录已实时转写完成<span class="tail">_</span></p>
-            <p class="voice-kbd"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd> 即说即输</p>
+            <p class="voice-text">就是说那个预算的事，预算大概三万五<span class="tail">_</span></p>
+            <div class="voice-modes">
+              <div class="voice-modes-label">输出模式 · 设置中预设</div>
+              <div class="voice-mode is-active"><strong>原样</strong><span>按识别原文上屏</span></div>
+              <div class="voice-mode"><strong>润色</strong><span>整理措辞与标点</span></div>
+            </div>
+            <p class="voice-kbd">快捷键启动 · 松开上屏 · <kbd>Esc</kbd> 取消</p>
           </div>
-          <p class="mock-caption">本地推理，说完即出字</p>
+          <p class="mock-caption">录音中：音量 · 时长 · 进度 · 实时识别预览</p>
         </div>
       </div>
     </section>
@@ -436,8 +441,8 @@ function runTyping() {
           <figcaption>AI 划词翻译浮窗 <em>translate</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
-          <figure @click="openLightbox('/image-3.png', '语音识别候选')" class="shot-img-wrap"><img src="/image-3.png" alt="语音识别候选" width="534" height="398" loading="lazy" decoding="async" /></figure>
-          <figcaption>语音识别候选 <em>voice</em></figcaption>
+          <figure @click="openLightbox('/voice-input-preview.jpg', '语音输入浮条与实时识别预览')" class="shot-img-wrap"><img src="/voice-input-preview.jpg" alt="语音输入浮条：音量波纹、时长进度与实时识别预览" width="1080" height="720" loading="lazy" decoding="async" /></figure>
+          <figcaption>语音输入浮条 · 实时预览 <em>voice</em></figcaption>
         </figure>
         <figure class="shot-card reveal">
           <figure @click="openLightbox('/image-2.png', '剪贴板历史记录')" class="shot-img-wrap"><img src="/image-2.png" alt="剪贴板历史记录" width="500" height="535" loading="lazy" decoding="async" /></figure>
@@ -488,9 +493,9 @@ function runTyping() {
             </tr>
             <tr>
               <td>语音</td>
-              <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span>音频上传云端识别</td>
-              <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg></span>不支持</td>
-              <td class="col-suyan"><span class="mark mark-good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>本地识别，音频不出机</td>
+              <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span>云端识别，输出文案不可控</td>
+              <td><span class="mark mark-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg></span>基本不支持</td>
+              <td class="col-suyan"><span class="mark mark-good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>内置云端识别，原样 / 润色可选</td>
             </tr>
             <tr>
               <td>平台</td>
@@ -782,16 +787,24 @@ function runTyping() {
 
 /* voice mock */
 .mock-voice { padding: 28px 28px 26px; text-align: center; }
+.voice-mode-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; }
 .voice-state { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--muted); border: 1px solid var(--border); background: var(--surface-2); padding: 4px 12px; border-radius: 999px; }
 .voice-state .rec-dot { width: 7px; height: 7px; border-radius: 999px; background: #d4483b; animation: rec-pulse 1.4s ease-in-out infinite; }
+.voice-cloud { font-size: 11.5px; color: var(--primary); background: var(--primary-soft); border-radius: 999px; padding: 4px 10px; }
 @keyframes rec-pulse { 50% { opacity: 0.35; } }
-.wave { display: flex; align-items: center; justify-content: center; gap: 5px; height: 64px; margin: 22px 0 18px; }
+.wave { display: flex; align-items: center; justify-content: center; gap: 5px; height: 56px; margin: 18px 0 14px; }
 .wave i { width: 4px; border-radius: 999px; background: var(--primary); opacity: 0.85; height: 12%; animation: wave-ease 1.2s ease-in-out infinite; }
 @keyframes wave-ease { 50% { height: 100%; } }
 .voice-text { font-size: 15.5px; font-weight: 500; color: var(--fg); min-height: 28px; letter-spacing: 0.01em; }
 .voice-text .tail { color: var(--faint); font-weight: 400; }
+.voice-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.voice-modes-label { grid-column: 1 / -1; text-align: left; font-size: 11px; color: var(--faint); }
+.voice-mode { display: grid; gap: 4px; padding: 12px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface-2); }
+.voice-mode.is-active { border-color: var(--primary-border); background: var(--primary-soft); }
+.voice-mode strong { font-size: 13.5px; color: var(--fg); }
+.voice-mode span { font-size: 11.5px; color: var(--muted); }
 .voice-kbd { margin-top: 16px; font-size: 12px; color: var(--faint); }
-.voice-kbd kbd { font-family: var(--sy-font-mono); font-size: 11px; border: 1px solid var(--border-strong); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; color: var(--muted); margin: 0 2px; }
+.voice-kbd kbd, .deep-points kbd { font-family: var(--sy-font-mono); font-size: 11px; border: 1px solid var(--border-strong); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; color: var(--muted); margin: 0 2px; }
 
 /* sync mock */
 .mock-sync { padding: 30px 28px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; }

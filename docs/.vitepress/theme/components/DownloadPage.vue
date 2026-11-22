@@ -12,6 +12,47 @@ const notesTitle = ref(props.releaseData.title)
 const notesHtml = ref(props.releaseData.notesHtml)
 let io = null
 
+// GitHub 加速直链：沿用历史 gh-proxy.org 方案，资源地址来自最新 Release。
+// 不向用户暴露 GitHub Releases 页面链接，不可用时的兜底是页面上方网盘区。
+const GITHUB_PROXY = 'https://gh-proxy.org/'
+const directReady = ref(false)
+const directLinks = ref({ windows: '', macArm: '', macIntel: '', linux: '' })
+const directLabels = ref({
+  windows: '获取中…',
+  macArm: '获取中…',
+  macIntel: '获取中…',
+  linux: '获取中…',
+})
+
+function markLinksUnavailable() {
+  Object.keys(directLabels.value).forEach((key) => {
+    directLabels.value[key] = '网盘下载'
+  })
+  directReady.value = false
+}
+
+function applyReleaseLinks(fresh) {
+  const assets = fresh.assets || []
+  const rules = [
+    ['windows', (name) => name.endsWith('.exe')],
+    ['macArm', (name) => name.endsWith('.pkg') && /arm|aarch|apple/.test(name)],
+    ['macIntel', (name) => name.endsWith('.pkg') && /x86|intel/.test(name)],
+    ['linux', (name) => name.endsWith('.deb')],
+  ]
+  const labels = {
+    windows: 'Windows 安装包',
+    macArm: 'macOS Apple Silicon',
+    macIntel: 'macOS Intel',
+    linux: 'Ubuntu 安装包',
+  }
+  rules.forEach(([key, matches]) => {
+    const asset = assets.find((item) => matches(item.name.toLowerCase()))
+    directLinks.value[key] = asset ? `${GITHUB_PROXY}${asset.downloadUrl}` : ''
+    directLabels.value[key] = asset ? `${fresh.tagName} · ${labels[key]}` : '网盘下载'
+  })
+  directReady.value = Object.values(directLinks.value).some(Boolean)
+}
+
 function observeReveals(root) {
   if (!root || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   io = new IntersectionObserver(
@@ -35,23 +76,28 @@ function observeReveals(root) {
 onMounted(() => {
   observeReveals(document.querySelector('.sy-download'))
 
-  // 版本号徽章 + 更新内容：运行时从同源 Pages Function 获取（边缘缓存 60 秒），
-  // 失败时保留构建期内容降级展示
+  // 版本号徽章 + 更新内容 + 直链：运行时从同源 Pages Function 获取最新 Release。
+  // 直链只认运行时动态返回的 assets；拿不到即视为服务不可用，按钮引导走网盘，
+  // 不使用任何写死在构建期的安装包地址。
   fetchLatestReleaseRuntime()
     .then((fresh) => {
       if (!fresh) {
+        markLinksUnavailable()
         latestVersion.value = '暂时无法获取'
         return
       }
       latestVersion.value = fresh.tagName
+      if (fresh.assets.length) applyReleaseLinks(fresh)
+      else markLinksUnavailable()
       // 标题相同不代表内容相同（如 release 正文被编辑过），按渲染后的正文比对
-      if (fresh.notesHtml !== props.releaseData.notesHtml) {
+      if (fresh.notesHtml && fresh.notesHtml !== props.releaseData.notesHtml) {
         notesTitle.value = fresh.title
         notesHtml.value = fresh.notesHtml
       }
     })
     .catch((error) => {
       console.error('Failed to refresh latest release:', error)
+      markLinksUnavailable()
       latestVersion.value = '暂时无法获取'
     })
 })
@@ -122,6 +168,70 @@ onBeforeUnmount(() => {
           </a>
           <div class="dl-meta"><span>无需提取码</span><span>· 全平台安装包</span></div>
         </article>
+      </div>
+    </section>
+
+    <!-- ============ GitHub 加速直链 ============ -->
+    <section class="section container" id="download-direct" data-component="Direct Download Links">
+      <div class="section-head reveal">
+        <p class="eyebrow">Download · GitHub 加速直链</p>
+        <h2 class="section-title">或使用 GitHub 加速直链</h2>
+        <p class="section-desc">直链自动指向 GitHub 最新 Release 安装包，经加速节点下载，无需登录网盘。</p>
+      </div>
+      <div class="direct-card reveal" data-component="Direct Download Card">
+        <div class="direct-card-head">
+          <div>
+            <h3>GitHub 加速直链</h3>
+            <p>最新版本 {{ latestVersion }} · 点击对应平台即可下载</p>
+          </div>
+        </div>
+        <div class="direct-grid">
+          <a
+            class="direct-btn"
+            :href="directLinks.windows || '#download'"
+            target="_blank"
+            rel="noreferrer"
+            onclick="if(window.LA) LA.track('download_direct', {os: 'windows'})"
+          >
+            <span class="direct-os" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.2 4.6v6.8H3V5.6ZM3 18.4l7.2 1v-6.7H3v5.7Zm8.3 1.2L21 21V12h-9.7v7.6ZM11.3 3 21 1.7V11h-9.7V3Z"/></svg></span>
+            <span class="direct-text"><strong>Windows</strong><small>{{ directLabels.windows }}</small></span>
+            <span class="direct-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+          </a>
+          <a
+            class="direct-btn"
+            :href="directLinks.macArm || '#download'"
+            target="_blank"
+            rel="noreferrer"
+            onclick="if(window.LA) LA.track('download_direct', {os: 'macos-arm'})"
+          >
+            <span class="direct-os" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.7 12.6a4.3 4.3 0 0 0 2.6-4 4.4 4.4 0 0 0-3.4-3.9 5.2 5.2 0 0 0-9.8 0A4.4 4.4 0 0 0 2.7 8.6a4.3 4.3 0 0 0 2.6 4 3.3 3.3 0 0 0 .5 5.6 4.4 4.4 0 0 0 5.5-1.2h1.4a4.4 4.4 0 0 0 5.5 1.2 3.3 3.3 0 0 0 .5-5.6Z" transform="translate(1.2 2.6) scale(.92)"/></svg></span>
+            <span class="direct-text"><strong>macOS · Apple 芯片</strong><small>{{ directLabels.macArm }}</small></span>
+            <span class="direct-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+          </a>
+          <a
+            class="direct-btn"
+            :href="directLinks.macIntel || '#download'"
+            target="_blank"
+            rel="noreferrer"
+            onclick="if(window.LA) LA.track('download_direct', {os: 'macos-intel'})"
+          >
+            <span class="direct-os" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.7 12.6a4.3 4.3 0 0 0 2.6-4 4.4 4.4 0 0 0-3.4-3.9 5.2 5.2 0 0 0-9.8 0A4.4 4.4 0 0 0 2.7 8.6a4.3 4.3 0 0 0 2.6 4 3.3 3.3 0 0 0 .5 5.6 4.4 4.4 0 0 0 5.5-1.2h1.4a4.4 4.4 0 0 0 5.5 1.2 3.3 3.3 0 0 0 .5-5.6Z" transform="translate(1.2 2.6) scale(.92)"/></svg></span>
+            <span class="direct-text"><strong>macOS · Intel 芯片</strong><small>{{ directLabels.macIntel }}</small></span>
+            <span class="direct-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+          </a>
+          <a
+            class="direct-btn"
+            :href="directLinks.linux || '#download'"
+            target="_blank"
+            rel="noreferrer"
+            onclick="if(window.LA) LA.track('download_direct', {os: 'ubuntu'})"
+          >
+            <span class="direct-os" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17m-17 6h17M12 3a15 15 0 0 1 0 18m0-18a15 15 0 0 0 0 18"/></svg></span>
+            <span class="direct-text"><strong>Ubuntu / Linux</strong><small>{{ directLabels.linux }}</small></span>
+            <span class="direct-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+          </a>
+        </div>
+        <p class="direct-note">若加速节点不可用，请使用上方网盘下载。</p>
       </div>
     </section>
 
@@ -279,6 +389,25 @@ onBeforeUnmount(() => {
 .dl-card .btn-primary, .dl-card .btn-primary:hover, .dl-card .btn-primary:active { color: #fff; }
 .btn-lg { font-size: 15.5px; padding: 12px 24px; }
 
+/* GitHub 加速直链 */
+.direct-card { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: 28px; }
+.direct-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+.direct-card-head h3 { font-size: 18px; font-weight: 600; }
+.direct-card-head p { margin-top: 6px; font-size: 13px; color: var(--faint); }
+.direct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+.direct-btn { display: flex; align-items: center; gap: 14px; min-width: 0; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface-2); transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease; }
+.direct-btn:hover { transform: translateY(-2px); border-color: var(--primary-border); background: var(--primary-soft); }
+.direct-os { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; flex: none; background: var(--surface); border: 1px solid var(--border); color: var(--fg); }
+.direct-os svg { width: 19px; height: 19px; }
+.direct-text { min-width: 0; display: grid; gap: 4px; }
+.direct-text strong { font-size: 14.5px; font-weight: 600; color: var(--fg); }
+.direct-text small { font-size: 12px; color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.direct-go { margin-left: auto; color: var(--faint); }
+.direct-go svg { width: 16px; height: 16px; }
+.direct-btn:hover .direct-go { color: var(--primary); }
+.direct-note { margin-top: 18px; font-size: 12.5px; color: var(--faint); line-height: 1.6; }
+.direct-note a { color: var(--primary); font-weight: 600; border-bottom: 1px solid var(--primary-border); }
+
 .dl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .dl-card { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: 28px; display: flex; flex-direction: column; transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
 .dl-card:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: var(--shadow-md); }
@@ -343,6 +472,8 @@ onBeforeUnmount(() => {
   .sponsor-qr { justify-items: center; }
 }
 @media (max-width: 639px) {
+  .direct-card { padding: 20px 18px; }
+  .direct-grid { grid-template-columns: 1fr; }
   .dl-grid { grid-template-columns: 1fr; }
   .release-head { padding: 16px 18px; }
   .release-body { padding: 18px; }

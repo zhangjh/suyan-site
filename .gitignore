@@ -4,3 +4,5 @@ admin/.env
 **/.vitepress/cache/
 **/.vitepress/dist/
 qwenwork/
+.workbuddy/
+.workbuddy-ai/
