@@ -16,12 +16,13 @@ let io = null
 // 不向用户暴露 GitHub Releases 页面链接，不可用时的兜底是页面上方网盘区。
 const GITHUB_PROXY = 'https://gh-proxy.org/'
 const directReady = ref(false)
-const directLinks = ref({ windows: '', macArm: '', macIntel: '', linux: '' })
+const directLinks = ref({ windows: '', macArm: '', macIntel: '', linuxAmd: '', linuxArm: '' })
 const directLabels = ref({
   windows: '获取中…',
   macArm: '获取中…',
   macIntel: '获取中…',
-  linux: '获取中…',
+  linuxAmd: '获取中…',
+  linuxArm: '获取中…',
 })
 
 function markLinksUnavailable() {
@@ -37,13 +38,15 @@ function applyReleaseLinks(fresh) {
     ['windows', (name) => name.endsWith('.exe')],
     ['macArm', (name) => name.endsWith('.pkg') && /arm|aarch|apple/.test(name)],
     ['macIntel', (name) => name.endsWith('.pkg') && /x86|intel/.test(name)],
-    ['linux', (name) => name.endsWith('.deb')],
+    ['linuxAmd', (name) => name.endsWith('.deb') && /amd|x86|intel/.test(name)],
+    ['linuxArm', (name) => name.endsWith('.deb') && /arm|aarch/.test(name)],
   ]
   const labels = {
     windows: 'Windows 安装包',
     macArm: 'macOS Apple Silicon',
     macIntel: 'macOS Intel',
-    linux: 'Ubuntu 安装包',
+    linuxAmd: 'Ubuntu 22.04+ · x86_64',
+    linuxArm: 'Ubuntu 22.04+ · ARM64',
   }
   rules.forEach(([key, matches]) => {
     const asset = assets.find((item) => matches(item.name.toLowerCase()))
@@ -187,7 +190,7 @@ onBeforeUnmount(() => {
         </div>
         <div class="direct-grid">
           <a
-            class="direct-btn"
+            class="direct-btn direct-btn-wide"
             :href="directLinks.windows || '#download'"
             target="_blank"
             rel="noreferrer"
@@ -221,13 +224,24 @@ onBeforeUnmount(() => {
           </a>
           <a
             class="direct-btn"
-            :href="directLinks.linux || '#download'"
+            :href="directLinks.linuxAmd || '#download'"
             target="_blank"
             rel="noreferrer"
-            onclick="if(window.LA) LA.track('download_direct', {os: 'ubuntu'})"
+            onclick="if(window.LA) LA.track('download_direct', {os: 'linux-amd64'})"
           >
             <span class="direct-os" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17m-17 6h17M12 3a15 15 0 0 1 0 18m0-18a15 15 0 0 0 0 18"/></svg></span>
-            <span class="direct-text"><strong>Ubuntu / Linux</strong><small>{{ directLabels.linux }}</small></span>
+            <span class="direct-text"><strong>Ubuntu · x86_64</strong><small>{{ directLabels.linuxAmd }}</small></span>
+            <span class="direct-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+          </a>
+          <a
+            class="direct-btn"
+            :href="directLinks.linuxArm || '#download'"
+            target="_blank"
+            rel="noreferrer"
+            onclick="if(window.LA) LA.track('download_direct', {os: 'linux-arm64'})"
+          >
+            <span class="direct-os" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17m-17 6h17M12 3a15 15 0 0 1 0 18m0-18a15 15 0 0 0 0 18"/></svg></span>
+            <span class="direct-text"><strong>Ubuntu · ARM64</strong><small>{{ directLabels.linuxArm }}</small></span>
             <span class="direct-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
           </a>
         </div>
@@ -396,6 +410,7 @@ onBeforeUnmount(() => {
 .direct-card-head p { margin-top: 6px; font-size: 13px; color: var(--faint); }
 .direct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
 .direct-btn { display: flex; align-items: center; gap: 14px; min-width: 0; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface-2); transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease; }
+.direct-btn-wide { grid-column: 1 / -1; }
 .direct-btn:hover { transform: translateY(-2px); border-color: var(--primary-border); background: var(--primary-soft); }
 .direct-os { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; flex: none; background: var(--surface); border: 1px solid var(--border); color: var(--fg); }
 .direct-os svg { width: 19px; height: 19px; }
