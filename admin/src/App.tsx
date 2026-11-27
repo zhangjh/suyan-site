@@ -1,5 +1,10 @@
-import { useState } from 'react'
-import { getAdminToken, clearAdminToken } from './adminApi'
+import { useEffect, useState } from 'react'
+import {
+  clearAdminToken,
+  dispatchAdminUnauthorized,
+  isAdminTokenValid,
+  ADMIN_UNAUTHORIZED_EVENT,
+} from './adminApi'
 import { AdminLogin } from './AdminLogin'
 import { AdminSuyanDashboard } from './AdminSuyanDashboard'
 import { AdminSuyanUsers } from './AdminSuyanUsers'
@@ -25,12 +30,36 @@ const nav: { key: Tab; label: string; icon: string }[] = [
 ]
 
 export function AdminApp() {
-  const [authed, setAuthed] = useState(!!getAdminToken())
+  // 本地先校验 JWT exp：过期的 token 不再进入控制台，避免闪现失效数据
+  const [authed, setAuthed] = useState(() => isAdminTokenValid())
+  const [loginNotice, setLoginNotice] = useState('')
   const [activeTab, setActiveTab] = useState<Tab>('dashboard')
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
 
+  useEffect(() => {
+    if (!authed) return
+    const onUnauthorized = () => {
+      setLoginNotice('登录已过期，请重新登录')
+      setAuthed(false)
+    }
+    window.addEventListener(ADMIN_UNAUTHORIZED_EVENT, onUnauthorized)
+    // 页面长时间空闲无请求时，也能在到期后自动跳回登录页
+    const timer = window.setInterval(() => {
+      if (!isAdminTokenValid()) dispatchAdminUnauthorized()
+    }, 60_000)
+    return () => {
+      window.removeEventListener(ADMIN_UNAUTHORIZED_EVENT, onUnauthorized)
+      window.clearInterval(timer)
+    }
+  }, [authed])
+
   if (!authed) {
-    return <AdminLogin onLogin={() => setAuthed(true)} />
+    return (
+      <AdminLogin
+        notice={loginNotice}
+        onLogin={() => { setLoginNotice(''); setAuthed(true) }}
+      />
+    )
   }
 
   const handleViewUser = (userId: string) => {
@@ -91,7 +120,7 @@ export function AdminApp() {
         </nav>
         <div className="p-3 border-t border-gray-200">
           <button
-            onClick={() => { clearAdminToken(); setAuthed(false) }}
+            onClick={() => { clearAdminToken(); setLoginNotice(''); setAuthed(false) }}
             className="w-full text-left px-3 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-colors"
           >
             退出登录

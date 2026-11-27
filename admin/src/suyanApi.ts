@@ -1,4 +1,4 @@
-import { getAdminToken, clearAdminToken } from './adminApi'
+import { getAdminToken, dispatchAdminUnauthorized } from './adminApi'
 
 /**
  * 素言管理后台 API 客户端（独立模块，不修改 adminApi.ts）。
@@ -22,7 +22,7 @@ async function suyanRequest<T>(method: string, path: string, body?: unknown): Pr
   })
 
   if (res.status === 401) {
-    clearAdminToken()
+    dispatchAdminUnauthorized()
     throw new Error('Unauthorized')
   }
 
@@ -364,7 +364,7 @@ export async function fetchCommunitySkinPreviewBlob(id: string): Promise<Blob> {
   const res = await fetch(`${API_BASE}/api/admin/suyan/community/skins/${id}/preview.png`, { headers })
 
   if (res.status === 401) {
-    clearAdminToken()
+    dispatchAdminUnauthorized()
     throw new Error('Unauthorized')
   }
   if (!res.ok) {
